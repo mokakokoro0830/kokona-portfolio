@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>月詠 — Kokona Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-tsukuyomi.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">04</p>
+    <p class="work-hero__cat">RYOKAN · LP</p>
+    <h1 class="work-hero__title">月詠<em>つくよみ</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>旅館 / LP</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>HTML / CSS / JS</p></div>
+      <div class="work-meta__item"><h4>画像</h4><p>gpt-image-1</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>信州の隠れ家旅館「月詠」のランディングページ。月と自然をテーマに、静寂と品格を感じさせる和の世界観を表現しました。</p>
+      <p>月齢カレンダーと連動した予約UI、縦書き俳句セクションなど、日本語の美しさをWebデザインに落とし込むことに挑戦しています。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>こだわり</h2>
+      <ul>
+        <li>月齢カレンダー（JavaScriptで月相を計算・表示）</li>
+        <li>CSS writing-mode による縦書き俳句レイアウト</li>
+        <li>深みのある藍 × 金 × 墨のカラーパレット</li>
+        <li>スクロール連動の障子風トランジション</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d2">
+      <a href="https://mokakokoro0830.github.io/ryokan-static/" target="_blank" rel="noopener" class="work-btn work-btn--primary">サイトを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
