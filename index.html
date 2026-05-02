@@ -198,20 +198,50 @@
     <div class="sec-head reveal" style="text-align:center">
       <p class="kicker">— Connect</p>
       <h2 class="sec-title">つながる</h2>
+      <p class="contact__lead reveal reveal-d1">お仕事のご依頼・ご質問はフォームからどうぞ。<br><span style="font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--gold)">For project inquiries and collaborations.</span></p>
     </div>
-    <div class="contact__links reveal reveal-d1">
-      <a href="https://x.com/kokona_codes" target="_blank" rel="noopener" class="contact__link">
-        <span class="contact__link-icon">𝕏</span>
-        <span class="contact__link-label">@kokona_codes</span>
-      </a>
-      <a href="https://github.com/mokakokoro0830" target="_blank" rel="noopener" class="contact__link">
-        <span class="contact__link-icon">⌘</span>
-        <span class="contact__link-label">GitHub</span>
-      </a>
-      <a href="mailto:contact@example.com" class="contact__link">
-        <span class="contact__link-icon">✉</span>
-        <span class="contact__link-label">Email</span>
-      </a>
+
+    <div class="contact__body reveal reveal-d2">
+      <!-- Contact Form -->
+      <form class="cf" id="contact-form" action="https://formspree.io/f/xqenayll" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="【ポートフォリオ】お問い合わせ">
+
+        <div class="cf__row">
+          <div class="cf__group">
+            <label class="cf__label" for="cf-name">お名前 <span class="cf__req">*</span></label>
+            <input class="cf__input" id="cf-name" type="text" name="name" placeholder="山田 太郎" required>
+          </div>
+          <div class="cf__group">
+            <label class="cf__label" for="cf-email">メールアドレス <span class="cf__req">*</span></label>
+            <input class="cf__input" id="cf-email" type="email" name="email" placeholder="hello@example.com" required>
+          </div>
+        </div>
+
+        <div class="cf__group">
+          <label class="cf__label" for="cf-message">メッセージ <span class="cf__req">*</span></label>
+          <textarea class="cf__input cf__textarea" id="cf-message" name="message" rows="6" placeholder="ご依頼内容やご質問をお書きください。" required></textarea>
+        </div>
+
+        <div class="cf__footer">
+          <button class="cf__btn" type="submit">
+            <span class="cf__btn-text">送信する — Send</span>
+            <span class="cf__btn-arrow">→</span>
+          </button>
+          <div class="cf__status" id="cf-status" aria-live="polite"></div>
+        </div>
+      </form>
+
+      <!-- Social links -->
+      <div class="contact__links">
+        <a href="https://x.com/kokona_codes" target="_blank" rel="noopener" class="contact__link">
+          <span class="contact__link-icon">𝕏</span>
+          <span class="contact__link-label">@kokona_codes</span>
+        </a>
+        <a href="https://github.com/mokakokoro0830" target="_blank" rel="noopener" class="contact__link">
+          <span class="contact__link-icon">⌘</span>
+          <span class="contact__link-label">GitHub</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -247,6 +277,38 @@ const heroScroll = document.querySelector('.hero__scroll');
 window.addEventListener('scroll', () => {
   heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 300);
 });
+
+// Contact form AJAX submit
+const cfForm = document.getElementById('contact-form');
+const cfStatus = document.getElementById('cf-status');
+if (cfForm) {
+  cfForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = cfForm.querySelector('.cf__btn');
+    btn.disabled = true;
+    cfStatus.textContent = '送信中…';
+    cfStatus.className = 'cf__status';
+    try {
+      const res = await fetch(cfForm.action, {
+        method: 'POST',
+        body: new FormData(cfForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        cfStatus.textContent = 'ありがとうございます。メッセージを受け取りました。';
+        cfStatus.className = 'cf__status cf__status--ok';
+        cfForm.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      cfStatus.textContent = '送信できませんでした。後ほどお試しください。';
+      cfStatus.className = 'cf__status cf__status--err';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
 </script>
 </body>
 </html>
