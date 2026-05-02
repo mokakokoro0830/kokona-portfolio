@@ -206,9 +206,12 @@
     </div>
 
     <div class="contact__body reveal reveal-d2">
-      <!-- Contact Form -->
-      <form class="cf" id="contact-form" action="https://formspree.io/f/xqenayll" method="POST" novalidate>
-        <input type="hidden" name="_subject" value="【ポートフォリオ】お問い合わせ">
+      <!-- Contact Form (Web3Forms) -->
+      <form class="cf" id="contact-form" novalidate>
+        <input type="hidden" name="access_key" value="4e252222-5a10-444b-a9e9-45341b51a4e1">
+        <input type="hidden" name="subject" value="【ポートフォリオ】お問い合わせ">
+        <input type="hidden" name="from_name" value="Kokona Portfolio">
+        <input type="checkbox" name="botcheck" style="display:none">
 
         <div class="cf__row">
           <div class="cf__group">
@@ -227,6 +230,15 @@
           <label class="cf__label" for="cf-message">Message <span class="cf__req">*</span></label>
           <textarea class="cf__input cf__textarea" id="cf-message" name="message" rows="6" placeholder="ご依頼内容やご質問をお書きください。" required></textarea>
           <span class="cf__underline"></span>
+        </div>
+
+        <div class="cf__group">
+          <label class="cf__label" for="cf-file">Attachment <span class="cf__req-opt">（任意 · 10MB以内）</span></label>
+          <label class="cf__file-label" for="cf-file">
+            <span class="cf__file-icon">＋</span>
+            <span class="cf__file-text" id="cf-file-text">ファイルを選択 — PNG / JPG / PDF</span>
+            <input class="cf__file-input" id="cf-file" type="file" name="attachment" accept="image/*,.pdf">
+          </label>
         </div>
 
         <div class="cf__footer">
@@ -380,7 +392,18 @@ window.addEventListener('scroll', () => {
   heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 300);
 });
 
-// Contact form AJAX submit
+// File input label update
+const cfFile = document.getElementById('cf-file');
+const cfFileText = document.getElementById('cf-file-text');
+if (cfFile) {
+  cfFile.addEventListener('change', () => {
+    cfFileText.textContent = cfFile.files[0]
+      ? cfFile.files[0].name
+      : 'ファイルを選択 — PNG / JPG / PDF';
+  });
+}
+
+// Contact form AJAX submit (Web3Forms)
 const cfForm = document.getElementById('contact-form');
 const cfStatus = document.getElementById('cf-status');
 if (cfForm) {
@@ -391,17 +414,18 @@ if (cfForm) {
     cfStatus.textContent = '送信中…';
     cfStatus.className = 'cf__status';
     try {
-      const res = await fetch(cfForm.action, {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: new FormData(cfForm),
-        headers: { 'Accept': 'application/json' }
+        body: new FormData(cfForm)
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         cfStatus.textContent = 'ありがとうございます。メッセージを受け取りました。';
         cfStatus.className = 'cf__status cf__status--ok';
         cfForm.reset();
+        cfFileText.textContent = 'ファイルを選択 — PNG / JPG / PDF';
       } else {
-        throw new Error();
+        throw new Error(data.message);
       }
     } catch {
       cfStatus.textContent = '送信できませんでした。後ほどお試しください。';
