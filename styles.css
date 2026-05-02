@@ -477,8 +477,8 @@ img { display: block; max-width: 100%; }
   width: 100%;
   resize: none;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-  -webkit-text-fill-color: var(--paper);
+  -webkit-box-shadow: 0 0 0 1000px #0E0B08 inset !important;
+  -webkit-text-fill-color: #F2E8D5 !important;
   transition: border-color .3s;
 }
 .cf__input::placeholder { color: rgba(242,232,213,0.2); }
