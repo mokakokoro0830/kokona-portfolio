@@ -232,15 +232,6 @@
           <span class="cf__underline"></span>
         </div>
 
-        <div class="cf__group">
-          <label class="cf__label" for="cf-file">Attachment <span class="cf__req-opt">（任意 · 10MB以内）</span></label>
-          <label class="cf__file-label" for="cf-file">
-            <span class="cf__file-icon">＋</span>
-            <span class="cf__file-text" id="cf-file-text">ファイルを選択 — PNG / JPG / PDF</span>
-            <input class="cf__file-input" id="cf-file" type="file" name="attachment" accept="image/*,.pdf">
-          </label>
-        </div>
-
         <div class="cf__footer">
           <button class="cf__btn" type="submit">
             <span class="cf__btn-text">送信する — Send</span>
@@ -392,17 +383,6 @@ window.addEventListener('scroll', () => {
   heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 300);
 });
 
-// File input label update
-const cfFile = document.getElementById('cf-file');
-const cfFileText = document.getElementById('cf-file-text');
-if (cfFile) {
-  cfFile.addEventListener('change', () => {
-    cfFileText.textContent = cfFile.files[0]
-      ? cfFile.files[0].name
-      : 'ファイルを選択 — PNG / JPG / PDF';
-  });
-}
-
 // Contact form AJAX submit (Web3Forms)
 const cfForm = document.getElementById('contact-form');
 const cfStatus = document.getElementById('cf-status');
@@ -423,7 +403,6 @@ if (cfForm) {
         cfStatus.textContent = 'ありがとうございます。メッセージを受け取りました。';
         cfStatus.className = 'cf__status cf__status--ok';
         cfForm.reset();
-        cfFileText.textContent = 'ファイルを選択 — PNG / JPG / PDF';
       } else {
         cfStatus.textContent = 'エラー: ' + (data.message || '不明');
         cfStatus.className = 'cf__status cf__status--err';
