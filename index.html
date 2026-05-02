@@ -34,6 +34,7 @@
 <section class="hero" id="top">
   <div class="hero__bg" style="background-image:url('images/hero.jpg')"></div>
   <div class="hero__overlay"></div>
+  <canvas class="hero__particles" id="hero-canvas"></canvas>
   <div class="hero__content">
     <p class="hero__kicker">— AI × Coding × Making</p>
     <h1 class="hero__title">ものを作る、<br>それだけ。</h1>
@@ -260,6 +261,79 @@
 </footer>
 
 <script>
+// Hero particles
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+  const COUNT = 90;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function mkParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -(Math.random() * 0.35 + 0.08),
+      a: Math.random() * 0.55 + 0.15,
+      da: (Math.random() > 0.5 ? 1 : -1) * 0.004
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: COUNT }, mkParticle);
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.a += p.da;
+      if (p.a > 0.7)  p.da = -Math.abs(p.da);
+      if (p.a < 0.1)  p.da =  Math.abs(p.da);
+      if (p.y < -4)   { particles[i] = mkParticle(); particles[i].y = H + 4; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(191,161,105,${p.a.toFixed(2)})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  init();
+  tick();
+  window.addEventListener('resize', init);
+})();
+
+// Sec-title char split
+(function() {
+  document.querySelectorAll('.sec-title').forEach(el => {
+    const text = el.textContent;
+    el.innerHTML = [...text].map((ch, i) =>
+      `<span class="char" style="transition-delay:${i * 45}ms">${ch === ' ' ? '&nbsp;' : ch}</span>`
+    ).join('');
+  });
+
+  const charObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.char').forEach(c => c.classList.add('char--show'));
+        charObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('.sec-title').forEach(el => charObs.observe(el));
+})();
+
 // Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
