@@ -586,8 +586,21 @@ img { display: block; max-width: 100%; }
 }
 .cf__status--ok { color: var(--gold-l); }
 .cf__status--err { color: #e07070; }
-
-/* File attachment */
+.cf__mail-note {
+  margin-top: 20px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: rgba(242,232,213,0.4);
+  letter-spacing: 0.08em;
+}
+.cf__mail-note a {
+  color: rgba(191,161,105,0.6);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+.cf__mail-note a:hover { color: var(--gold-l); }
 
 .contact__links {
   display: flex;
