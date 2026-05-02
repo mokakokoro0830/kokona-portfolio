@@ -425,10 +425,11 @@ if (cfForm) {
         cfForm.reset();
         cfFileText.textContent = 'ファイルを選択 — PNG / JPG / PDF';
       } else {
-        throw new Error(data.message);
+        cfStatus.textContent = 'エラー: ' + (data.message || '不明');
+        cfStatus.className = 'cf__status cf__status--err';
       }
-    } catch {
-      cfStatus.textContent = '送信できませんでした。後ほどお試しください。';
+    } catch(err) {
+      cfStatus.textContent = '通信エラー: ' + (err.message || '不明');
       cfStatus.className = 'cf__status cf__status--err';
     } finally {
       btn.disabled = false;
