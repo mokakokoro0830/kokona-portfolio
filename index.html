@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div id="scroll-progress"></div>
 
 <!-- Nav -->
 <header class="nav" id="nav">
@@ -261,13 +262,26 @@
 </footer>
 
 <script>
-// Hero particles
+// Hero particles (seasonal)
 (function() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W, H, particles;
-  const COUNT = 90;
+
+  const month = new Date().getMonth() + 1;
+  const season =
+    month >= 3 && month <= 5 ? 'spring' :
+    month >= 6 && month <= 8 ? 'summer' :
+    month >= 9 && month <= 11 ? 'autumn' : 'winter';
+
+  const SEASONS = {
+    spring: { color: '255,183,197', count: 110, rMax: 2.2, speed: 0.28 },
+    summer: { color: '100,200,255', count:  65, rMax: 1.2, speed: 0.18 },
+    autumn: { color: '210,140, 60', count: 100, rMax: 1.8, speed: 0.32 },
+    winter: { color: '191,161,105', count:  85, rMax: 1.4, speed: 0.22 },
+  };
+  const S = SEASONS[season];
 
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
@@ -278,17 +292,17 @@
     return {
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.4 + 0.3,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: -(Math.random() * 0.35 + 0.08),
-      a: Math.random() * 0.55 + 0.15,
+      r: Math.random() * S.rMax + 0.3,
+      vx: (Math.random() - 0.5) * S.speed,
+      vy: -(Math.random() * S.speed + 0.08),
+      a:  Math.random() * 0.55 + 0.15,
       da: (Math.random() > 0.5 ? 1 : -1) * 0.004
     };
   }
 
   function init() {
     resize();
-    particles = Array.from({ length: COUNT }, mkParticle);
+    particles = Array.from({ length: S.count }, mkParticle);
   }
 
   function tick() {
@@ -297,12 +311,12 @@
       const p = particles[i];
       p.x += p.vx; p.y += p.vy;
       p.a += p.da;
-      if (p.a > 0.7)  p.da = -Math.abs(p.da);
-      if (p.a < 0.1)  p.da =  Math.abs(p.da);
+      if (p.a > 0.72) p.da = -Math.abs(p.da);
+      if (p.a < 0.10) p.da =  Math.abs(p.da);
       if (p.y < -4)   { particles[i] = mkParticle(); particles[i].y = H + 4; }
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(191,161,105,${p.a.toFixed(2)})`;
+      ctx.fillStyle = `rgba(${S.color},${p.a.toFixed(2)})`;
       ctx.fill();
     }
     requestAnimationFrame(tick);
@@ -333,6 +347,15 @@
 
   document.querySelectorAll('.sec-title').forEach(el => charObs.observe(el));
 })();
+
+// Scroll progress bar
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
 
 // Nav scroll
 const nav = document.getElementById('nav');
