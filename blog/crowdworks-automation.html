@@ -11,6 +11,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
 <style>
+/* ── Light theme override ── */
+body {
+  background: #F5F0E8;
+  color: #2A1F12;
+}
+#scroll-progress {
+  background: linear-gradient(to bottom, #8B6914, #5C4510);
+}
+
 /* Article layout */
 .art-hero {
   padding: 160px 0 80px;
@@ -29,15 +38,15 @@
   font-family: var(--serif);
   font-size: 0.78rem;
   letter-spacing: 0.18em;
-  color: var(--gold);
+  color: #8B6914;
 }
 .art-hero__tag {
   font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gold-d);
-  border: 1px solid var(--gold-d);
+  color: #8B6914;
+  border: 1px solid #C4A45A;
   padding: 2px 10px;
   border-radius: 2px;
 }
@@ -47,14 +56,14 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   line-height: 1.45;
-  color: var(--paper);
+  color: #1C1008;
   margin-bottom: 20px;
 }
 .art-hero__lead {
   font-size: 0.95rem;
-  color: var(--paper-dim);
+  color: #5C4830;
   line-height: 2;
-  border-left: 2px solid var(--gold-d);
+  border-left: 2px solid #C4A45A;
   padding-left: 20px;
 }
 
@@ -69,28 +78,28 @@
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   font-weight: 500;
   letter-spacing: 0.08em;
-  color: var(--paper);
+  color: #1C1008;
   margin: 60px 0 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(180,145,80,0.3);
 }
 .art-body h3 {
   font-family: var(--jp-mincho);
   font-size: 1rem;
   font-weight: 500;
-  color: var(--gold);
+  color: #8B6914;
   letter-spacing: 0.08em;
   margin: 36px 0 12px;
 }
 .art-body p {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   line-height: 2.1;
-  color: var(--paper-dim);
+  color: #3D2B1A;
   margin-bottom: 20px;
 }
 .art-body strong {
-  color: var(--paper);
-  font-weight: 500;
+  color: #1C1008;
+  font-weight: 600;
 }
 
 /* Flow steps */
@@ -105,14 +114,14 @@
   gap: 20px;
   align-items: flex-start;
   padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(180,145,80,0.25);
 }
-.flow-step:first-child { border-top: 1px solid var(--line); }
+.flow-step:first-child { border-top: 1px solid rgba(180,145,80,0.25); }
 .flow-step__num {
   font-family: var(--serif);
   font-size: 1.4rem;
   font-weight: 400;
-  color: var(--gold);
+  color: #C4A45A;
   letter-spacing: 0.05em;
   min-width: 36px;
   line-height: 1;
@@ -123,13 +132,13 @@
   font-family: var(--jp-mincho);
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--paper);
+  color: #1C1008;
   margin-bottom: 6px;
   letter-spacing: 0.05em;
 }
 .flow-step__desc {
   font-size: 0.84rem;
-  color: var(--paper-dim);
+  color: #5C4830;
   line-height: 1.9;
   margin: 0;
 }
@@ -143,8 +152,8 @@
 }
 @media (max-width: 600px) { .criteria-grid { grid-template-columns: 1fr; } }
 .criteria-box {
-  background: var(--bg-2);
-  border: 1px solid var(--line);
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
   border-radius: 4px;
   padding: 24px;
 }
@@ -155,8 +164,8 @@
   letter-spacing: 0.2em;
   margin-bottom: 14px;
 }
-.criteria-box--skip .criteria-box__head { color: #c0776a; }
-.criteria-box--pass .criteria-box__head { color: var(--gold); }
+.criteria-box--skip .criteria-box__head { color: #A0463A; }
+.criteria-box--pass .criteria-box__head { color: #8B6914; }
 .criteria-box ul {
   list-style: none;
   padding: 0;
@@ -167,19 +176,19 @@
 }
 .criteria-box ul li {
   font-size: 0.82rem;
-  color: var(--paper-dim);
+  color: #4A3520;
   line-height: 1.7;
   padding-left: 14px;
   position: relative;
 }
-.criteria-box--skip ul li::before { content: '×'; position: absolute; left: 0; color: #c0776a; font-size: 0.75rem; }
-.criteria-box--pass ul li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-size: 0.75rem; }
+.criteria-box--skip ul li::before { content: '×'; position: absolute; left: 0; color: #A0463A; font-size: 0.75rem; }
+.criteria-box--pass ul li::before { content: '✓'; position: absolute; left: 0; color: #8B6914; font-size: 0.75rem; }
 
 /* Result box */
 .result-box {
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
   border-radius: 4px;
   padding: 28px 28px 24px;
   margin: 32px 0;
@@ -189,12 +198,12 @@
   font-style: italic;
   font-size: 0.75rem;
   letter-spacing: 0.2em;
-  color: var(--gold);
+  color: #8B6914;
   margin-bottom: 14px;
 }
 .result-box p {
   font-size: 0.88rem;
-  color: var(--paper);
+  color: #2A1F12;
   margin: 0;
   line-height: 1.9;
 }
@@ -208,7 +217,7 @@
   font-style: italic;
   font-size: 0.82rem;
   letter-spacing: 0.18em;
-  color: var(--gold);
+  color: #8B6914;
   margin-bottom: 48px;
   transition: opacity 0.2s;
 }
@@ -225,7 +234,7 @@
       <a href="../#about">About</a>
       <a href="../#works">Works</a>
       <a href="../#process">Process</a>
-      <a href="../blog/" style="color:var(--gold)">Blog</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
       <a href="../#contact">Contact</a>
     </nav>
   </div>
@@ -375,7 +384,7 @@
 
 </div>
 
-<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:var(--gold-d);letter-spacing:0.2em;">
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
   © 2026 Kokona
 </footer>
 
