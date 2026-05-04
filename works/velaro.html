@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VELARO — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/velaro.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-velaro.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">06</p>
+    <p class="work-hero__cat">RESORT · BOOKING SYSTEM</p>
+    <h1 class="work-hero__title">VELARO<em>ヴェラーロ</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>リゾート / 予約管理システム</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>Next.js / Supabase / Resend</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>Vercel</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>架空のリゾートヴィラ「VELARO」向けの予約管理システム。単なるLPではなく、ゲストの予約から管理者の承認・メール送信までを一気通貫で動かすフルスタック実装です。</p>
+      <p>ゲストが予約フォームを送信すると確認メールが自動送信され、管理者は管理画面でステータス管理・任意のメール送信が可能。実業務に近い設計を意識しました。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>こだわり</h2>
+      <ul>
+        <li>ゲスト向けUI（ミニマル）と管理画面（情報密度高め）でデザイン思想を分けた</li>
+        <li>予約作成と同時にゲスト確認メール＋管理者通知メールを自動送信（Resend）</li>
+        <li>管理画面でステータス変更 → 自動でゲストにメール通知</li>
+        <li>完成後に自分でセキュリティレビューを実施、5件の問題を修正してデプロイ</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>Next.js 16</strong>（App Router）— フロント＋API Routes</li>
+        <li><strong>Supabase</strong> — 予約データDB・RLS設定</li>
+        <li><strong>Resend</strong> — トランザクションメール送信</li>
+        <li><strong>Tailwind CSS v4</strong> — スタイリング</li>
+        <li><strong>Vercel</strong> — デプロイ・環境変数管理</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d2">
+      <a href="https://velaro-static.pages.dev" target="_blank" rel="noopener" class="work-btn work-btn--primary">サイトを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
