@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6つ目のサイトはLPじゃなく予約管理システムだった — Kokona Blog</title>
+<meta name="description" content="リゾートヴィラVELAROの予約管理システム制作記録。Next.js + Supabase + Resendでフルスタック実装し、完成後にセキュリティレビューまでやった話。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/velaro-booking.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.art-hero {
+  padding: 160px 32px 80px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.art-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.art-hero__date {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+}
+.art-hero__tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6914;
+  border: 1px solid #C4A45A;
+  padding: 2px 10px;
+  border-radius: 2px;
+}
+.art-hero__title {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  color: #1C1008;
+  margin-bottom: 20px;
+}
+.art-hero__lead {
+  font-size: 0.95rem;
+  color: #5C4830;
+  line-height: 2;
+  border-left: 2px solid #C4A45A;
+  padding-left: 20px;
+}
+
+.art-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+}
+.art-body h2 {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #1C1008;
+  margin: 60px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(180,145,80,0.3);
+}
+.art-body h3 {
+  font-family: var(--jp-mincho);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #8B6914;
+  letter-spacing: 0.08em;
+  margin: 36px 0 12px;
+}
+.art-body p {
+  font-size: 0.95rem;
+  line-height: 2.1;
+  color: #3D2B1A;
+  margin-bottom: 20px;
+}
+.art-body strong { color: #1C1008; font-weight: 600; }
+
+.flow { margin: 32px 0; display: flex; flex-direction: column; gap: 0; }
+.flow-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(180,145,80,0.25);
+}
+.flow-step:first-child { border-top: 1px solid rgba(180,145,80,0.25); }
+.flow-step__num {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #C4A45A;
+  letter-spacing: 0.05em;
+  min-width: 36px;
+  line-height: 1;
+  padding-top: 4px;
+}
+.flow-step__title {
+  font-family: var(--jp-mincho);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1C1008;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.flow-step__desc {
+  font-size: 0.84rem;
+  color: #5C4830;
+  line-height: 1.9;
+  margin: 0;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.stack-item {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-radius: 4px;
+  padding: 20px;
+}
+.stack-item__name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: #1C1008;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.stack-item__role {
+  font-size: 0.78rem;
+  color: #8B6914;
+  line-height: 1.7;
+}
+
+.security-list { margin: 28px 0; display: flex; flex-direction: column; gap: 12px; }
+.security-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-radius: 4px;
+  padding: 18px 20px;
+}
+.security-item__badge {
+  font-size: 0.72rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.badge--red { background: #A0463A; color: #fff; }
+.badge--yellow { background: #C4A45A; color: #fff; }
+.security-item__text { font-size: 0.88rem; color: #3D2B1A; line-height: 1.8; }
+.security-item__text strong { color: #1C1008; }
+
+.result-box {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
+  border-radius: 4px;
+  padding: 28px;
+  margin: 32px 0;
+}
+.result-box__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  margin-bottom: 14px;
+}
+.result-box p { font-size: 0.88rem; color: #2A1F12; margin: 0; line-height: 1.9; }
+
+.art-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  margin-bottom: 48px;
+  transition: opacity 0.2s;
+}
+.art-back:hover { opacity: 0.65; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.05</span>
+    <span class="art-hero__tag">制作記録</span>
+  </div>
+  <h1 class="art-hero__title">6つ目のサイトはLPじゃなく<br>予約管理システムだった<br>— VELARO 制作記録</h1>
+  <p class="art-hero__lead">
+    今まで作ってきたのはLP・ECサイト・ポートフォリオ。<br>
+    今回は初めて「動くシステム」に挑戦した。<br>
+    予約フォームを送信したら管理画面に反映され、メールも自動で飛ぶ——そういうやつ。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <h2>何を作ったか</h2>
+  <p>
+    架空のリゾートヴィラ「<strong>VELARO</strong>」向けの予約管理システム。
+    ゲストが予約フォームを送信すると、DBに保存されて確認メールが届く。
+    管理者は専用画面で予約一覧を確認し、ステータスを変更したりゲストにメールを送ったりできる。
+  </p>
+  <p>
+    LPは「見せる」だけでよかった。今回は「動く」ことが求められる。
+    フォームのバリデーション、APIの設計、DBのスキーマ、メールの自動送信——
+    考えることが一気に増えた。
+  </p>
+
+  <h2>システムの流れ</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <span class="flow-step__num">01</span>
+      <div>
+        <p class="flow-step__title">ゲストが予約フォームを送信</p>
+        <p class="flow-step__desc">チェックイン・アウト日、人数、ヴィラ種別、名前・メール・電話を入力。送信と同時にAPIが動く。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <span class="flow-step__num">02</span>
+      <div>
+        <p class="flow-step__title">DBに保存 → メール2通を自動送信</p>
+        <p class="flow-step__desc">Supabaseに予約データを保存後、ゲストへ受付確認メール・管理者へ新規予約通知メールを同時送信。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <span class="flow-step__num">03</span>
+      <div>
+        <p class="flow-step__title">管理者が管理画面で確認</p>
+        <p class="flow-step__desc">予約一覧をステータスでフィルタ・名前やメールで検索。各予約の詳細ページで情報を確認できる。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <span class="flow-step__num">04</span>
+      <div>
+        <p class="flow-step__title">ステータス変更 → 自動でメール通知</p>
+        <p class="flow-step__desc">「確定」「キャンセル」などにステータスを変えると、内容に応じたメールがゲストに自動送信される。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <span class="flow-step__num">05</span>
+      <div>
+        <p class="flow-step__title">任意メールの送信</p>
+        <p class="flow-step__desc">管理画面から件名・本文を入力して、そのゲストに直接メールを送ることもできる。</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>技術構成</h2>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <p class="stack-item__name">Next.js 16</p>
+      <p class="stack-item__role">App Router でフロント＋API Routes を一体管理</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Supabase</p>
+      <p class="stack-item__role">予約データのDB。RLSで権限を制御</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Resend</p>
+      <p class="stack-item__role">トランザクションメールの送信。テンプレートはHTML手書き</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Tailwind CSS</p>
+      <p class="stack-item__role">ゲスト画面はミニマル、管理画面は情報密度重視で設計を分けた</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Vercel</p>
+      <p class="stack-item__role">デプロイ先。環境変数もCLIで管理</p>
+    </div>
+  </div>
+
+  <h2>完成した直後にセキュリティレビューをした</h2>
+  <p>
+    「動いた」と思って一息ついたあと、自分のコードを自分でレビューした。
+    結果、5件の問題が見つかった。
+  </p>
+
+  <div class="security-list">
+    <div class="security-item">
+      <span class="security-item__badge badge--red">Critical</span>
+      <p class="security-item__text"><strong>管理画面・管理APIに認証がない</strong><br>URLを知っていれば誰でも全予約を閲覧・操作できる状態だった。</p>
+    </div>
+    <div class="security-item">
+      <span class="security-item__badge badge--red">Critical</span>
+      <p class="security-item__text"><strong>予約APIにレート制限がない</strong><br>連打されるとDBとメール送信枠を使い切られる。</p>
+    </div>
+    <div class="security-item">
+      <span class="security-item__badge badge--yellow">Medium</span>
+      <p class="security-item__text"><strong>日付バリデーションなし</strong><br>チェックインがチェックアウトより後でも通ってしまう。</p>
+    </div>
+    <div class="security-item">
+      <span class="security-item__badge badge--yellow">Medium</span>
+      <p class="security-item__text"><strong>メール本文にXSSリスク</strong><br>管理画面から送るメール本文がHTMLエスケープなしでテンプレートに埋め込まれていた。</p>
+    </div>
+  </div>
+
+  <p>
+    全部修正してデプロイし直した。
+    管理画面はBasic Authで保護、APIにはレート制限（5回/分）、日付はサーバー側で検証、
+    メール本文はHTMLエスケープを通してから埋め込む。
+  </p>
+
+  <div class="result-box">
+    <p class="result-box__label">— 修正後の構成</p>
+    <p>
+      middleware.ts でパスワード認証（/admin, /api/admin/* をまるごとガード）<br>
+      IPベースのレートリミッター（in-memoryで5回/分）<br>
+      チェックイン &lt; チェックアウトをサーバー側でバリデーション<br>
+      カスタムメール本文をescapeHtml()に通してから展開
+    </p>
+  </div>
+
+  <h2>やってみて分かったこと</h2>
+  <p>
+    LPは見た目が7割だと思っていた。でもシステムは見た目より設計の方が難しい。
+    「ゲストが何かを送信したとき、バックエンドで何が起きるか」を全部自分で考える必要がある。
+  </p>
+  <p>
+    それと、<strong>「動く」と「安全」は別の話</strong>だと改めて実感した。
+    フォームが送信できてメールが届いた時点では、まだ半分しか完成していない。
+    誰が触るか、どう悪用されるかを想定して初めて「完成」と言える。
+  </p>
+  <p>
+    次はもう少し複雑な状態管理——在庫や空室カレンダーのようなもの——に挑戦したいと思っている。
+  </p>
+
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+    <a href="index.html" class="art-back">← Blog に戻る</a>
+    <a href="https://velaro-booking.vercel.app" target="_blank" rel="noopener"
+      style="font-family:var(--serif);font-size:0.82rem;letter-spacing:0.18em;color:#1C1008;border:1px solid #C4A45A;padding:10px 24px;transition:opacity 0.2s;"
+      onmouseover="this.style.opacity='.65'" onmouseout="this.style.opacity='1'">
+      サイトを見る →
+    </a>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  if (total > 0) progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+</body>
+</html>
