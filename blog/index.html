@@ -6,6 +6,63 @@
 <title>Blog — Kokona</title>
 <meta name="description" content="AI×コーディングの制作記録。自動化・ツール・フリーランスの裏側。">
 <link rel="canonical" href="https://kokona-makes.dev/blog/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/">
+<meta property="og:title" content="Blog — Kokona">
+<meta property="og:description" content="AI×コーディングの制作記録。自動化・ツール・フリーランスの裏側。">
+<meta property="og:image" content="https://kokona-makes.dev/images/hero.jpg">
+<meta property="og:image:alt" content="Kokona — AI×自動化で、業務ごと変える">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="Blog — Kokona">
+<meta name="twitter:description" content="AI×コーディングの制作記録。自動化・ツール・フリーランスの裏側。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/hero.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": "https://kokona-makes.dev/blog/#blog",
+  "url": "https://kokona-makes.dev/blog/",
+  "name": "Kokona Blog",
+  "description": "AI×コーディングの制作記録。自動化・ツール・フリーランスの裏側。",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "会議を書かないAIを作る — Quill 開発ログ #1：計画編",
+      "url": "https://kokona-makes.dev/blog/quill-planning.html",
+      "datePublished": "2026-05-05",
+      "author": { "@type": "Person", "name": "Kokona" }
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "6つ目のサイトはLPじゃなく予約管理システムだった — VELARO 制作記録",
+      "url": "https://kokona-makes.dev/blog/velaro-booking.html",
+      "datePublished": "2026-05-05",
+      "author": { "@type": "Person", "name": "Kokona" }
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "案件探しをClaudeに丸投げした話 — クラウドワークス自動巡回の仕組み",
+      "url": "https://kokona-makes.dev/blog/crowdworks-automation.html",
+      "datePublished": "2026-05-04",
+      "author": { "@type": "Person", "name": "Kokona" }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
@@ -51,13 +108,71 @@ body {
   padding: 0 32px 120px;
 }
 .blog-card {
-  display: block;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: start;
   border-top: 1px solid rgba(180,145,80,0.3);
   padding: 40px 0;
   transition: opacity 0.2s;
 }
 .blog-card:last-child { border-bottom: 1px solid rgba(180,145,80,0.3); }
-.blog-card:hover { opacity: 0.72; }
+.blog-card:hover { opacity: 0.78; }
+.blog-card:hover .blog-card__thumb img { transform: scale(1.04); }
+
+.blog-card__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.25);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.blog-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+/* Text cover (no image) */
+.blog-card__thumb--text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2A1F12 0%, #5C4510 100%);
+  color: #F5F0E8;
+  padding: 20px;
+  text-align: center;
+}
+.blog-card__thumb--text .cover-kicker {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: #C4A45A;
+  margin-bottom: 10px;
+  display: block;
+}
+.blog-card__thumb--text .cover-title {
+  font-family: var(--jp-mincho);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+.blog-card__thumb--text .cover-no {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: rgba(196,164,90,0.7);
+}
+
+.blog-card__body { min-width: 0; }
 .blog-card__meta {
   display: flex;
   align-items: center;
@@ -106,6 +221,13 @@ body {
   letter-spacing: 0.2em;
   color: #8B6914;
 }
+@media (max-width: 640px) {
+  .blog-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .blog-card__thumb { aspect-ratio: 16 / 9; }
+}
 </style>
 </head>
 <body>
@@ -133,33 +255,56 @@ body {
 <div class="blog-list">
 
   <a href="quill-planning.html" class="blog-card reveal">
-    <div class="blog-card__meta">
-      <span class="blog-card__date">2026.05.05</span>
-      <span class="blog-card__tag">開発ログ</span>
+    <div class="blog-card__thumb blog-card__thumb--text">
+      <span class="cover-no">No. 01</span>
+      <div>
+        <span class="cover-kicker">— Dev Log</span>
+        <span class="cover-title">Quill<br>計画編</span>
+      </div>
     </div>
-    <h2 class="blog-card__title">会議を書かないAIを作る<br>— Quill 開発ログ #1：計画編</h2>
-    <p class="blog-card__desc">架空のAI議事録SaaS『Quill』を作る計画。実装前に潰しておきたい6つの問題（音声取得・文字起こし・話者分離・抽出精度・配信タイミング・心理障壁）と、それぞれの解き方。</p>
-    <span class="blog-card__link">Read more →</span>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span class="blog-card__date">2026.05.05</span>
+        <span class="blog-card__tag">開発ログ</span>
+      </div>
+      <h2 class="blog-card__title">会議を書かないAIを作る<br>— Quill 開発ログ #1：計画編</h2>
+      <p class="blog-card__desc">架空のAI議事録SaaS『Quill』を作る計画。実装前に潰しておきたい6つの問題（音声取得・文字起こし・話者分離・抽出精度・配信タイミング・心理障壁）と、それぞれの解き方。</p>
+      <span class="blog-card__link">Read more →</span>
+    </div>
   </a>
 
   <a href="velaro-booking.html" class="blog-card reveal">
-    <div class="blog-card__meta">
-      <span class="blog-card__date">2026.05.05</span>
-      <span class="blog-card__tag">制作記録</span>
+    <div class="blog-card__thumb">
+      <img src="../images/thumb-velaro.jpg" alt="VELARO 予約管理システム" loading="lazy">
     </div>
-    <h2 class="blog-card__title">6つ目のサイトはLPじゃなく予約管理システムだった<br>— VELARO 制作記録</h2>
-    <p class="blog-card__desc">フォーム送信 → DB保存 → 自動メール2通 → 管理画面でステータス管理。フルスタックの予約フローを実装して、完成直後に自分でセキュリティレビューまでやった記録。</p>
-    <span class="blog-card__link">Read more →</span>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span class="blog-card__date">2026.05.05</span>
+        <span class="blog-card__tag">制作記録</span>
+      </div>
+      <h2 class="blog-card__title">6つ目のサイトはLPじゃなく予約管理システムだった<br>— VELARO 制作記録</h2>
+      <p class="blog-card__desc">フォーム送信 → DB保存 → 自動メール2通 → 管理画面でステータス管理。フルスタックの予約フローを実装して、完成直後に自分でセキュリティレビューまでやった記録。</p>
+      <span class="blog-card__link">Read more →</span>
+    </div>
   </a>
 
   <a href="crowdworks-automation.html" class="blog-card reveal">
-    <div class="blog-card__meta">
-      <span class="blog-card__date">2026.05.04</span>
-      <span class="blog-card__tag">自動化</span>
+    <div class="blog-card__thumb blog-card__thumb--text">
+      <span class="cover-no">No. 03</span>
+      <div>
+        <span class="cover-kicker">— Automation</span>
+        <span class="cover-title">Claudeに<br>丸投げ</span>
+      </div>
     </div>
-    <h2 class="blog-card__title">案件探しをClaudeに丸投げした話<br>— クラウドワークス自動巡回の仕組み</h2>
-    <p class="blog-card__desc">7カテゴリのスキャン、独自基準でのスキップ判定、提案書の自動生成、Gmailへの通知まで。フリーランスの地味な作業を全部自動化した記録。</p>
-    <span class="blog-card__link">Read more →</span>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span class="blog-card__date">2026.05.04</span>
+        <span class="blog-card__tag">自動化</span>
+      </div>
+      <h2 class="blog-card__title">案件探しをClaudeに丸投げした話<br>— クラウドワークス自動巡回の仕組み</h2>
+      <p class="blog-card__desc">7カテゴリのスキャン、独自基準でのスキップ判定、提案書の自動生成、Gmailへの通知まで。フリーランスの地味な作業を全部自動化した記録。</p>
+      <span class="blog-card__link">Read more →</span>
+    </div>
   </a>
 
 </div>
