@@ -429,6 +429,66 @@ img { display: block; max-width: 100%; }
 }
 .work-card:hover .work-card__link { letter-spacing: 0.25em; }
 
+/* === Service === */
+.service {
+  padding: 140px 0;
+  background: var(--bg-2);
+}
+.service__visual {
+  margin: 64px 0 72px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(191,161,105,0.15);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.service__img {
+  width: 100%;
+  display: block;
+  transition: transform 0.8s var(--ease);
+}
+.service__visual:hover .service__img {
+  transform: scale(1.02);
+}
+.service__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.service__card {
+  background: var(--bg-3);
+  padding: 40px 36px;
+  border: 1px solid var(--line);
+  transition: border-color 0.3s, background 0.3s;
+}
+.service__card:hover {
+  border-color: rgba(191,161,105,0.3);
+  background: rgba(191,161,105,0.04);
+}
+.service__card-num {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-d);
+  margin-bottom: 16px;
+}
+.service__card-title {
+  font-family: var(--jp-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+.service__card-desc {
+  font-size: 0.8rem;
+  color: var(--paper-dim);
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+}
+@media (max-width: 768px) {
+  .service__cards { grid-template-columns: 1fr; }
+}
+
 /* === Process === */
 .process {
   padding: 140px 0;
