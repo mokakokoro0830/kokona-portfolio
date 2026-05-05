@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会議を書かないAIを作る — Quill 開発ログ #1：計画編 — Kokona Blog</title>
+<meta name="description" content="架空のAI議事録SaaS『Quill』を作る計画。音声取得・文字起こし・話者分離・抽出精度・コスト・心理障壁——実装前に潰しておきたい6つの問題と、それぞれの解き方。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/quill-planning.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.art-hero {
+  padding: 160px 32px 80px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.art-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.art-hero__date {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+}
+.art-hero__tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6914;
+  border: 1px solid #C4A45A;
+  padding: 2px 10px;
+  border-radius: 2px;
+}
+.art-hero__title {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  color: #1C1008;
+  margin-bottom: 20px;
+}
+.art-hero__lead {
+  font-size: 0.95rem;
+  color: #5C4830;
+  line-height: 2;
+  border-left: 2px solid #C4A45A;
+  padding-left: 20px;
+}
+
+.art-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+}
+.art-body h2 {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #1C1008;
+  margin: 60px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(180,145,80,0.3);
+}
+.art-body h3 {
+  font-family: var(--jp-mincho);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #8B6914;
+  letter-spacing: 0.08em;
+  margin: 36px 0 12px;
+}
+.art-body p {
+  font-size: 0.95rem;
+  line-height: 2.1;
+  color: #3D2B1A;
+  margin-bottom: 20px;
+}
+.art-body strong { color: #1C1008; font-weight: 600; }
+
+/* Problem block */
+.qa {
+  margin: 40px 0;
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.qa__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  margin-bottom: 10px;
+  display: block;
+}
+.qa__problem {
+  font-family: var(--jp-mincho);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #1C1008;
+  margin-bottom: 18px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+.qa__body p {
+  font-size: 0.9rem;
+  line-height: 2;
+  color: #3D2B1A;
+  margin-bottom: 14px;
+}
+.qa__body p:last-child { margin-bottom: 0; }
+.qa__solve {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(180,145,80,0.4);
+}
+.qa__solve-label {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #8B6914;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.lead-block {
+  background: #F5F0E8;
+  border: 1px solid rgba(180,145,80,0.25);
+  border-radius: 4px;
+  padding: 28px 32px;
+  margin: 32px 0;
+}
+.lead-block p {
+  font-family: var(--jp-mincho);
+  font-size: 1.02rem;
+  line-height: 2.1;
+  color: #2A1F12;
+  margin: 0 0 14px;
+}
+.lead-block p:last-child { margin-bottom: 0; }
+
+.art-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  margin-bottom: 48px;
+  transition: opacity 0.2s;
+}
+.art-back:hover { opacity: 0.65; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.05</span>
+    <span class="art-hero__tag">開発ログ</span>
+  </div>
+  <h1 class="art-hero__title">会議を書かないAIを作る<br>— Quill 開発ログ #1：計画編</h1>
+  <p class="art-hero__lead">
+    ひとりで仕事をしていると、議事録は要らない。<br>
+    でも社員5人くらいの組織からは、急に必要になる。<br>
+    そして誰がやっても続かない、そんな話を最近よく聞いた。<br><br>
+    だから、それを解く AI を作ってみることにした。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <h2>まずLPだけ先に作った</h2>
+  <p>
+    機能を一行も書く前に、<strong>LPだけ先に公開した</strong>。
+    名前は「Quill」、羽ペンの意。タグラインは「会議は書かない。」
+  </p>
+  <p>
+    なぜ先に LP かというと、<strong>誰に何を売る AI なのか</strong>を、自分の中で固定したかったから。
+    実装が始まると技術の都合に引きずられて、ユーザー体験がブレる。
+    だから先にゴールを置いて、それを実装で再現する形にしたい。
+  </p>
+  <p>
+    LP は <a href="https://quill-static.pages.dev" target="_blank" rel="noopener" style="color:#8B6914;text-decoration:underline">quill-static.pages.dev</a> で公開している。
+    ここから先は、その絵を実物に変えていく作業の話。
+  </p>
+
+  <h2>計画段階で見えている、6つの問題</h2>
+  <p>
+    「会議を書かない AI」と一行で言うと簡単だが、まじめに作ろうとすると、最初から最後まで問題だらけになる。
+    今の段階で見えている課題と、それぞれの当たりをつけた解き方を残しておく。
+    実装が始まれば、たぶんこの計画は半分くらい裏切られる。それも記録の対象。
+  </p>
+
+  <!-- Q1 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 01</span>
+    <p class="qa__problem">そもそも、会議の音声はどう取る？</p>
+    <div class="qa__body">
+      <p>
+        「マイクで録音すればいい」で終わる話ではない。
+        その会議に参加してる誰か一人が「録音係」をやる前提だと、絶対に普及しない。
+        本人が忘れる、設定をミスる、保存先が散らばる。
+      </p>
+      <p>
+        理想は、<strong>会議に AI 自身が参加してくれる</strong>こと。
+        Zoom や Google Meet で「Quill が参加しました」と通知が出て、終わったら勝手に退出している、という体験。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          Bot として会議に参加させる方式を採る。実装オプションは2つ：
+          <strong>Recall.ai のような Bot 基盤を借りる</strong>か、
+          <strong>Headless ブラウザ × WebRTC で自前実装</strong>するか。
+          MVP では Recall.ai に乗る。自前は絶対にハマる領域。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 02</span>
+    <p class="qa__problem">文字起こし、Whisper API か、自前ホスティングか？</p>
+    <div class="qa__body">
+      <p>
+        OpenAI の Whisper API は楽だが、1時間の会議で約 <strong>$0.36</strong>。
+        1000ユーザーが平均1日30分使ったら、月 <strong>$5,400</strong> がトランスクリプトだけで消える。
+        ここは早めに設計しておかないと、価格戦略が崩れる。
+      </p>
+      <p>
+        一方、自前で Whisper をホストすれば固定費にできるが、GPU の管理コストと遅延の制御が新しい問題になる。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          MVP は <strong>Whisper API 一択</strong>でいい。
+          ユーザーが少ないうちに自前運用は無駄。
+          月のトークンコストが Pro プランの粗利を食い始めたら、自前ホストへの切り替えを検討。
+          境目は「同時録音 30本以上が常態化」したあたり。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 03</span>
+    <p class="qa__problem">「文字起こし」と「議事録」は別物</p>
+    <div class="qa__body">
+      <p>
+        逐語ログがそのまま届いても、誰も読まない。
+        「で、結局なに決まったんだっけ？」「私、何やるんだっけ？」に即答できる形でないと、議事録としての価値がない。
+      </p>
+      <p>
+        つまり <strong>文字起こし → 構造化 → 要約</strong> の3段変換が必要。
+        ここの精度がプロダクトのコアになる。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          多段階プロンプトで処理する：
+          <br>① 全文から「決定事項」「アクションアイテム」「保留事項」を抽出
+          <br>② 各アクションに対して「誰が／いつまでに」を逐語ログから埋める
+          <br>③ 全体を 200〜400字のサマリーに圧縮
+          <br>各段階で <strong>Few-shot で良い議事録の例を見せる</strong>のが効く。学習しているフォーマットに引き寄せる。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 04</span>
+    <p class="qa__problem">話者分離、誰が誰の声か AI に分かる？</p>
+    <div class="qa__body">
+      <p>
+        diarization（話者分離）は今のモデルなら7-8割は当たる。
+        ただしこれは「話者A」「話者B」という匿名ラベル。
+        議事録としては「Aさん」じゃなく「中村さん」と書きたい。
+      </p>
+      <p>
+        実名を当てるには、別の情報源と突き合わせる必要がある。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          Zoom / Meet の <strong>参加者リスト API</strong> から名前を取得し、
+          各話者の発話量と参加者の発言タイミングを照合してマッピングする。
+          初回はユーザーに「この声は中村さんで合ってる？」と確認させ、
+          2回目以降は声紋を再利用する。<strong>初回だけ少し手間、2回目から自動</strong>が現実的。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 05</span>
+    <p class="qa__problem">リアルタイム vs 会議後、どっちで届ける？</p>
+    <div class="qa__body">
+      <p>
+        最初は「リアルタイムで議事録が画面に出る」と思っていた。
+        でもユーザーリサーチを想像してみると、
+        <strong>会議中に議事録画面なんて誰も見ない</strong>。話に集中している。
+      </p>
+      <p>
+        逆に、終わった瞬間に通知が来て、3分後に開いたら全部書かれている、の方が体験として強い。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          リアルタイム配信は捨てる。
+          <strong>会議終了の瞬間に処理を開始</strong>し、3分以内に Slack / メールへ届ける構成にする。
+          これならコスト計算も、レイテンシ管理も、UX も全部楽になる。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa">
+    <span class="qa__num">— Problem 06</span>
+    <p class="qa__problem">「会議を録音されるのは嫌」という心理的ハードル</p>
+    <div class="qa__body">
+      <p>
+        技術が動いても、文化が動かないと使われない。
+        「Bot が黙って入ってきて録音している」状態は、たとえ社内の会議でも警戒される。
+        特にクライアントとの会議では致命的。
+      </p>
+      <div class="qa__solve">
+        <span class="qa__solve-label">→ Solve</span>
+        <p>
+          Bot 入室時に必ず、<strong>「Quill が記録します。停止したい方はホストに伝えてください」と全員にチャットで通知</strong>する。
+          ホスト側にはワンクリック退出ボタンを常時表示。
+          「録音されている事実が透明である」ことが、心理的ハードルを下げる第一歩。
+          機能じゃなく、態度の設計。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <h2>次回：実装フェーズに入る</h2>
+  <p>
+    ここまでで、機能を作る前に潰しておきたい問題を6つ列挙した。
+    次回（#2）からは、いよいよコードを書き始める。
+    最初に手をつけるのは Problem 01 — <strong>Bot として会議に参加させる</strong>部分。
+    Recall.ai のドキュメントを読み込みつつ、最小構成のプロトタイプを動かすところから。
+  </p>
+
+  <div class="lead-block">
+    <p>
+      予定通りには進まない、というのはわかっている。<br>
+      Quill を作る過程で、思ってなかった問題が必ず出てくる。<br>
+      だからこの開発ログは、<strong>計画通りに進んだ話ではなく、計画が崩れた瞬間の記録</strong>を残す場所にしたい。
+    </p>
+  </div>
+
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+    <a href="index.html" class="art-back">← Blog に戻る</a>
+    <a href="https://quill-static.pages.dev" target="_blank" rel="noopener"
+      style="font-family:var(--serif);font-size:0.82rem;letter-spacing:0.18em;color:#1C1008;border:1px solid #C4A45A;padding:10px 24px;transition:opacity 0.2s;"
+      onmouseover="this.style.opacity='.65'" onmouseout="this.style.opacity='1'">
+      Quill のLPを見る →
+    </a>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  if (total > 0) progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+</body>
+</html>
