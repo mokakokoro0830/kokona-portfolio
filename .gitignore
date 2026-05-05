@@ -1,0 +1,7 @@
+# Service section (drafts / unused)
+service-diagram.html
+images/service-atelier*.png
+images/service-threads.png
+
+# OS
+.DS_Store
