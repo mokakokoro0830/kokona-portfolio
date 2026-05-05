@@ -360,6 +360,25 @@ body { background: #F5F0E8; color: #2A1F12; }
     </p>
   </div>
 
+  <h2>管理画面はこうなっている</h2>
+  <p>
+    ゲストには綺麗な予約フォームしか見えないけれど、裏側では管理者がこの画面で予約を捌いている。
+    予約一覧をステータス（仮受付・確定・チェックイン済・チェックアウト済・キャンセル）でフィルタしたり、
+    名前・メール・予約番号で検索したり、各予約の詳細ページでステータス変更や任意メール送信ができる。
+  </p>
+
+  <figure style="margin:32px 0;">
+    <img src="../images/admin-screen.png" alt="VELARO 管理画面" style="width:100%;border:1px solid rgba(180,145,80,0.3);border-radius:4px;display:block;">
+    <figcaption style="font-size:0.8rem;color:#8B6914;font-style:italic;text-align:center;margin-top:12px;letter-spacing:0.05em;">
+      管理画面。Basic Auth で保護されているのでURLを知っていても入れない。
+    </figcaption>
+  </figure>
+
+  <p>
+    ゲスト用のUIはミニマル・余白多め。管理画面は逆に情報密度を上げて、一覧で5〜10件を一目で把握できるようにした。
+    <strong>同じサイトでも、使う人によって設計思想を変える</strong>のが今回の裏テーマだった。
+  </p>
+
   <h2>やってみて分かったこと</h2>
   <p>
     LPは見た目が7割だと思っていた。でもシステムは見た目より設計の方が難しい。
