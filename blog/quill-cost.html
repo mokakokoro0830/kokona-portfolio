@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>動いた。でも、お金のことを考えてなかった — Quill 開発ログ #3：コスト編 — Kokona Blog</title>
+<meta name="description" content="Whisper APIは1分0.6円。AI議事録SaaS『Quill』を実際に動かしてわかったコスト構造と、スケールしたときに内製化が得になる判断軸を整理した。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/quill-cost">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/quill-cost">
+<meta property="og:title" content="動いた。でも、お金のことを考えてなかった — Quill 開発ログ #3：コスト編">
+<meta property="og:description" content="Whisper APIは1分0.6円。スケールしたとき何が起きるか、内製化はいつ得になるか。SaaSのコスト構造を数字で整理した。">
+<meta property="og:image" content="https://kokona-makes.dev/images/og-quill-cost.jpg">
+<meta property="article:published_time" content="2026-05-07">
+<meta property="article:author" content="Kokona">
+<meta property="article:section" content="開発ログ">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="動いた。でも、お金のことを考えてなかった — Quill 開発ログ #3：コスト編">
+<meta name="twitter:description" content="Whisper APIは1分0.6円。スケールしたとき何が起きるか、内製化はいつ得になるか。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/og-quill-cost.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "動いた。でも、お金のことを考えてなかった — Quill 開発ログ #3：コスト編",
+  "description": "Whisper APIは1分0.6円。AI議事録SaaS『Quill』を実際に動かしてわかったコスト構造と、スケールしたときに内製化が得になる判断軸を整理した。",
+  "url": "https://kokona-makes.dev/blog/quill-cost",
+  "image": "https://kokona-makes.dev/images/og-quill-cost.jpg",
+  "datePublished": "2026-05-07",
+  "dateModified": "2026-05-07",
+  "inLanguage": "ja",
+  "articleSection": "開発ログ",
+  "author": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://kokona-makes.dev/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://kokona-makes.dev/blog/"},
+    {"@type":"ListItem","position":3,"name":"Quill 開発ログ #3：コスト編"}
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.breadcrumb {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 110px 32px 0;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+}
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 8px; color: rgba(139,105,20,0.5); }
+.breadcrumb a { color: #8B6914; text-decoration: none; transition: opacity 0.2s; }
+.breadcrumb a:hover { opacity: 0.65; }
+.breadcrumb [aria-current] { color: #5C4510; font-style: italic; }
+
+.art-hero { padding: 30px 32px 80px; max-width: 760px; margin: 0 auto; }
+.art-hero__meta { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; }
+.art-hero__date { font-family: var(--serif); font-size: 0.78rem; letter-spacing: 0.18em; color: #8B6914; }
+.art-hero__tag { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: #8B6914; border: 1px solid #C4A45A; padding: 2px 10px; border-radius: 2px; }
+.art-hero__title { font-family: var(--jp-mincho); font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 500; letter-spacing: 0.06em; line-height: 1.45; color: #1C1008; margin-bottom: 20px; }
+.art-hero__lead { font-size: 0.95rem; color: #5C4830; line-height: 2; border-left: 2px solid #C4A45A; padding-left: 20px; }
+
+.art-body { max-width: 760px; margin: 0 auto; padding: 0 32px 120px; }
+.art-body h2 { font-family: var(--jp-mincho); font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 500; letter-spacing: 0.08em; color: #1C1008; margin: 60px 0 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(180,145,80,0.3); }
+.art-body p { font-size: 0.95rem; line-height: 2.1; color: #3D2B1A; margin-bottom: 20px; }
+.art-body strong { color: #1C1008; font-weight: 600; }
+
+.art-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-style: italic; font-size: 0.82rem; letter-spacing: 0.18em; color: #8B6914; margin-bottom: 48px; transition: opacity 0.2s; }
+.art-back:hover { opacity: 0.65; }
+
+.lead-block { background: #F5F0E8; border: 1px solid rgba(180,145,80,0.25); border-radius: 4px; padding: 28px 32px; margin: 32px 0; }
+.lead-block p { font-family: var(--jp-mincho); font-size: 1.02rem; line-height: 2.1; color: #2A1F12; margin: 0 0 14px; }
+.lead-block p:last-child { margin-bottom: 0; }
+
+/* コスト表 */
+.cost-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 0.88rem;
+}
+.cost-table th {
+  background: #1C1008;
+  color: #C4A45A;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(196,164,90,0.3);
+}
+.cost-table td {
+  padding: 14px 20px;
+  color: #3D2B1A;
+  border-bottom: 1px solid rgba(180,145,80,0.2);
+  line-height: 1.7;
+}
+.cost-table tr:last-child td { border-bottom: none; }
+.cost-table tr:nth-child(even) td { background: rgba(180,145,80,0.05); }
+.cost-table .highlight td {
+  background: rgba(196,164,90,0.12);
+  font-weight: 600;
+  color: #1C1008;
+}
+
+/* コストブロック */
+.cost-block {
+  margin: 40px 0;
+  background: #1C1008;
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.cost-block__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  display: block;
+  margin-bottom: 16px;
+}
+.cost-block__num {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  color: #C4A45A;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 8px;
+}
+.cost-block__desc {
+  font-size: 0.88rem;
+  color: #A89878;
+  line-height: 1.8;
+}
+
+/* 判断軸ブロック */
+.judgment-block {
+  margin: 40px 0;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
+  border-radius: 6px;
+  padding: 28px 32px;
+  background: #EDE5D4;
+}
+.judgment-block__title {
+  font-family: var(--jp-mincho);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #1C1008;
+  margin-bottom: 16px;
+}
+.judgment-block__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.judgment-block__list li {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: #3D2B1A;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(180,145,80,0.3);
+  display: flex;
+  gap: 16px;
+}
+.judgment-block__list li:last-child { border-bottom: none; }
+.judgment-block__list .cond {
+  font-family: var(--serif);
+  font-style: italic;
+  color: #8B6914;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+.nav-next {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(180,145,80,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.nav-next a {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  transition: opacity 0.2s;
+}
+.nav-next a:hover { opacity: 0.65; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li><a href="./">Blog</a></li>
+    <li aria-current="page">Quill 開発ログ #3：コスト編</li>
+  </ol>
+</nav>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.07</span>
+    <span class="art-hero__tag">開発ログ</span>
+  </div>
+  <h1 class="art-hero__title">動いた。でも、お金のことを考えてなかった<br>— Quill 開発ログ #3：コスト編</h1>
+  <p class="art-hero__lead">
+    動くものができると、次に気になるのはコストだ。<br>
+    「1回の会議でいくらかかるのか」を計算したことがなかった。<br><br>
+    数字を出してみると、思ったより単純だった。<br>
+    そして、スケールしたときに何が起きるかも見えてきた。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <p>
+    <a href="quill-implementation.html">#2 実装編</a>で、会議終了から2.1秒でメールが届くところまで作った。
+    動くことを確認して満足していたが、ふと気になった。<strong>「これ、1回の会議でいくらかかってるんだろう」</strong>と。
+  </p>
+
+  <h2>1会議あたりのコストを出す</h2>
+
+  <p>
+    Quill が使っているAPIは2つ。音声を文字にする <strong>Whisper API</strong> と、議事録を作る <strong>Claude API</strong> だ。
+    それぞれの料金を確認して、1時間の会議を処理した場合のコストを計算した。
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0;">
+    <div class="cost-block">
+      <span class="cost-block__label">— Whisper API</span>
+      <span class="cost-block__num">¥0.9<small style="font-size:1.2rem;color:#8B6914">/分</small></span>
+      <span class="cost-block__desc">$0.006/分（¥150換算）<br>1時間の会議 = <strong style="color:#C4A45A">¥54</strong></span>
+    </div>
+    <div class="cost-block">
+      <span class="cost-block__label">— Claude API</span>
+      <span class="cost-block__num">¥1.5<small style="font-size:1.2rem;color:#8B6914">/会議</small></span>
+      <span class="cost-block__desc">1時間分の文字起こし ≈ 1万トークン<br>議事録生成の合計コスト</span>
+    </div>
+  </div>
+
+  <p>
+    1時間の会議を処理するコストは、<strong>合計で約55円</strong>。
+    内訳はほぼWhisper API（54円）で、Claude APIは誤差の範囲（1〜2円）だ。
+    議事録の生成に使うトークン数は、音声の長さほど多くないためだ。
+  </p>
+
+  <h2>スケールすると何が起きるか</h2>
+
+  <p>
+    55円という数字は安く見える。だが、これがSaaSになって利用者が増えたらどうなるか。
+    会議の本数が増えるにつれ、コストは線形に増える。
+  </p>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>月間会議数</th>
+        <th>Whisper API</th>
+        <th>Claude API</th>
+        <th>合計（月）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>100回（個人・小規模）</td>
+        <td>¥5,400</td>
+        <td>¥150</td>
+        <td>¥5,550</td>
+      </tr>
+      <tr>
+        <td>1,000回（中規模）</td>
+        <td>¥54,000</td>
+        <td>¥1,500</td>
+        <td>¥55,500</td>
+      </tr>
+      <tr class="highlight">
+        <td>10,000回（本格運用）</td>
+        <td>¥540,000</td>
+        <td>¥15,000</td>
+        <td>¥555,000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    月1万回を超えると、APIコストだけで<strong>月55万円</strong>になる。
+    これはまだサーバー費用も人件費も含んでいない。
+    SaaSとして成立させるには、この数字を意識した価格設計が必要になる。
+  </p>
+
+  <h2>自前に切り替える判断軸</h2>
+
+  <p>
+    Whisper はOpenAIのAPIを使わず、<strong>自前のサーバーで動かすこともできる</strong>。
+    オープンソース版のWhisperをGPUサーバーに乗せれば、APIに払うコストがゼロになる。
+    ただし、サーバーの維持費と構築コストがかかる。
+  </p>
+
+  <div class="lead-block">
+    <p>
+      クラウドGPU（AWS g4dn.xlarge）を使うとして、時間あたり約80円。<br>
+      1時間の音声を処理するのに必要な時間は約5〜6分なので、<br>
+      <strong>1会議あたりの処理コスト ≈ 8円</strong>。
+    </p>
+    <p>
+      APIの54円に対して、自前なら8円。差は46円。
+    </p>
+  </div>
+
+  <p>
+    ただし、サーバーを常時起動しておくと月57,600円（80円×720時間）かかる。
+    処理のたびに起動・停止する運用にすれば費用は下がるが、
+    起動時間のロスや運用の複雑さが増す。
+  </p>
+
+  <div class="judgment-block">
+    <p class="judgment-block__title">内製化（自前サーバー）が得になる目安</p>
+    <ul class="judgment-block__list">
+      <li>
+        <span class="cond">API が得</span>
+        月1,000回以下。構築・運用の手間を考えると、APIの方がトータルで安い。
+      </li>
+      <li>
+        <span class="cond">どちらも同じ</span>
+        月1,200〜1,500回あたりが分岐点。サーバー費用とAPI費用が拮抗する。
+      </li>
+      <li>
+        <span class="cond">内製化が得</span>
+        月2,000回を超えると自前サーバーの方が明確に安くなる。スケールするほど差が開く。
+      </li>
+    </ul>
+  </div>
+
+  <p>
+    切替えのタイミングは、利用ボリュームの変化点を見て判断する。
+    月1,000回を超えたあたりで内製化の準備を始め、2,000回を超えたら切り替える——というのが現実的な判断軸だ。
+  </p>
+
+  <h2>価格設計への影響</h2>
+
+  <p>
+    コスト構造がわかると、価格設計の考え方も変わる。
+    1会議55円のコストに対して、どのくらいのマージンを乗せるか。
+  </p>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>月額プラン</th>
+        <th>想定会議数/月</th>
+        <th>APIコスト</th>
+        <th>粗利率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>¥1,980（ライト）</td>
+        <td>20回</td>
+        <td>¥1,100</td>
+        <td>44%</td>
+      </tr>
+      <tr>
+        <td>¥4,980（スタンダード）</td>
+        <td>50回</td>
+        <td>¥2,750</td>
+        <td>45%</td>
+      </tr>
+      <tr class="highlight">
+        <td>¥9,800（ビジネス）</td>
+        <td>100回</td>
+        <td>¥5,500</td>
+        <td>44%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    粗利率は約44〜45%で安定する。
+    ただしこれはAPIコストだけで、サーバー・開発・サポートのコストは含まない。
+    SaaSとして黒字にするには、実際には60〜70%の粗利が必要とされることが多い。
+  </p>
+
+  <p>
+    その差を埋める方法は2つだ。<strong>価格を上げる</strong>か、<strong>内製化でコストを下げる</strong>か。
+    どちらを先にやるかは、ユーザー数と交渉力次第になる。
+  </p>
+
+  <h2>今の段階でわかったこと</h2>
+
+  <p>
+    Quill はまだプロトタイプだ。コストの計算は、実際に課金する前に把握しておくべき数字を整理しただけに過ぎない。
+    だが、こうして数字を出してみると、<strong>「APIで始めて、スケールしたら内製化する」</strong>という#1で書いた方針が、現実的な判断軸として機能することが確認できた。
+  </p>
+
+  <p>
+    動いているものを作る。コストを把握する。価格を設計する。
+    順番はこれでいい。
+  </p>
+
+  <div class="nav-next">
+    <a href="quill-implementation.html">← #2 実装編</a>
+    <a href="index.html">Blog 一覧 →</a>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+</body>
+</html>
