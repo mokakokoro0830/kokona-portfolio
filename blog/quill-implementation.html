@@ -134,6 +134,51 @@ body { background: #F5F0E8; color: #2A1F12; }
 .art-back:hover { opacity: 0.65; }
 
 .code-block { background: #1C1008; color: #D4AF5A; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.82rem; line-height: 1.8; padding: 20px 24px; border-radius: 6px; margin: 20px 0; overflow-x: auto; }
+
+.recap-block {
+  margin: 32px 0 40px;
+  background: #1C1008;
+  border-radius: 6px;
+  padding: 24px 32px;
+}
+.recap-block__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  margin-bottom: 16px;
+  display: block;
+}
+.recap-block__label a {
+  color: #C4A45A;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196,164,90,0.4);
+  transition: opacity 0.2s;
+}
+.recap-block__label a:hover { opacity: 0.7; }
+.recap-block__list {
+  margin: 0;
+  padding: 0 0 0 4px;
+  list-style: none;
+  counter-reset: none;
+}
+.recap-block__list li {
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: #D4C9B0;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(180,145,80,0.15);
+}
+.recap-block__list li:last-child { border-bottom: none; }
+.recap-block__list strong {
+  color: #C4A45A;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  margin-right: 12px;
+  letter-spacing: 0.05em;
+}
 </style>
 </head>
 <body>
@@ -182,6 +227,18 @@ body { background: #F5F0E8; color: #2A1F12; }
     前回は6つの問題を整理した。今回はそれを実際にコードにした。<br>
     作ってみてわかったのは、<strong>「書くより動かす方がずっと難しい」</strong>という当たり前のことだった。
   </p>
+
+  <div class="recap-block">
+    <p class="recap-block__label">— <a href="quill-planning.html">#1 計画編</a> で整理した6つの問題</p>
+    <ol class="recap-block__list">
+      <li><strong>Problem 01</strong>　Botが会議の音声をどう取得するか</li>
+      <li><strong>Problem 02</strong>　文字起こしの精度をどう上げるか</li>
+      <li><strong>Problem 03</strong>　議事録をどう構造化するか</li>
+      <li><strong>Problem 04</strong>　誰が話しているかをどう特定するか</li>
+      <li><strong>Problem 05</strong>　会議終了後すぐに送るにはどうするか</li>
+      <li><strong>Problem 06</strong>　参加者への心理的障壁をどう下げるか</li>
+    </ol>
+  </div>
 
   <h2>全体の構成</h2>
 
