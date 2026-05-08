@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>山田法律事務所 無料相談フォーム自動化 — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/consultation-form.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-consultation.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">08</p>
+    <p class="work-hero__cat">LAW · FORM AUTOMATION</p>
+    <h1 class="work-hero__title">山田法律事務所<em>無料相談フォーム自動化</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>法律事務所 / フォーム自動化デモ</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>HTML / CSS / GAS / Notion API / Gmail</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>GitHub Pages</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>架空の法律事務所「山田法律事務所」の無料相談受付フォームのデモです。シンプルなHTMLフォームの裏側に、Google Apps Script（GAS）を使った自動化フローを実装しました。</p>
+      <p>フォームを送信するだけで、問い合わせ内容がNotionのデータベースに自動記録され、相談者へGmailで受付完了メールが即時送信されます。よくある「手動でスプレッドシートに転記 → 手動でメール返信」という作業を完全にゼロにしたデモです。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>自動化フロー</h2>
+      <ul>
+        <li><strong>フォーム送信</strong> — 氏名・メール・電話番号・相談内容を入力して送信</li>
+        <li><strong>GAS（doPost）受信</strong> — WebAppとしてデプロイしたGASがPOSTを受け取る</li>
+        <li><strong>Notion API記録</strong> — 相談内容をNotionデータベースに自動追加（ステータス「未対応」で初期設定）</li>
+        <li><strong>Gmail自動返信</strong> — 相談者に受付完了メールを即時送信</li>
+        <li><strong>成功画面表示</strong> — フォームが完了画面に切り替わる</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>HTML / CSS / JS</strong> — フロントエンド（フレームワークなし）</li>
+        <li><strong>Google Apps Script</strong> — バックエンド（WebApp / doPost）</li>
+        <li><strong>Notion API</strong>（v2022-06-28）— データベースへのページ作成</li>
+        <li><strong>GmailApp</strong> — トランザクションメール送信</li>
+        <li><strong>GitHub Pages</strong> — フロントのホスティング</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d3">
+      <h2>こだわり</h2>
+      <ul>
+        <li>電話番号が空の場合に Notion API がエラーを返す問題を修正（空文字ではなく null を渡す）</li>
+        <li>Notion DB のプロパティ名を curl で実際に確認してから実装（思い込みによるミスを防止）</li>
+        <li>エラーハンドリングをGAS側とフロント側の両方で実装</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d3">
+      <a href="https://mokakokoro0830.github.io/consultation-form/" target="_blank" rel="noopener" class="work-btn work-btn--primary">デモを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

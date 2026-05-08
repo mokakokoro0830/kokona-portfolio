@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechBridge 採用フォーム自動化 — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/recruit-form.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-recruit.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">09</p>
+    <p class="work-hero__cat">RECRUIT · FORM AUTOMATION</p>
+    <h1 class="work-hero__title">TechBridge<em>採用フォーム自動化</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>採用LP / フォーム自動化デモ</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>HTML / CSS / GAS / Google Sheets / Gmail</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>GitHub Pages</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>架空のテック企業「株式会社テックブリッジ」の採用LP + 応募フォーム自動化デモです。エンジニア採用を想定したランディングページに、Google Apps Script（GAS）を使った自動化バックエンドを組み合わせました。</p>
+      <p>応募フォームを送信すると、応募内容がGoogleスプレッドシートに自動記録され（TB-0001と自動採番）、応募者へ受付完了メールが即時送信されます。「LP制作」と「業務自動化」の両方をひとつのデモで見せることを意識しています。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>自動化フロー</h2>
+      <ul>
+        <li><strong>フォーム送信</strong> — 氏名・フリガナ・メール・電話・現在の状況・希望ポジション・ポートフォリオURL・自己PRを入力して送信</li>
+        <li><strong>GAS（doPost）受信</strong> — WebAppとしてデプロイしたGASがPOSTを受け取る</li>
+        <li><strong>スプレッドシート記録</strong> — 「採用フォーム 応募者管理」シートに自動追記。TB-0001、TB-0002…と連番IDを付与。ステータスは「書類選考中」で初期設定</li>
+        <li><strong>Gmail自動返信</strong> — 応募者に受付完了メールを即時送信（差出人名：株式会社テックブリッジ 採用担当）</li>
+        <li><strong>成功画面表示</strong> — フォームが完了画面に切り替わる</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>HTML / CSS / JS</strong> — フロントエンド（フレームワークなし）</li>
+        <li><strong>Google Apps Script</strong> — バックエンド（WebApp / doPost）</li>
+        <li><strong>SpreadsheetApp</strong> — 応募データの記録・採番・ヘッダー自動生成</li>
+        <li><strong>GmailApp</strong> — トランザクションメール送信</li>
+        <li><strong>GitHub Pages</strong> — フロントのホスティング</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d3">
+      <h2>こだわり</h2>
+      <ul>
+        <li>GASコードをMonaco Editor API（setValue）で直接注入して確実に保存する実装を習得</li>
+        <li>ヘッダー行の初期化・自動採番・列幅の自動調整をGAS側で完結させ、手動セットアップをゼロに</li>
+        <li>スプレッドシートのヘッダーを太字＋ブルー背景で自動スタイリング</li>
+        <li>エンドツーエンドのテスト（フォーム送信 → シート確認 → メール受信）で動作確認済み</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d3">
+      <a href="https://mokakokoro0830.github.io/recruit-form/" target="_blank" rel="noopener" class="work-btn work-btn--primary">デモを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
