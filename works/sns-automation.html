@@ -45,41 +45,39 @@
     </div>
 
     <div class="work-text reveal">
-      <h2>概要</h2>
-      <p>「毎日のSNS投稿文を考える時間をゼロにしたい」という実際のクラウドワークス案件からヒントを得て制作したデモです。ブランド情報（名前・商品・ターゲット・トーン）を入力するだけで、Claude APIがThreads・Instagram・TikTok向けの投稿文をSNSごとの特性に合わせて自動生成します。</p>
-      <p>生成された投稿文はGoogleスプレッドシートの「投稿カレンダー」シートに自動保存され、そのまま運用ベースとして活用できます。LP制作・Claude API連携・GASバックエンドをひとつのデモで実証しています。</p>
+      <h2>何を作ったか</h2>
+      <p>SNS担当者が毎日頭を悩ませる「今日の投稿文、何にしよう…」をゼロにするツールのデモです。ブランド名・商品・ターゲット・雰囲気を入力してボタンを押すだけで、AIがThreads・Instagram・TikTok向けの投稿文をまとめて作ってくれます。</p>
+      <p>生成された文章はそのままGoogleスプレッドシートの「投稿カレンダー」に自動で保存。「未投稿 → 確認中 → 投稿済み」とステータスをドロップダウンで管理できるので、チームでの運用フローにもそのまま使えます。</p>
     </div>
 
     <div class="work-text reveal reveal-d1">
-      <h2>自動化フロー</h2>
+      <h2>使い方の流れ</h2>
       <ul>
-        <li><strong>フォーム入力</strong> — ブランド名・商品/サービス・ターゲット・トーン・追加メモを入力。Threads / Instagram / TikTokから対象SNSを選択し、生成件数（1〜5件）をスライダーで指定</li>
-        <li><strong>GAS（doPost）受信</strong> — WebAppとしてデプロイしたGASがPOSTを受け取り、選択されたSNSごとにループ処理</li>
-        <li><strong>Claude API呼び出し</strong> — SNSごとのトーン定義（Threads：500字以内・親しみやすい / Instagram：150字・絵文字活用 / TikTok：100字・若者言葉）をプロンプトに組み込み、claude-opus-4-5で投稿文を生成</li>
-        <li><strong>Sheetsへ保存</strong> — 生成された投稿文・ハッシュタグ・ブランド情報・ステータス（未投稿）をGoogleスプレッドシートに自動追記。ヘッダーは紫背景で自動スタイリング</li>
-        <li><strong>結果表示</strong> — フォームがSNS別の投稿カードに切り替わり、スプレッドシートへのリンクも表示</li>
+        <li><strong>① 情報を入力する</strong> — ブランド名・商品・ターゲット・雰囲気（カジュアル/高級感など）をフォームに入力。投稿したいSNS（Threads・Instagram・TikTok）を選んで、何件作るかをスライダーで指定</li>
+        <li><strong>② AIが自動生成する</strong> — ボタンを押すとAI（Claude）が動き出す。SNSごとに文体を変えながら投稿文とハッシュタグをセットで作成（Threadは長め・Instagramは絵文字多め・TikTokは短くテンポよく）</li>
+        <li><strong>③ スプレッドシートに保存される</strong> — 生成完了と同時に、Googleスプレッドシートの「投稿カレンダー」に自動で追記。日時・SNS・投稿文・ハッシュタグが整理された状態で記録される</li>
+        <li><strong>④ ステータスを管理する</strong> — スプレッドシートのステータス列をクリックすると「未投稿 / 確認中 / 投稿済み / 却下」をドロップダウンで選択可能。チームでの確認フローにも対応</li>
       </ul>
     </div>
 
     <div class="work-text reveal reveal-d2">
-      <h2>技術構成</h2>
+      <h2>使った技術</h2>
       <ul>
-        <li><strong>HTML / CSS / JS</strong> — フロントエンド（フレームワークなし）。ラベンダー×ピンクのグラデーションUI</li>
-        <li><strong>Google Apps Script</strong> — バックエンド（WebApp / doPost）。SNSごとにClaude APIを呼び出すループ処理</li>
-        <li><strong>Claude API</strong>（claude-opus-4-5）— SNS別トーン定義をシステムプロンプトに組み込み、JSON配列形式で投稿文を返す</li>
-        <li><strong>SpreadsheetApp</strong> — 投稿カレンダーシートへの自動追記・ヘッダースタイリング・列幅調整</li>
-        <li><strong>GitHub Pages</strong> — フロントのホスティング</li>
+        <li><strong>フロントエンド（画面）</strong> — HTML / CSS / JavaScript のみで制作。ラベンダー×ピンクのグラデーションUI。外部フレームワーク不使用</li>
+        <li><strong>バックエンド（裏側の処理）</strong> — Google Apps Script を使用。フォームのデータを受け取り、AIへの問い合わせ・スプレッドシートへの保存を全自動で行う</li>
+        <li><strong>AI文章生成</strong> — Anthropic の Claude API（claude-opus-4-5）。SNSごとに「何文字以内・どんな文体で」という指示をAIに渡して、用途に合った文章を生成させている</li>
+        <li><strong>データ保存</strong> — Google スプレッドシート。新規投稿が生成されるたびに自動で行が追加され、ヘッダーの色付け・列幅の調整もコードで自動設定</li>
+        <li><strong>公開</strong> — GitHub Pages（無料ホスティング）</li>
       </ul>
     </div>
 
     <div class="work-text reveal reveal-d3">
-      <h2>こだわり</h2>
+      <h2>工夫したところ</h2>
       <ul>
-        <li>Threads・Instagram・TikTokそれぞれのプラットフォーム特性をプロンプトに反映。文字数・絵文字・ハッシュタグ数が自動で変わる</li>
-        <li>SNS選択カードはチェックボックスをカード全体でトグル可能にし、直感的なUI操作を実現</li>
-        <li>生成件数をスライダー（1〜5件）で指定でき、複数投稿を一括生成できる設計</li>
-        <li>GAS側でJSON抽出をregexで行い、Claudeの返答にMarkdownコードブロックが混入しても正常にパースできるよう対処</li>
-        <li>エンドツーエンドのテスト（フォーム送信 → Claude生成確認 → シート記録確認）で動作確認済み</li>
+        <li><strong>SNSによって文体が変わる</strong> — 同じブランド情報でも、ThreadsはInstagramとは別の文章・TikTokはさらに別の文章を生成。「このSNSらしさ」をAIへの指示に組み込んで実現した</li>
+        <li><strong>まとめて複数件つくれる</strong> — スライダーで1〜5件を指定可能。1回の操作で1週間分の投稿文をまとめて作れる</li>
+        <li><strong>ドロップダウンで進捗管理</strong> — スプレッドシートのステータス列がプルダウン式になっており、手打ち不要で「投稿済み」などに切り替えられる</li>
+        <li><strong>フォームからシートまで全部つながっている</strong> — 入力 → AI生成 → 保存の一連の流れをコードだけで完結。手動コピペや転記作業がゼロ</li>
       </ul>
     </div>
 
