@@ -97,6 +97,11 @@
 .work-text {
   margin-bottom: 48px;
 }
+.work-text mark {
+  background: linear-gradient(transparent 62%, rgba(212,175,55,0.35) 62%);
+  color: inherit;
+  padding: 0 2px;
+}
 .work-text h2 {
   font-family: var(--jp-mincho);
   font-size: 1.1rem;
