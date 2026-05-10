@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quill — AI議事録自動生成 — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/quill.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-quill.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">11</p>
+    <p class="work-hero__cat">AI · MEETING MINUTES</p>
+    <h1 class="work-hero__title">Quill<em>会議は書かない。</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>AI自動化 / 議事録SaaS（架空）</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>Python / Whisper API / Claude API / Playwright</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>Cloudflare Pages（LP）/ ローカル動作確認済み</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE（LP・デモ）</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>何を作ったか</h2>
+      <p>「会議が終わったら誰かが議事録を書く」という当たり前をなくすためのツールです。音声ファイルを渡すだけで、AIが文字起こし・議事録生成・構造化まで全部やります。</p>
+      <p><mark>会議中に誰も何も書かなくていい</mark>。終わったら2分以内に議事録が届く。それだけを目標に設計しました。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>使い方の流れ</h2>
+      <ul>
+        <li><strong>① 音声ファイルを渡す</strong> — .mp3 / .m4a / .wav など会議の録音ファイルをスクリプトに渡すだけ</li>
+        <li><strong>② Whisper APIが文字起こし</strong> — OpenAIのWhisper APIが音声を日本語テキストに変換。タイムスタンプ付きで各発言を分離</li>
+        <li><strong>③ Claudeが3段階で議事録化</strong> — まず「決定事項・ToDo・保留事項」を抽出 → 担当者と期限を補完 → 200〜400字のサマリーを生成</li>
+        <li><strong>④ Markdownファイルに保存</strong> — 「議事録_2026-05-10_1430.md」のように日時ファイル名で自動保存</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>使った技術</h2>
+      <ul>
+        <li><strong>Python</strong> — メインの実装言語。各モジュールを分離して責務を明確化</li>
+        <li><strong>OpenAI Whisper API</strong> — 音声→テキスト変換。日本語対応・タイムスタンプ付きセグメント取得</li>
+        <li><strong>Claude API</strong>（claude-sonnet-4-6）— 3段階プロンプトで議事録を構造化。1段階では精度が出なかったため多段階処理を採用</li>
+        <li><strong>Playwright</strong> — Google Meet / Zoom にブラウザBotとして自動参加。録音はffmpegで行う</li>
+        <li><strong>LP・デモページ</strong> — HTML/CSS/JS で制作。Cloudflare Pages で公開</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d3">
+      <h2>工夫したところ</h2>
+      <ul>
+        <li><strong>3段階プロンプトで精度を上げた</strong> — 1回のリクエストで全部やらせると抜け漏れが多い。「抽出 → 補完 → 要約」と分けることで決定事項・担当者・期限の精度が大幅に向上した</li>
+        <li><strong><mark>議事録を書く時間がゼロになる</mark></strong> — 会議後に誰かが「えーと何だっけ」と記憶を辿りながら書く作業がなくなる。これが一番大きい</li>
+        <li><strong>コスト管理を内蔵</strong> — Whisper APIの利用コストを自動で記録。月次の閾値を超えたら自前サーバーへの切替を警告する仕組みを実装</li>
+        <li><strong>ローカルで完全動作確認済み</strong> — 46秒の会議音声から、決定事項・ToDo・保留事項を正しく抽出できることをエンドツーエンドで確認</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d3">
+      <a href="https://quill-static.pages.dev" target="_blank" rel="noopener" class="work-btn work-btn--primary">LPを見る →</a>
+      <a href="https://quill-static.pages.dev/demo" target="_blank" rel="noopener" class="work-btn work-btn--primary">デモを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
