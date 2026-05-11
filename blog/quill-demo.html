@@ -299,43 +299,15 @@ body { background: #F5F0E8; color: #2A1F12; }
   <h2>Renderにデプロイする</h2>
 
   <p>
-    どこで動かすかを決める。選択肢はいくつかあったが、<strong>Render Freeにした</strong>。理由は単純で、無料でHTTPSが使えて、GitHubと連携できるからだ。
+    どこで動かすかを決める。<strong>Render Free</strong> を選んだ。無料でURLが発行されて、GitHubと繋げるだけで自動でデプロイされる。サーバーを自分で管理しなくていい。
   </p>
 
-  <div class="step-block">
-    <div class="step-item">
-      <span class="step-num">1</span>
-      <div class="step-body">
-        <strong>GitHubリポジトリを連携する</strong>
-        <p>RenderのダッシュボードでNew Web Serviceを選び、リポジトリを指定する。</p>
-      </div>
-    </div>
-    <div class="step-item">
-      <span class="step-num">2</span>
-      <div class="step-body">
-        <strong>startコマンドを設定する</strong>
-        <p><code>uvicorn server:app --host 0.0.0.0 --port $PORT</code> を入力する。</p>
-      </div>
-    </div>
-    <div class="step-item">
-      <span class="step-num">3</span>
-      <div class="step-body">
-        <strong>環境変数を入れる</strong>
-        <p>OPENAI_API_KEY と ANTHROPIC_API_KEY をRenderの環境変数に設定する。コードにキーを書かずに済む。</p>
-      </div>
-    </div>
-    <div class="step-item">
-      <span class="step-num">4</span>
-      <div class="step-body">
-        <strong>デプロイが走る</strong>
-        <p>Deployボタンを押すとビルドが始まり、2〜3分でURLが発行される。</p>
-      </div>
-    </div>
-  </div>
+  <p>
+    設定はシンプルだ。GitHubのリポジトリを指定して、「どのコマンドで起動するか」と「APIキー」を画面に入力するだけ。コード側に直接キーを書かなくていいので、GitHubに上げても安全だ。
+  </p>
 
   <p>
-    `https://quill-api-tofh.onrender.com` にアクセスできることを確認した。
-    デプロイまでの時間は、設定込みで15分もかからなかった。
+    Deployボタンを押すと2〜3分でURLが発行された。ブラウザで開いて動作を確認。<strong>設定込みで15分もかからなかった。</strong>
   </p>
 
   <h2>無料プランには落とし穴がある</h2>
