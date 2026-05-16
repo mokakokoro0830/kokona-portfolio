@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>確定ボタン1つで、LINEに通知が届く。— Lien 開発ログ #2：管理画面編 — Kokona Blog</title>
+<meta name="description" content="予約Botの次は「サロン側の画面」を作った。仮受付の確認・確定・LINE通知・お客様へのメッセージ返信まで、ブラウザひとつで完結する管理画面の話。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/lien-admin">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/lien-admin">
+<meta property="og:title" content="確定ボタン1つで、LINEに通知が届く。— Lien 開発ログ #2：管理画面編">
+<meta property="og:description" content="予約の仮受付確認・確定・LINE通知・お客様へのメッセージ返信まで、ブラウザひとつで完結する管理画面の話。">
+<meta property="og:image" content="https://kokona-makes.dev/images/lien-admin-post.jpg">
+<meta property="article:published_time" content="2026-05-16">
+<meta property="article:author" content="Kokona">
+<meta property="article:section" content="開発ログ">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="確定ボタン1つで、LINEに通知が届く。— Lien 開発ログ #2：管理画面編">
+<meta name="twitter:description" content="仮受付・確定・LINE通知・受信ボックス。サロン側の操作はブラウザだけで完結。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/lien-admin-post.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "確定ボタン1つで、LINEに通知が届く。— Lien 開発ログ #2：管理画面編",
+  "description": "予約Botの次は「サロン側の画面」を作った。仮受付の確認・確定・LINE通知・お客様へのメッセージ返信まで、ブラウザひとつで完結する管理画面の話。",
+  "url": "https://kokona-makes.dev/blog/lien-admin",
+  "image": "https://kokona-makes.dev/images/lien-admin-post.jpg",
+  "datePublished": "2026-05-16",
+  "dateModified": "2026-05-16",
+  "inLanguage": "ja",
+  "articleSection": "開発ログ",
+  "author": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://kokona-makes.dev/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://kokona-makes.dev/blog/"},
+    {"@type":"ListItem","position":3,"name":"Lien 開発ログ #2：管理画面編"}
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.breadcrumb { max-width: 760px; margin: 0 auto; padding: 110px 32px 0; font-family: var(--serif); font-size: 0.78rem; letter-spacing: 0.18em; color: #8B6914; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 8px; color: rgba(139,105,20,0.5); }
+.breadcrumb a { color: #8B6914; text-decoration: none; transition: opacity 0.2s; }
+.breadcrumb a:hover { opacity: 0.65; }
+.breadcrumb [aria-current] { color: #5C4510; font-style: italic; }
+
+.art-hero { padding: 30px 32px 80px; max-width: 760px; margin: 0 auto; }
+.art-hero__meta { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; }
+.art-hero__date { font-family: var(--serif); font-size: 0.78rem; letter-spacing: 0.18em; color: #8B6914; }
+.art-hero__tag { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: #8B6914; border: 1px solid #C4A45A; padding: 2px 10px; border-radius: 2px; }
+.art-hero__title { font-family: var(--jp-mincho); font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 500; letter-spacing: 0.06em; line-height: 1.45; color: #1C1008; margin-bottom: 20px; }
+.art-hero__lead { font-size: 0.95rem; color: #5C4830; line-height: 2; border-left: 2px solid #C4A45A; padding-left: 20px; }
+
+.art-body { max-width: 760px; margin: 0 auto; padding: 0 32px 120px; }
+.art-body h2 { font-family: var(--jp-mincho); font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 500; letter-spacing: 0.08em; color: #1C1008; margin: 60px 0 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(180,145,80,0.3); }
+.art-body p { font-size: 0.95rem; line-height: 2.1; color: #3D2B1A; margin-bottom: 20px; }
+.art-body strong { color: #1C1008; font-weight: 600; }
+
+.art-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-style: italic; font-size: 0.82rem; letter-spacing: 0.18em; color: #8B6914; margin-bottom: 48px; transition: opacity 0.2s; }
+.art-back:hover { opacity: 0.65; }
+
+.lead-block { background: #F5F0E8; border: 1px solid rgba(180,145,80,0.25); border-radius: 4px; padding: 28px 32px; margin: 32px 0; }
+.lead-block p { font-family: var(--jp-mincho); font-size: 1.02rem; line-height: 2.1; color: #2A1F12; margin: 0 0 14px; }
+.lead-block p:last-child { margin-bottom: 0; }
+
+.step-block { margin: 40px 0; }
+.step-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px dashed rgba(180,145,80,0.3); }
+.step-item:last-child { border-bottom: none; }
+.step-num { font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: rgba(196,164,90,0.4); min-width: 32px; line-height: 1; padding-top: 4px; }
+.step-body { flex: 1; }
+.step-body strong { display: block; font-family: var(--jp-mincho); font-size: 0.95rem; color: #1C1008; margin-bottom: 6px; }
+.step-body p { font-size: 0.88rem; color: #5C4830; line-height: 1.9; margin: 0; }
+
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+.stat-card { background: #1C1008; border-radius: 6px; padding: 24px 28px; }
+.stat-card__label { font-family: var(--serif); font-style: italic; font-size: 0.72rem; letter-spacing: 0.2em; color: #8B6914; display: block; margin-bottom: 10px; }
+.stat-card__value { font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 500; color: #C4A45A; display: block; margin-bottom: 6px; }
+.stat-card__desc { font-size: 0.82rem; color: #A89878; line-height: 1.7; }
+
+.nav-next { margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(180,145,80,0.3); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.nav-next a { font-family: var(--serif); font-style: italic; font-size: 0.82rem; letter-spacing: 0.18em; color: #8B6914; transition: opacity 0.2s; }
+.nav-next a:hover { opacity: 0.65; }
+
+.art-img { margin: 36px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.art-img img { width: 100%; display: block; }
+.art-img__caption { font-family: var(--serif); font-style: italic; font-size: 0.75rem; letter-spacing: 0.14em; color: #8B6914; text-align: center; padding: 10px 0 4px; }
+
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+@media(max-width: 560px){ .feature-grid { grid-template-columns: 1fr; } }
+.feature-card { background: white; border: 1px solid rgba(180,145,80,0.18); border-radius: 8px; padding: 20px 22px; }
+.feature-card__icon { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+.feature-card__title { font-family: var(--jp-mincho); font-size: 0.9rem; font-weight: 500; color: #1C1008; margin-bottom: 6px; }
+.feature-card__desc { font-size: 0.82rem; color: #5C4830; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li><a href="./">Blog</a></li>
+    <li aria-current="page">Lien 開発ログ #2：管理画面編</li>
+  </ol>
+</nav>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.16</span>
+    <span class="art-hero__tag">開発ログ</span>
+  </div>
+  <h1 class="art-hero__title">確定ボタン1つで、<br>LINEに通知が届く。<br>— Lien 開発ログ #2：管理画面編</h1>
+  <p class="art-hero__lead">
+    Botを作っただけでは片手落ちだった。<br>
+    お客さんがLINEで予約を入れた後、サロン側はどこで確認して、どうやって確定するのか。<br><br>
+    「確定ボタンを押したら、お客様のLINEに通知が届く」。<br>
+    その体験をブラウザだけで完結させる管理画面を作った。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <p>
+    <a href="lien-bot.html">#1</a>で作った予約Botは、お客様側の体験を完成させた。
+    でも、予約が入った後のサロン側の動きが抜けていた。
+  </p>
+
+  <p>
+    サロンはどこで予約を確認するのか。確定はどうする。スタッフが急病になったら。
+    キャンセルしたいお客様からメッセージが来たら。
+    Bot だけでは答えられない問いが残っていた。
+  </p>
+
+  <div class="art-img">
+    <img src="https://kokona-makes.dev/images/lien-admin-post.jpg" alt="Lien Admin 管理画面と LINE 通知の流れ" loading="lazy">
+    <p class="art-img__caption">— 管理画面（左）で確定ボタンを押すと、お客様のLINE（右）に即座に通知が届く。</p>
+  </div>
+
+  <h2>管理画面でできること</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-card__icon">📋</span>
+      <div class="feature-card__title">仮受付の確認と確定</div>
+      <p class="feature-card__desc">Botから届いた予約を一覧で確認。確定ボタンを押すとお客様のLINEへ即通知。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card__icon">💬</span>
+      <div class="feature-card__title">LINEで直接メッセージ</div>
+      <p class="feature-card__desc">予約済みのお客様に、管理画面から直接LINEメッセージを送れる。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card__icon">📥</span>
+      <div class="feature-card__title">受信ボックス</div>
+      <p class="feature-card__desc">お客様からの自由なメッセージをチャット形式で受け取り、返信できる。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card__icon">🏥</span>
+      <div class="feature-card__title">急病対応</div>
+      <p class="feature-card__desc">スタッフが当日欠勤した場合、影響する予約を一覧表示して担当を振り替えられる。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card__icon">💰</span>
+      <div class="feature-card__title">売上管理</div>
+      <p class="feature-card__desc">月次・日次の売上をグラフで確認。メニューごとの件数も集計される。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card__icon">🚫</span>
+      <div class="feature-card__title">休業日設定</div>
+      <p class="feature-card__desc">お盆や年末など休む日を登録すると、Botが自動でその日を候補から外す。</p>
+    </div>
+  </div>
+
+  <h2>「即確定」をやめた理由</h2>
+
+  <p>
+    最初の設計では、お客様が予約を入れたら自動で「確定」にする予定だった。でも実際に使うことを想像したとき、それだと困る場面が見えてきた。
+  </p>
+
+  <p>
+    スタッフが急病で来られなくなったとき。その日の予約がすでに満杯なときに、何かの間違いで入ってしまったとき。お客様の希望をよく確認してから返事したいとき。
+  </p>
+
+  <p>
+    <strong>「人が確認してから確定する」という一歩を挟む</strong>ことで、トラブルを未然に防げる。自動化はするが、最後の判断はサロン側に残す。そのバランスを「仮受付」という仕組みで実現した。
+  </p>
+
+  <div class="lead-block">
+    <p>お客様がLINEで予約を入れる。</p>
+    <p>サロン側の管理画面に「仮受付」として届く。内容を確認して、確定ボタンを押す。</p>
+    <p><strong>その瞬間、お客様のLINEに「ご予約が確定しました」と通知が届く。</strong></p>
+  </div>
+
+  <h2>お客様からのメッセージを受け取る</h2>
+
+  <p>
+    予約以外の問い合わせ——「カラーについて相談したい」「前回と同じデザインにできますか」——をどう受け取るかが課題だった。
+  </p>
+
+  <p>
+    解決策は<strong>受信ボックス機能</strong>だ。予約フローに当てはまらないメッセージが来たとき、Botは「スタッフが確認次第ご連絡します」と返しながら、そのメッセージを管理画面の受信ボックスに届ける。
+  </p>
+
+  <p>
+    管理画面にはLINEのようなチャット画面があり、お客様のメッセージを読んで返信できる。返信はお客様のLINEに直接届く。Bot経由ではなく、本当の意味での「直接やりとり」だ。
+  </p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-card__label">— 更新頻度</span>
+      <span class="stat-card__value">5秒</span>
+      <span class="stat-card__desc">新着メッセージは5秒ごとに自動チェック。タブのバッジで件数を通知。</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">— セッション有効期限</span>
+      <span class="stat-card__value">5日間</span>
+      <span class="stat-card__desc">ログイン状態が5日間持続。毎回パスワードを打つ必要がない。</span>
+    </div>
+  </div>
+
+  <h2>セキュリティをどう考えたか</h2>
+
+  <p>
+    管理画面はお客様の名前・予約情報・LINEとのやりとりを扱う。個人情報が含まれるページだ。作り始めの段階から、セキュリティをちゃんと考えておく必要があった。
+  </p>
+
+  <div class="step-block">
+    <div class="step-item">
+      <span class="step-num">1</span>
+      <div class="step-body">
+        <strong>URLにパスワードを載せない</strong>
+        <p>最初の実装では「?token=xxxx」とURLにパスワードを含めていた。ブラウザの履歴やサーバーのログに残るため、Cookieという仕組みに切り替えた。Cookie はURLには表示されず、サーバーとブラウザの間でこっそりやりとりされる。</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-num">2</span>
+      <div class="step-body">
+        <strong>ログインに有効期限をつける</strong>
+        <p>一度ログインしたら永遠に入れる状態は危険だ。5日間でログアウトされるようにした。万が一デバイスをなくしても、被害が限定される。</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-num">3</span>
+      <div class="step-body">
+        <strong>LINE送信の操作ログを残す</strong>
+        <p>誰がいつどのお客様にどんなメッセージを送ったか、データベースに記録が残る。「送ったっけ？」「何を送った？」を後から確認できる。</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>同じDB、別の画面という設計</h2>
+
+  <p>
+    管理画面は、BotとまったくDBを共有している。お客様がLINEで予約を入れると、同じDBにデータが書き込まれ、管理画面にはそれが即座に反映される。
+  </p>
+
+  <p>
+    別々のサービスが同じデータを見ている——これが「リアルタイムで同期されている」ように見える理由だ。実際には管理画面が「5秒ごとにデータベースに問い合わせている」だけで、魔法ではない。シンプルな仕組みが、使いやすい体験を作っている。
+  </p>
+
+  <p>
+    サーバーレス構成なので、管理画面の維持コストもほぼゼロ。月に何百万件アクセスがあっても、数千円で収まる設計だ（架空のサロンなので実際にはかからないが）。
+  </p>
+
+  <h2>次に作るとしたら</h2>
+
+  <p>
+    今回の管理画面で基本的な機能は揃った。実際のサロンで使うとしたら、次に必要になりそうなのはこのあたりだと思う。
+  </p>
+
+  <p>
+    複数スタッフのシフト管理。顧客カルテ（過去のメニュー履歴・アレルギー情報）。定期的に来るリピーターへの一斉通知。支払い記録との連携。
+  </p>
+
+  <p>
+    どれも今の構成に積み上げていける。Bot・管理画面・DBという基盤が整っているので、機能追加は比較的素直にできる。
+  </p>
+
+  <div class="nav-next">
+    <a href="lien-bot.html">← #1 Botを作った話</a>
+    <span style="font-family:var(--serif);font-style:italic;font-size:0.82rem;color:#A89878;letter-spacing:0.1em">次の記事は準備中</span>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+</body>
+</html>
