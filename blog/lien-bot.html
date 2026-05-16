@@ -214,7 +214,7 @@ body { background: #F5F0E8; color: #2A1F12; }
       <span class="step-num">3</span>
       <div class="step-body">
         <strong>1ヶ月先まで空き日程を自動計算</strong>
-        <p>定休日・スタッフ休憩時間・既存予約を考慮して、空き枠だけをボタンで提示する。二重予約は DB レベルで防止。</p>
+        <p>定休日・スタッフの休憩・すでに埋まっている枠を除外して、本当に予約できる時間だけをボタンで表示する。同じ枠に2人が同時に予約しようとしても、1件しか入らない仕組みになっている。</p>
       </div>
     </div>
     <div class="step-item">
@@ -228,86 +228,81 @@ body { background: #F5F0E8; color: #2A1F12; }
       <span class="step-num">5</span>
       <div class="step-body">
         <strong>前日リマインダー自動送信</strong>
-        <p>予約前日の夜20時に、Cronジョブが自動でリマインドメッセージを送信する。</p>
+        <p>予約前日の夜20時に、タイマーが自動でリマインドメッセージを送る。サロン側が何もしなくていい。</p>
       </div>
     </div>
   </div>
 
-  <h2>技術構成</h2>
+  <h2>どうやって動いているか</h2>
 
   <p>
-    すべて Cloudflare のエコシステムで完結させた。サーバーレスで、コストはほぼゼロ。
+    仕組みをざっくり説明すると、LINEでメッセージを送るたびに「サーバー」が瞬時に反応して返事を作っている。この「サーバー」は世界中に分散していて、月間コストはほぼゼロ円。特別な機材も契約も不要だ。
   </p>
 
   <div class="arch-block">
-    <div class="arch-block__title">— Architecture</div>
-    <div class="arch-row"><span class="arch-row__role">Webhook 処理</span>Cloudflare Workers（Edge で動くサーバーレス）</div>
-    <div class="arch-row"><span class="arch-row__role">予約データ</span>Cloudflare D1（SQLite ベースの DB）</div>
-    <div class="arch-row"><span class="arch-row__role">セッション管理</span>Cloudflare KV（会話状態を30分保持）</div>
-    <div class="arch-row"><span class="arch-row__role">定期実行</span>Cloudflare Cron Triggers（毎日11:00 UTC）</div>
-    <div class="arch-row"><span class="arch-row__role">LINE 通信</span>LINE Messaging API（Webhook / Push / Reply）</div>
-    <div class="arch-row"><span class="arch-row__role">管理画面</span>Cloudflare Workers（同じ D1 を参照）</div>
+    <div class="arch-block__title">— 役割分担</div>
+    <div class="arch-row"><span class="arch-row__role">メッセージ処理</span>LINEから届いたメッセージを受け取り、返事を作る頭脳</div>
+    <div class="arch-row"><span class="arch-row__role">予約データ保管</span>誰がいつ何を予約したか記録するデータベース</div>
+    <div class="arch-row"><span class="arch-row__role">会話の記憶</span>「今この人は予約の何ステップ目か」を30分間覚えておくメモ帳</div>
+    <div class="arch-row"><span class="arch-row__role">自動タイマー</span>毎晩決まった時刻にリマインドを送る仕掛け</div>
+    <div class="arch-row"><span class="arch-row__role">管理画面</span>サロン側が予約を確認・確定するブラウザ画面</div>
   </div>
-
-  <p>
-    LINE Bot の本体は1つの Workers ファイル。Webhook を受け取り、KV から会話ステートを読み、D1 で予約を管理し、LINE API にメッセージを返す。このサイクルが1リクエスト30秒以内に完結しなければならない。
-  </p>
 
   <h2>設計で工夫したこと</h2>
 
   <p>
-    一番考えたのは<strong>会話フローの状態管理</strong>だ。LINEのBotはステートレスで、毎回のメッセージが独立したリクエストとして来る。「今このユーザーは予約フローのどのステップにいるか」を保持する仕組みが必要だった。
+    一番考えたのは<strong>「会話の途中を覚えておく」仕組み</strong>だ。LINEのBotは、メッセージが来るたびに「初対面」として起動する。前のメッセージを覚えていない。だから「今この人はメニュー選択が終わって日付を選んでいる最中」という状態をどこかに記録しておく必要があった。
   </p>
 
   <p>
-    解決策はシンプルで、Cloudflare KV に `state:{userId}` というキーでJSONを保存する。予約フローに入ったらステートを書き、ステップが進むたびに更新し、完了したら削除する。TTLは30分。タイムアウトしたら自動でリセットされる。
+    解決策は、メモ帳のようなストレージに「この人の現在地」を書いておくことだ。予約が完了したら消す。30分間放置されたら自動で消える。シンプルだが、これだけで会話が途切れずに成立する。
   </p>
 
   <div class="code-block">
-    <span class="code-block__label">— KV でセッション管理</span>
-    <pre>// ステート保存（TTL: 30分）
+    <span class="code-block__label">— 会話の状態を保存するコード（エンジニア向け）</span>
+    <pre>// 「この人は今ここにいる」と記録（30分で自動消去）
 await kv.put(`state:${userId}`, JSON.stringify(state), { expirationTtl: 1800 });
 
-// ステート取得
+// 次のメッセージが来たとき、記録を読み出す
 const raw = await kv.get(`state:${userId}`);
 const state = raw ? JSON.parse(raw) : null;</pre>
   </div>
 
   <p>
-    もう一つの工夫が<strong>二重予約防止</strong>だ。「空き確認 → 選択 → 確定」の間に別ユーザーが同じ枠を予約する競合が起きる可能性がある。D1 の UNIQUE INDEX を使って、同じ日時・スタッフの組み合わせには1件しか入らないようにした。
+    もう一つは<strong>二重予約の防止</strong>だ。同じ時間帯を2人が同時に選ぼうとした場合、どちらか片方しか入れないようにしなければならない。「データベースのルール」として「同じ日時・同じスタッフには1件しか入らない」と設定することで、アプリ側で複雑な処理をしなくても自動的に弾かれる仕組みにした。
   </p>
 
   <div class="code-block">
-    <span class="code-block__label">— UNIQUE INDEX で二重予約を防ぐ</span>
+    <span class="code-block__label">— 二重予約を防ぐルール（エンジニア向け）</span>
     <pre>CREATE UNIQUE INDEX IF NOT EXISTS uniq_slot
   ON reservations(date, start_time, staff_id)
   WHERE status IN ('confirmed', 'pending');</pre>
   </div>
 
-  <h2>難しかったこと</h2>
+  <h2>作ってみて詰まったこと</h2>
 
   <p>
-    <strong>Cloudflare Workers の30秒制限</strong>は最初に躓いた壁だった。LINE の Webhook はリクエストを受けてから30秒以内にレスポンスを返さなければならない。AI画像生成や外部API呼び出しを直列で実行すると簡単に超える。
+    <strong>「30秒ルール」の壁</strong>が最初の難関だった。LINEのBotはメッセージを受け取ってから30秒以内に返事をしなければならない。重い処理を順番にやっていると、あっという間に超える。
   </p>
 
   <p>
-    対策は「まず即レスポンスを返し、重い処理はPromiseで並列実行する」設計に変えることだった。LINEの仕様上、replyTokenで返せるのは1回だけなので、後続メッセージはPush APIで送る。
+    対策は「まず『受け取りました』とだけ返してから、重い作業を並行で走らせる」設計に変えることだった。完成したものから順番にLINEへ送る。レストランで「ご注文承りました」と言ってから調理する感覚に近い。
   </p>
 
   <p>
-    もう一つは<strong>QAキーワードの誤検知</strong>問題だ。「ニュアンスデザイン」を選んだとき、「デザイン」というキーワードがQAルールにマッチしてギャラリーの案内を返してしまう。予約フロー中はQAを完全に無効にし、フロー外でのみQAを発火させることで解決した。
+    もう一つは<strong>言葉の誤解</strong>の問題だ。「ニュアンスデザイン」というメニューを選んだとき、Botが「デザイン」という言葉に反応して「作品ギャラリーはこちらです」と엉뚱한返事をしてしまっていた。予約の最中はこういったキーワード検索を完全にオフにすることで解決した。
   </p>
 
   <div class="stat-row">
     <div class="stat-card">
-      <span class="stat-card__label">— 対応メッセージ種別</span>
-      <span class="stat-card__value">5+</span>
-      <span class="stat-card__desc">テキスト / Flex Message / カルーセル / ボタン / 位置情報</span>
+      <span class="stat-card__label">— 対応できる質問の種類</span>
+      <span class="stat-card__value">20+</span>
+      <span class="stat-card__desc">料金・営業時間・アクセス・キャンセル規定・駐車場など</span>
     </div>
     <div class="stat-card">
-      <span class="stat-card__label">— QAルール数</span>
-      <span class="stat-card__value">20+</span>
-      <span class="stat-card__desc">料金・営業時間・アクセス・キャンセル規定など</span>
+      <span class="stat-card__label">— メッセージの表示形式</span>
+      <span class="stat-card__value">5種</span>
+      <span class="stat-card__desc">テキスト・写真カルーセル・ボタン・カード・地図</span>
     </div>
   </div>
 
