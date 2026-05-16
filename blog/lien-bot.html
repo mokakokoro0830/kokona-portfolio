@@ -122,6 +122,10 @@ body { background: #F5F0E8; color: #2A1F12; }
 .nav-next a { font-family: var(--serif); font-style: italic; font-size: 0.82rem; letter-spacing: 0.18em; color: #8B6914; transition: opacity 0.2s; }
 .nav-next a:hover { opacity: 0.65; }
 
+.art-img { margin: 36px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.art-img img { width: 100%; display: block; }
+.art-img__caption { font-family: var(--serif); font-style: italic; font-size: 0.75rem; letter-spacing: 0.14em; color: #8B6914; text-align: center; padding: 10px 0 4px; }
+
 .arch-block { background: white; border: 1px solid rgba(180,145,80,0.2); border-radius: 6px; padding: 24px 28px; margin: 28px 0; }
 .arch-block__title { font-family: var(--serif); font-style: italic; font-size: 0.78rem; letter-spacing: 0.18em; color: #8B6914; margin-bottom: 16px; }
 .arch-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(180,145,80,0.1); font-size: 0.9rem; color: #3D2B1A; }
@@ -185,6 +189,11 @@ body { background: #F5F0E8; color: #2A1F12; }
   <p>
     「Lien Nail Studio」という架空のネイルサロン向けLINE予約Botをゼロから実装した。デモとして実際に動いている。
   </p>
+
+  <div class="art-img">
+    <img src="https://kokona-makes.dev/images/lien-richmenu.jpg" alt="Lien Nail Studio リッチメニュー — 8セル構成" loading="lazy">
+    <p class="art-img__caption">— LINE のリッチメニュー。写真背景に8機能を配置した。</p>
+  </div>
 
   <div class="step-block">
     <div class="step-item">
@@ -302,6 +311,11 @@ const state = raw ? JSON.parse(raw) : null;</pre>
     </div>
   </div>
 
+  <div class="art-img">
+    <img src="https://kokona-makes.dev/images/lien-admin-post.jpg" alt="Lien Admin 管理画面と LINE 通知" loading="lazy">
+    <p class="art-img__caption">— 管理画面で確定ボタンを押すと、お客様の LINE に即座に通知が届く。</p>
+  </div>
+
   <h2>できたもの</h2>
 
   <p>
@@ -319,6 +333,11 @@ const state = raw ? JSON.parse(raw) : null;</pre>
       <strong>それだけで予約が入る。</strong><br>
       お客さんは待たなくていい。サロン側は手が空いたときに確認すればいい。
     </p>
+  </div>
+
+  <div class="art-img">
+    <img src="https://kokona-makes.dev/images/lien-gallery.jpg" alt="Lien Nail Studio ネイルギャラリー" loading="lazy">
+    <p class="art-img__caption">— Bot から「ギャラリー」と送ると、作品写真のカルーセルが流れてくる。</p>
   </div>
 
   <p>
