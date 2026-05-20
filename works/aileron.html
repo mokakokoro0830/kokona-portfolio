@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aileron Inc. — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/aileron.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-aileron.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">12</p>
+    <p class="work-hero__cat">CORPORATE · WORDPRESS THEME</p>
+    <h1 class="work-hero__title">Aileron Inc.<em>エイルロン</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>コーポレートサイト / WordPressテーマ</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>HTML / CSS / JavaScript / jQuery</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>Cloudflare Pages</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>架空のAI業務自動化スタートアップ「Aileron Inc.（エイルロン）」のコーポレートサイト。WordPressオリジナルテーマでの実装を想定して、全13ページの構造を静的HTMLで再現しました。</p>
+      <p>クライアント業務でよくある「Excelで作られたページ構成を元に、既存サイトを参考にコンテンツを作成する」案件を意識し、コーポレートサイトに必要な情報設計・テンプレート階層・カスタム投稿（事例・お知らせ）の運用イメージを具体化しています。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>ページ構成（全13ページ）</h2>
+      <ul>
+        <li>トップ（Hero / Services / Stats / Cases / News / CTA）</li>
+        <li>会社案内（理念 / 代表メッセージ / 会社概要 / 沿革 / アクセス）</li>
+        <li>サービス一覧 + 詳細3ページ（DXコンサル / AI業務自動化 / システム開発）</li>
+        <li>導入事例一覧 + 事例詳細サンプル（カスタム投稿想定）</li>
+        <li>お知らせ一覧 + お知らせ詳細サンプル（カスタム投稿想定）</li>
+        <li>採用情報（職種別募集要項 / 働き方 / 選考フロー）</li>
+        <li>お問い合わせ（バリデーション付きフォーム / プライバシー同意）</li>
+        <li>プライバシーポリシー</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>こだわり</h2>
+      <ul>
+        <li><strong>WordPress運用前提の構造設計</strong>：事例・お知らせはカスタム投稿タイプ想定、フィルタ・カテゴリ表示を意識</li>
+        <li><strong>BEM準拠のクラス命名 + W3C準拠のセマンティックHTML</strong>でSEO構造を担保</li>
+        <li><strong>パンくず・OGP・meta description</strong>を全ページに実装</li>
+        <li><strong>レスポンシブ完全対応</strong>（375 / 768 / 1280 / 1920px で実機確認）</li>
+        <li><strong>FAQアコーディオン・モバイルメニュー・スムーススクロール</strong>をjQueryなしで純粋JSで実装</li>
+        <li><strong>IntersectionObserver</strong>で軽量なスクロール出現アニメーション</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>HTML5</strong>（セマンティックタグ・microdata想定）</li>
+        <li><strong>CSS3</strong>（Custom Properties・Grid・Flexbox）</li>
+        <li><strong>Vanilla JavaScript</strong>（IntersectionObserver / FAQ Accordion / モバイルメニュー）</li>
+        <li><strong>Google Fonts</strong>（Inter + Noto Sans JP）</li>
+        <li><strong>Cloudflare Pages</strong>（デプロイ・無料SSL）</li>
+        <li>WordPress化を想定：<strong>カスタム投稿タイプ</strong>・<strong>ACF</strong>・<strong>functions.php 責務分離</strong></li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d2">
+      <a href="https://aileron-demo.pages.dev/" target="_blank" rel="noopener" class="work-btn work-btn--primary">サイトを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

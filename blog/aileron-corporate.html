@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>「13ページのコーポレートサイト」を、デモから本物にする — Aileron 制作記録 — Kokona Blog</title>
+<meta name="description" content="架空のAI業務自動化スタートアップ『Aileron Inc.』のコーポレートサイトを13ページ実装。応募案件に向き合うための、WordPressオリジナルテーマ前提の構造設計と、AI生成画像でブランドを揃えた制作記録。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/aileron-corporate.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/aileron-corporate.html">
+<meta property="og:title" content="「13ページのコーポレートサイト」を、デモから本物にする — Aileron 制作記録">
+<meta property="og:description" content="架空のAI業務自動化スタートアップ『Aileron Inc.』のコーポレートサイトを13ページ実装。応募案件と同規模で構造設計し、AI生成画像でブランドを揃えた制作記録。">
+<meta property="og:image" content="https://kokona-makes.dev/images/thumb-aileron.jpg">
+<meta property="article:published_time" content="2026-05-18">
+<meta property="article:author" content="Kokona">
+<meta property="article:section" content="制作記録">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="「13ページのコーポレートサイト」を、デモから本物にする — Aileron 制作記録">
+<meta name="twitter:description" content="架空のAI業務自動化スタートアップ『Aileron Inc.』のコーポレートサイトを13ページ実装した制作記録。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/thumb-aileron.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "「13ページのコーポレートサイト」を、デモから本物にする — Aileron 制作記録",
+  "description": "架空のAI業務自動化スタートアップ『Aileron Inc.』のコーポレートサイトを13ページ実装。WordPressオリジナルテーマ前提の構造設計と、AI生成画像でブランドを揃えた制作記録。",
+  "url": "https://kokona-makes.dev/blog/aileron-corporate.html",
+  "image": "https://kokona-makes.dev/images/thumb-aileron.jpg",
+  "datePublished": "2026-05-18",
+  "dateModified": "2026-05-18",
+  "inLanguage": "ja",
+  "articleSection": "制作記録",
+  "author": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kokona-makes.dev/blog/aileron-corporate.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://kokona-makes.dev/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://kokona-makes.dev/blog/"},
+    {"@type":"ListItem","position":3,"name":"Aileron 制作記録"}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.breadcrumb {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 110px 32px 0;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+}
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 8px; color: rgba(139,105,20,0.5); }
+.breadcrumb a { color: #8B6914; text-decoration: none; transition: opacity 0.2s; }
+.breadcrumb a:hover { opacity: 0.65; }
+.breadcrumb [aria-current] { color: #5C4510; font-style: italic; }
+
+.art-cover {
+  max-width: 1080px;
+  margin: 110px auto 0;
+  padding: 0 32px;
+}
+.art-cover__image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+  box-shadow: 0 20px 60px rgba(28,16,8,0.15);
+}
+
+.art-hero { max-width: 760px; margin: 0 auto; padding: 50px 32px 50px; text-align: left; }
+.art-hero__meta { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; }
+.art-hero__date {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #5C4510;
+  font-weight: 500;
+  background: #EDE5D4;
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+.art-hero__tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6914;
+  border: 1px solid #C4A45A;
+  padding: 3px 12px;
+  border-radius: 2px;
+}
+.art-hero__title {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #1C1008;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+.art-hero__lead {
+  font-size: 0.95rem;
+  color: #3D2B1A;
+  line-height: 2;
+  border-left: 3px solid #C4A45A;
+  padding-left: 22px;
+}
+
+.art-body { max-width: 760px; margin: 0 auto; padding: 0 32px 120px; font-size: 0.95rem; line-height: 2.1; color: #2A1F12; }
+.art-body p { margin: 0 0 22px; }
+.art-body h2 {
+  font-family: var(--jp-mincho);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #1C1008;
+  margin: 60px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(180,145,80,0.4);
+}
+.art-body h3 {
+  font-family: var(--jp-mincho);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #1C1008;
+  margin: 36px 0 14px;
+}
+.art-body ul { margin: 0 0 22px 24px; }
+.art-body li { margin-bottom: 6px; }
+.art-body strong { color: #1C1008; font-weight: 600; }
+.art-body code {
+  font-family: 'Menlo', monospace;
+  font-size: 0.85em;
+  background: #EDE5D4;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #5C4510;
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+.page-grid__item {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-radius: 4px;
+  padding: 14px 18px;
+}
+.page-grid__num {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #C4A45A;
+  margin-bottom: 4px;
+}
+.page-grid__name {
+  font-family: var(--jp-mincho);
+  font-size: 0.92rem;
+  color: #1C1008;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.stack-item {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-radius: 4px;
+  padding: 20px;
+}
+.stack-item__name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: #1C1008;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.stack-item__role {
+  font-size: 0.78rem;
+  color: #8B6914;
+  line-height: 1.7;
+}
+
+.result-box {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
+  border-radius: 4px;
+  padding: 28px;
+  margin: 32px 0;
+}
+.result-box__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  margin-bottom: 14px;
+}
+.result-box p { font-size: 0.88rem; color: #2A1F12; margin: 0; line-height: 1.9; }
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 32px 0;
+}
+.case-gallery__item {
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 16 / 10;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.case-gallery__label {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(245, 240, 232, 0.92);
+  color: #1A2A4A;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.inline-image {
+  margin: 36px 0;
+}
+.inline-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+}
+.inline-image__caption {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  color: #8B6914;
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .case-gallery { grid-template-columns: repeat(2, 1fr); }
+  .art-cover__image { aspect-ratio: 4 / 3; }
+}
+
+.cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 36px 0;
+}
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2A1F12;
+  color: #F5F0E8;
+  padding: 14px 24px;
+  border-radius: 2px;
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.cta-link:hover { background: #5C4510; }
+.cta-link--outline {
+  background: transparent;
+  color: #5C4510;
+  border: 1px solid #C4A45A;
+}
+.cta-link--outline:hover { background: #EDE5D4; }
+
+.art-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  margin-bottom: 48px;
+  transition: opacity 0.2s;
+}
+.art-back:hover { opacity: 0.65; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li><a href="./">Blog</a></li>
+    <li aria-current="page">Aileron 制作記録</li>
+  </ol>
+</nav>
+
+<div class="art-cover">
+  <div class="art-cover__image" style="background-image: url('../images/thumb-aileron.jpg')" role="img" aria-label="Aileron Inc. ブランドビジュアル"></div>
+</div>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.18</span>
+    <span class="art-hero__tag">制作記録</span>
+  </div>
+  <h1 class="art-hero__title">「13ページのコーポレートサイト」を、<br>デモから本物にする<br>— Aileron 制作記録</h1>
+  <p class="art-hero__lead">
+    クラウドワークスで「コーポレートサイトの14ページコーディング」案件に応募するために、<br>
+    架空のAI業務自動化スタートアップ「Aileron Inc.」を仕立てて13ページ実装した。<br>
+    依頼内容に合うポートフォリオを、自分で先回りして作る試み。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <p>クラウドワークスの応募フォームには、ほぼ毎回「ポートフォリオを提示してください」という項目がある。これまでは LP・予約システム・AIツールの作品はあったが、<strong>コーポレートサイト型の作品</strong>はまだ手元になかった。</p>
+  <p>そして今週、出会ったのは <strong>「デザイナーが描いた完成イメージ（Photoshopファイル）を元に、WordPressで動かせるサイトを14ページぶん作ってください」</strong> という案件。応募するなら、似た規模感の作品を一つ見せられるほうが説得力が出る。なので、応募と並行して作った。</p>
+
+  <h2>何を作ったか</h2>
+  <p>
+    架空のAI業務自動化スタートアップ <strong>「Aileron Inc.（エイルロン）」</strong> のコーポレートサイト。
+    タグラインは「事業の方向転換を、確実に。」。
+    DXコンサルティング・AI業務自動化・システム開発の3軸を提供する、中堅企業向けの会社という設定。
+  </p>
+  <p>
+    依頼案件と同規模の <strong>全13ページ</strong> を、ゼロから手書きのコードで実装。
+    後でこれを WordPress に組み込むことになっても困らないよう、
+    <strong>運用するクライアントが管理画面から「事例」や「お知らせ」を追加・編集できる仕組み</strong>を前提とした情報設計まで含めて整えてある。
+  </p>
+
+  <h2>ページ構成（13ページ）</h2>
+
+  <div class="page-grid">
+    <div class="page-grid__item"><p class="page-grid__num">01</p><p class="page-grid__name">トップ</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">02</p><p class="page-grid__name">会社案内</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">03</p><p class="page-grid__name">サービス一覧</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">04</p><p class="page-grid__name">DXコンサルティング</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">05</p><p class="page-grid__name">AI業務自動化</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">06</p><p class="page-grid__name">システム開発</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">07</p><p class="page-grid__name">導入事例一覧</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">08</p><p class="page-grid__name">事例詳細（受注処理）</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">09</p><p class="page-grid__name">お知らせ一覧</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">10</p><p class="page-grid__name">プレスリリース詳細</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">11</p><p class="page-grid__name">採用情報</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">12</p><p class="page-grid__name">お問い合わせ</p></div>
+    <div class="page-grid__item"><p class="page-grid__num">13</p><p class="page-grid__name">プライバシーポリシー</p></div>
+  </div>
+
+  <p>「事例」と「お知らせ」は、<strong>納品後にクライアント側で記事を追加・編集できる仕組み</strong>を想定して設計した。Webに詳しくない担当者でも、「新しい事例を1件追加したい」「お知らせを今日中に掲載したい」が、管理画面から数クリックで完結する。<br>納品物としては、こうした運用ルールのドキュメントも一緒に出すつもりで作っている。</p>
+
+  <div class="inline-image">
+    <img src="../images/thumb-aileron.jpg" alt="Aileron Inc. ヒーロービジュアル">
+    <p class="inline-image__caption">— Brand Visual: 飛行機の補助翼から着想したコーポレート抽象</p>
+  </div>
+
+  <h2>デザインシステム</h2>
+  <p>
+    コーポレートサイトに必要なのは、「派手さ」ではなく「信頼感」と「読みやすさ」。
+    そこで色は3色だけに絞った。
+  </p>
+  <ul>
+    <li><strong>ネイビー（#1A2A4A）</strong>：信頼感・コーポレート基調</li>
+    <li><strong>アクセントブルー（#4A6FB5）</strong>：リンク・CTAボタン・ハイライト</li>
+    <li><strong>白（#FFFFFF）</strong>＋グレースケール：余白とテキスト</li>
+  </ul>
+  <p>フォントは Inter（英語・数字）と Noto Sans JP（日本語）の組み合わせ。Google Fonts のみで完結。これで実装環境を選ばない。</p>
+
+  <h2>こだわったポイント</h2>
+
+  <h3>1. 「色を変えたいとき、1箇所書き換えれば全ページ変わる」仕組み</h3>
+  <p>サイトの色やフォントは、1箇所で一括管理。たとえばブランドカラーを変更したくなった時、全14ページのコードを書き換える必要はなく、設定ファイルの数値を一度書き換えるだけで全ページに反映される。<br>納品後、クライアント側でちょっとした色味調整がしたくなった時にも、たった1行の修正で済む。</p>
+
+  <h3>2. 検索エンジンにも、運用者にも、伝わる構造</h3>
+  <p>HTMLのタグ付け（見出し・本文・ナビゲーションの区別）を厳密に整え、検索エンジンが「ここはお知らせ」「ここは会社概要」と正しく理解できる作りに。<br>結果として <strong>SEOに強く、後から別のエンジニアがコードを触っても迷子にならない</strong>。引き継ぎコストが下がる構造になっている。</p>
+
+  <h3>3. スクロールに合わせて要素がふわっと現れる動き</h3>
+  <p>ページを下にスクロールすると、見出しや画像が一拍遅れて滑らかに登場する演出を入れた。<br>外部ライブラリに頼らず、最新のブラウザ標準機能（IntersectionObserver）で実装したので、<strong>ページの読み込みが軽く、スマホでも引っかかりがない</strong>。</p>
+
+  <h3>4. FAQ・スマホメニューも全部、手書きで</h3>
+  <p>「質問をクリックすると答えが開く」FAQ、「ハンバーガーアイコンを押すとメニューが出る」スマホ表示。よくある挙動だが、外部ライブラリに頼らず素のJavaScriptで実装した。<br>結果、<strong>ページの容量が軽く、保守時に「あのライブラリのバージョンを上げないといけない」みたいな引き継ぎコストがない</strong>。</p>
+
+  <h2>AIで画像を作って、ブランドを揃える</h2>
+
+  <p>もう一つの裏テーマは <strong>「写真撮影もストック画像購入もせずに、ブランドの世界観を揃える」</strong> こと。OpenAI のAI画像生成サービスを使って実現した。</p>
+  <p>
+    生成したのはサムネ1枚＋事例カード6枚の計7枚。
+    「Aileron のブランドカラーで、こういう雰囲気の画像を作って」と一度ルールを決めてから、業種別（EC・製造・SaaS・小売・コンサル・教育）に少しずつ指示を変えて生成。
+    結果、6つの事例カードが <strong>業種は違うのに、ぱっと見「同じ会社の画像群」と分かる統一感</strong> を持って仕上がった。
+  </p>
+
+  <div class="case-gallery">
+    <div class="case-gallery__item" style="background-image: url('../images/case-ec.jpg')" role="img" aria-label="EC業種の事例カード">
+      <span class="case-gallery__label">EC</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/case-manufacturing.jpg')" role="img" aria-label="製造業の事例カード">
+      <span class="case-gallery__label">Manufacturing</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/case-saas.jpg')" role="img" aria-label="SaaS業種の事例カード">
+      <span class="case-gallery__label">SaaS</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/case-retail.jpg')" role="img" aria-label="小売業の事例カード">
+      <span class="case-gallery__label">Retail</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/case-consulting.jpg')" role="img" aria-label="コンサル業の事例カード">
+      <span class="case-gallery__label">Consulting</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/case-education.jpg')" role="img" aria-label="教育業の事例カード">
+      <span class="case-gallery__label">Education</span>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-family:var(--serif);font-style:italic;font-size:0.82rem;letter-spacing:0.18em;color:#8B6914;margin-top:-10px;">— 6 categories, 1 brand voice. Generated in $0.12.</p>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <p class="stack-item__name">メインビジュアル</p>
+      <p class="stack-item__role">高画質設定・1枚 約11円<br>飛行機の補助翼から着想した抽象画像</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">事例カード × 6枚</p>
+      <p class="stack-item__role">低画質設定・1枚 約3円<br>業種ごとに雰囲気を差し替え</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">合計コスト</p>
+      <p class="stack-item__role">$0.19（約30円）<br>撮影費・素材購入費ゼロ</p>
+    </div>
+  </div>
+
+  <p>これまで「ストック画像を買う」「素材サイトから探す」が常識だったところを、<strong>必要なときに必要なだけ作る</strong>に切り替えると、ブランドの一貫性も、コストも、時間も、全部改善される。</p>
+
+  <h2>使った道具</h2>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <p class="stack-item__name">HTML / CSS</p>
+      <p class="stack-item__role">ページの骨組みと見た目を作る言語</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">JavaScript</p>
+      <p class="stack-item__role">ボタンの開閉やアニメーションなど「動き」をつける</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Google Fonts</p>
+      <p class="stack-item__role">無料で使える高品質なフォント</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">OpenAI 画像生成AI</p>
+      <p class="stack-item__role">ブランドビジュアル7枚を生成</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Cloudflare Pages</p>
+      <p class="stack-item__role">サイトを世界中に高速配信（無料・SSL自動）</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Claude Code</p>
+      <p class="stack-item__role">AIコーディング環境<br>標準の半分〜2/3の時間で実装</p>
+    </div>
+  </div>
+
+  <h2>ポートフォリオへの統合</h2>
+  <p>
+    最後に、これを kokona-makes.dev の Works No.12 として追加した。
+    作品詳細ページには概要・ページ構成・こだわり・技術構成を載せて、「サイトを見る →」ボタンから本物の Aileron デモへ飛べるようにした。
+    クライアントの動線としては、ポートフォリオトップ → 作品詳細 → 実物の3ステップで、「文章で理解 → 実物で確認」が自然に流れるようになっている。
+  </p>
+
+  <h2>応募案件に向き合うために</h2>
+  <p>
+    応募中の案件は168件提案中のWordPress 14ページコーディング。提案文では、依頼の納期 6/18 に対して <strong>5/31 納品をコミット</strong>。Claude Code を併用した独自ワークフローで標準工数の半分〜2/3で仕上げる前提だ。
+  </p>
+  <p>
+    この Aileron Inc. は、その提案を裏付けるための実物。「13ページのコーポレートサイトをこのクオリティで実装します」を口頭で言うより、本物のデモを見てもらう方が早い。
+  </p>
+
+  <div class="result-box">
+    <p class="result-box__label">— What I Made</p>
+    <p>
+      応募と並行して、応募内容を裏付ける作品を作る。
+      これがフリーランス1年目のもう一つの戦い方だと思う。
+      Claude Code が「やる前に時間がかかるはず」だった部分を圧縮してくれたから、
+      応募と作品づくりを同時に走らせることができた。
+    </p>
+  </div>
+
+  <div class="cta-links">
+    <a href="https://aileron-demo.pages.dev/" target="_blank" rel="noopener" class="cta-link">サイトを見る →</a>
+    <a href="../works/aileron.html" class="cta-link cta-link--outline">作品詳細を見る →</a>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+</body>
+</html>
