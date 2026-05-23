@@ -195,6 +195,122 @@ body {
   letter-spacing: 0.2em;
 }
 
+/* ── Category filter ── */
+.cat-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 32px 52px;
+}
+.cat-btn {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  background: transparent;
+  border: 1px solid rgba(139,105,20,0.35);
+  border-radius: 2px;
+  padding: 6px 18px;
+  cursor: pointer;
+  transition: background 0.22s, color 0.22s, border-color 0.22s;
+}
+.cat-btn:hover {
+  background: rgba(139,105,20,0.08);
+  border-color: #8B6914;
+}
+.cat-btn.is-active {
+  background: #5C4510;
+  color: #F5F0E8;
+  border-color: #5C4510;
+}
+.cat-count {
+  font-style: normal;
+  font-size: 0.7rem;
+  opacity: 0.65;
+  margin-left: 5px;
+}
+
+/* ── Series group ── */
+.blog-series {
+  border-top: 1px solid rgba(180,145,80,0.3);
+  padding: 36px 0;
+}
+.blog-series:last-child { border-bottom: 1px solid rgba(180,145,80,0.3); }
+.blog-series__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.blog-series__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #8B6914;
+  border: 1px solid rgba(139,105,20,0.35);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.blog-series__title {
+  font-family: var(--jp-mincho);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #3A2810;
+  letter-spacing: 0.08em;
+}
+.blog-series__items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.blog-series-card {
+  display: flex;
+  gap: 14px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid rgba(180,145,80,0.2);
+  border-radius: 2px;
+  background: rgba(237,229,212,0.35);
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+.blog-series-card:hover { background: rgba(237,229,212,0.7); border-color: rgba(139,105,20,0.45); }
+.blog-series-card__no {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: #C4A45A;
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.blog-series-card__body {}
+.blog-series-card__sub {
+  font-size: 0.72rem;
+  color: #8B6914;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 4px;
+}
+.blog-series-card__title {
+  font-family: var(--jp-mincho);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #1C1008;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+}
+
+/* hide/show for filter */
+.blog-card[hidden], .blog-series[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .blog-series__items { grid-template-columns: 1fr; }
+}
+
 .blog-list {
   max-width: 760px;
   margin: 0 auto;
@@ -352,9 +468,25 @@ body {
   <p class="blog-hero__sub">制作の記録と、自動化の実験。</p>
 </section>
 
+<!-- Category filter tabs -->
+<div class="cat-filter" role="tablist" aria-label="記事カテゴリ">
+  <button class="cat-btn is-active" data-filter="all" role="tab" aria-selected="true">
+    すべて<span class="cat-count">10</span>
+  </button>
+  <button class="cat-btn" data-filter="dev" role="tab" aria-selected="false">
+    開発ログ<span class="cat-count">7</span>
+  </button>
+  <button class="cat-btn" data-filter="site" role="tab" aria-selected="false">
+    HP・サイト制作<span class="cat-count">2</span>
+  </button>
+  <button class="cat-btn" data-filter="auto" role="tab" aria-selected="false">
+    自動化<span class="cat-count">1</span>
+  </button>
+</div>
+
 <div class="blog-list">
 
-  <a href="rag-demo.html" class="blog-card reveal">
+  <a href="rag-demo.html" class="blog-card reveal" data-cat="dev">
     <div class="blog-card__thumb">
       <img src="../images/thumb-rag-demo.jpg" alt="RAG 社内文書Q&Aシステム" loading="lazy">
     </div>
@@ -369,14 +501,14 @@ body {
     </div>
   </a>
 
-  <a href="aileron-corporate.html" class="blog-card reveal">
+  <a href="aileron-corporate.html" class="blog-card reveal" data-cat="site">
     <div class="blog-card__thumb">
       <img src="../images/thumb-aileron.jpg" alt="Aileron Inc. コーポレートサイト" loading="lazy">
     </div>
     <div class="blog-card__body">
       <div class="blog-card__meta">
         <span class="blog-card__date">2026.05.18</span>
-        <span class="blog-card__tag">制作記録</span>
+        <span class="blog-card__tag">HP・サイト制作</span>
       </div>
       <h2 class="blog-card__title">「13ページのコーポレートサイト」を、デモから本物にする<br>— Aileron 制作記録</h2>
       <p class="blog-card__desc">クラウドワークスの「WordPressコーポレートサイト14ページ」案件に応募するため、架空のAI業務自動化スタートアップ「Aileron Inc.」を仕立てて全13ページ実装。WordPressオリジナルテーマ前提の構造設計と、gpt-image-2で7枚のブランドビジュアルを揃えた記録。</p>
@@ -384,7 +516,7 @@ body {
     </div>
   </a>
 
-  <a href="lien-admin.html" class="blog-card reveal">
+  <a href="lien-admin.html" class="blog-card reveal" data-cat="dev">
     <div class="blog-card__thumb">
       <img src="../images/lien-admin-post.jpg" alt="Lien 管理画面" loading="lazy">
     </div>
@@ -399,7 +531,7 @@ body {
     </div>
   </a>
 
-  <a href="lien-bot.html" class="blog-card reveal">
+  <a href="lien-bot.html" class="blog-card reveal" data-cat="dev">
     <div class="blog-card__thumb">
       <img src="../images/lien-richmenu.jpg" alt="Lien リッチメニュー" loading="lazy">
     </div>
@@ -414,90 +546,52 @@ body {
     </div>
   </a>
 
-  <a href="quill-demo.html" class="blog-card reveal">
-    <div class="blog-card__thumb blog-card__thumb--text">
-      <span class="cover-no">No. 04</span>
-      <div>
-        <span class="cover-kicker">— Dev Log</span>
-        <span class="cover-title">Quill<br>デプロイ編</span>
-      </div>
+  <!-- Quill シリーズ グループ -->
+  <div class="blog-series reveal" data-cat="dev">
+    <div class="blog-series__head">
+      <span class="blog-series__label">Series — Quill</span>
+      <span class="blog-series__title">AI議事録SaaSを0から作る、全4回。</span>
     </div>
-    <div class="blog-card__body">
-      <div class="blog-card__meta">
-        <span class="blog-card__date">2026.05.10</span>
-        <span class="blog-card__tag">開発ログ</span>
-      </div>
-      <h2 class="blog-card__title">デモを、本物にする。<br>— Quill 開発ログ #4：デプロイ編</h2>
-      <p class="blog-card__desc">ローカルで動いただけでは、架空のSaaSのままだ。FastAPIでAPIサーバーを作り、Renderにデプロイし、UptimeRobotで監視する。デモページが本物のAPIと繋がった瞬間の話。</p>
-      <span class="blog-card__link">Read more →</span>
+    <div class="blog-series__items">
+      <a href="quill-planning.html" class="blog-series-card">
+        <span class="blog-series-card__no">#01</span>
+        <div class="blog-series-card__body">
+          <span class="blog-series-card__sub">計画編 — 2026.05.05</span>
+          <span class="blog-series-card__title">会議を書かないAIを作る</span>
+        </div>
+      </a>
+      <a href="quill-implementation.html" class="blog-series-card">
+        <span class="blog-series-card__no">#02</span>
+        <div class="blog-series-card__body">
+          <span class="blog-series-card__sub">実装編 — 2026.05.06</span>
+          <span class="blog-series-card__title">計画通りには進まなかった</span>
+        </div>
+      </a>
+      <a href="quill-cost.html" class="blog-series-card">
+        <span class="blog-series-card__no">#03</span>
+        <div class="blog-series-card__body">
+          <span class="blog-series-card__sub">コスト編 — 2026.05.07</span>
+          <span class="blog-series-card__title">動いた。でも、お金のことを考えてなかった</span>
+        </div>
+      </a>
+      <a href="quill-demo.html" class="blog-series-card">
+        <span class="blog-series-card__no">#04</span>
+        <div class="blog-series-card__body">
+          <span class="blog-series-card__sub">デプロイ編 — 2026.05.10</span>
+          <span class="blog-series-card__title">デモを、本物にする。</span>
+        </div>
+      </a>
     </div>
-  </a>
+  </div>
 
-  <a href="quill-cost.html" class="blog-card reveal">
-    <div class="blog-card__thumb blog-card__thumb--text">
-      <span class="cover-no">No. 03</span>
-      <div>
-        <span class="cover-kicker">— Dev Log</span>
-        <span class="cover-title">Quill<br>コスト編</span>
-      </div>
-    </div>
-    <div class="blog-card__body">
-      <div class="blog-card__meta">
-        <span class="blog-card__date">2026.05.07</span>
-        <span class="blog-card__tag">開発ログ</span>
-      </div>
-      <h2 class="blog-card__title">動いた。でも、お金のことを考えてなかった<br>— Quill 開発ログ #3：コスト編</h2>
-      <p class="blog-card__desc">Whisper APIは1分0.6円。1会議55円のコスト構造を把握して、スケールしたときに内製化が得になる判断軸を整理した。価格設計の考え方まで。</p>
-      <span class="blog-card__link">Read more →</span>
-    </div>
-  </a>
-
-  <a href="quill-implementation.html" class="blog-card reveal">
-    <div class="blog-card__thumb blog-card__thumb--text">
-      <span class="cover-no">No. 02</span>
-      <div>
-        <span class="cover-kicker">— Dev Log</span>
-        <span class="cover-title">Quill<br>実装編</span>
-      </div>
-    </div>
-    <div class="blog-card__body">
-      <div class="blog-card__meta">
-        <span class="blog-card__date">2026.05.06</span>
-        <span class="blog-card__tag">開発ログ</span>
-      </div>
-      <h2 class="blog-card__title">計画通りには進まなかった<br>— Quill 開発ログ #2：実装編</h2>
-      <p class="blog-card__desc">Google Meetに自動参加し、音声を録音して、Whisperで文字起こし、Claudeで議事録化してメール送信。実際に動かすまでに引っかかったポイントと、計画からのズレを記録した。</p>
-      <span class="blog-card__link">Read more →</span>
-    </div>
-  </a>
-
-  <a href="quill-planning.html" class="blog-card reveal">
-    <div class="blog-card__thumb blog-card__thumb--text">
-      <span class="cover-no">No. 01</span>
-      <div>
-        <span class="cover-kicker">— Dev Log</span>
-        <span class="cover-title">Quill<br>計画編</span>
-      </div>
-    </div>
-    <div class="blog-card__body">
-      <div class="blog-card__meta">
-        <span class="blog-card__date">2026.05.05</span>
-        <span class="blog-card__tag">開発ログ</span>
-      </div>
-      <h2 class="blog-card__title">会議を書かないAIを作る<br>— Quill 開発ログ #1：計画編</h2>
-      <p class="blog-card__desc">架空のAI議事録SaaS『Quill』を作る計画。実装前に潰しておきたい6つの問題（音声取得・文字起こし・話者分離・抽出精度・配信タイミング・心理障壁）と、それぞれの解き方。</p>
-      <span class="blog-card__link">Read more →</span>
-    </div>
-  </a>
-
-  <a href="velaro-booking.html" class="blog-card reveal">
+  <a href="velaro-booking.html" class="blog-card reveal" data-cat="site">
     <div class="blog-card__thumb">
       <img src="../images/thumb-velaro.jpg" alt="VELARO 予約管理システム" loading="lazy">
     </div>
     <div class="blog-card__body">
       <div class="blog-card__meta">
         <span class="blog-card__date">2026.05.05</span>
-        <span class="blog-card__tag">制作記録</span>
+        <span class="blog-card__tag">HP・サイト制作</span>
       </div>
       <h2 class="blog-card__title">6つ目のサイトはLPじゃなく予約管理システムだった<br>— VELARO 制作記録</h2>
       <p class="blog-card__desc">フォーム送信 → DB保存 → 自動メール2通 → 管理画面でステータス管理。フルスタックの予約フローを実装して、完成直後に自分でセキュリティレビューまでやった記録。</p>
@@ -505,7 +599,7 @@ body {
     </div>
   </a>
 
-  <a href="crowdworks-automation.html" class="blog-card reveal">
+  <a href="crowdworks-automation.html" class="blog-card reveal" data-cat="auto">
     <div class="blog-card__thumb blog-card__thumb--text">
       <div>
         <span class="cover-kicker">— Automation</span>
@@ -530,6 +624,24 @@ body {
 </footer>
 
 <script>
+// ── Category filter ──
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    // update buttons
+    document.querySelectorAll('.cat-btn').forEach(b => {
+      b.classList.toggle('is-active', b === btn);
+      b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+    });
+    // show/hide cards and series
+    document.querySelectorAll('[data-cat]').forEach(el => {
+      const match = filter === 'all' || el.dataset.cat === filter;
+      el.hidden = !match;
+      if (match) el.classList.add('is-visible'); // reveal 未発火でも表示
+    });
+  });
+});
+
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('is-scrolled', window.scrollY > 60);
