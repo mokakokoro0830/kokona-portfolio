@@ -14,6 +14,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Works filter */
+  .works-filter { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:52px; }
+  .works-filter-btn { font-family:var(--serif); font-style:italic; font-size:0.8rem; letter-spacing:0.22em; color:rgba(191,161,105,0.65); background:transparent; border:1px solid rgba(191,161,105,0.22); padding:8px 22px; cursor:pointer; transition:all .22s; }
+  .works-filter-btn:hover { color:var(--gold-l); border-color:rgba(191,161,105,0.5); background:rgba(191,161,105,0.06); }
+  .works-filter-btn.is-active { color:var(--bg); background:var(--gold); border-color:var(--gold); }
+  .works-filter-count { font-style:normal; font-size:0.68rem; opacity:0.6; margin-left:5px; }
+  .work-card[hidden] { display:none !important; visibility:hidden !important; }
+</style>
 </head>
 <body>
 <div id="scroll-progress"></div>
@@ -90,9 +99,25 @@
       <h2 class="sec-title">作品一覧</h2>
       <p class="sec-sub">— All projects built from scratch —</p>
     </div>
+    <!-- Works filter -->
+    <div class="works-filter reveal" role="tablist">
+      <button class="works-filter-btn is-active" data-filter="all">
+        すべて<span class="works-filter-count">12</span>
+      </button>
+      <button class="works-filter-btn" data-filter="lp">
+        LP・HP制作<span class="works-filter-count">6</span>
+      </button>
+      <button class="works-filter-btn" data-filter="auto">
+        自動化<span class="works-filter-count">4</span>
+      </button>
+      <button class="works-filter-btn" data-filter="ai">
+        AIツール・システム<span class="works-filter-count">2</span>
+      </button>
+    </div>
+
     <div class="works__grid">
 
-      <a href="blog/crowdworks-automation.html" class="work-card reveal">
+      <a href="blog/crowdworks-automation.html" class="work-card reveal" data-cat="auto">
         <div class="work-card__img" style="background-image:url('images/service-flow-v1.png');background-size:cover;background-position:35% center;"></div>
         <div class="work-card__body">
           <p class="work-card__num">01</p>
@@ -104,7 +129,7 @@
         </div>
       </a>
 
-      <a href="works/velaro.html" class="work-card reveal reveal-d1">
+      <a href="works/velaro.html" class="work-card reveal reveal-d1" data-cat="ai">
         <div class="work-card__img" style="background-image:url('images/thumb-velaro.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">02</p>
@@ -116,7 +141,7 @@
         </div>
       </a>
 
-      <a href="works/cafe-noir.html" class="work-card reveal reveal-d2">
+      <a href="works/cafe-noir.html" class="work-card reveal reveal-d2" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-cafenoir.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">03</p>
@@ -128,7 +153,7 @@
         </div>
       </a>
 
-      <a href="works/aura.html" class="work-card reveal">
+      <a href="works/aura.html" class="work-card reveal" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-aura.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">04</p>
@@ -140,7 +165,7 @@
         </div>
       </a>
 
-      <a href="works/kona-kon.html" class="work-card reveal reveal-d1">
+      <a href="works/kona-kon.html" class="work-card reveal reveal-d1" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-konakon.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">05</p>
@@ -152,7 +177,7 @@
         </div>
       </a>
 
-      <a href="works/tsukuyomi.html" class="work-card reveal reveal-d2">
+      <a href="works/tsukuyomi.html" class="work-card reveal reveal-d2" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-tsukuyomi.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">06</p>
@@ -164,7 +189,7 @@
         </div>
       </a>
 
-      <a href="works/wan.html" class="work-card reveal">
+      <a href="works/wan.html" class="work-card reveal" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-wan.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">07</p>
@@ -176,7 +201,7 @@
         </div>
       </a>
 
-      <a href="works/consultation-form.html" class="work-card reveal reveal-d1">
+      <a href="works/consultation-form.html" class="work-card reveal reveal-d1" data-cat="auto">
         <div class="work-card__img" style="background-image:url('images/thumb-consultation.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">08</p>
@@ -188,7 +213,7 @@
         </div>
       </a>
 
-      <a href="works/recruit-form.html" class="work-card reveal reveal-d2">
+      <a href="works/recruit-form.html" class="work-card reveal reveal-d2" data-cat="auto">
         <div class="work-card__img" style="background-image:url('images/thumb-recruit.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">09</p>
@@ -200,7 +225,7 @@
         </div>
       </a>
 
-      <a href="works/sns-automation.html" class="work-card reveal">
+      <a href="works/sns-automation.html" class="work-card reveal" data-cat="auto">
         <div class="work-card__img" style="background-image:url('images/thumb-sns-automation.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">10</p>
@@ -212,7 +237,7 @@
         </div>
       </a>
 
-      <a href="works/quill.html" class="work-card reveal reveal-d1">
+      <a href="works/quill.html" class="work-card reveal reveal-d1" data-cat="ai">
         <div class="work-card__img" style="background-image:url('images/thumb-quill.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">11</p>
@@ -224,7 +249,7 @@
         </div>
       </a>
 
-      <a href="works/aileron.html" class="work-card reveal reveal-d2">
+      <a href="works/aileron.html" class="work-card reveal reveal-d2" data-cat="lp">
         <div class="work-card__img" style="background-image:url('images/thumb-aileron.jpg')"></div>
         <div class="work-card__body">
           <p class="work-card__num">12</p>
@@ -465,6 +490,19 @@ const revealObs = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── Works filter ──
+document.querySelectorAll('.works-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.works-filter-btn').forEach(b => b.classList.toggle('is-active', b === btn));
+    document.querySelectorAll('.work-card[data-cat]').forEach(card => {
+      const show = filter === 'all' || card.dataset.cat === filter;
+      card.hidden = !show;
+      if (show) card.classList.add('is-visible');
+    });
+  });
+});
 
 // Hero scroll indicator fade
 const heroScroll = document.querySelector('.hero__scroll');

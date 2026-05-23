@@ -334,6 +334,45 @@ img { display: block; max-width: 100%; }
   padding: 140px 0;
   background: var(--bg);
 }
+
+/* ── Works filter tabs ── */
+.works-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+}
+.works-filter-btn {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  color: rgba(191,161,105,0.65);
+  background: transparent;
+  border: 1px solid rgba(191,161,105,0.22);
+  padding: 8px 22px;
+  cursor: pointer;
+  transition: color .22s, border-color .22s, background .22s;
+}
+.works-filter-btn:hover {
+  color: var(--gold-l);
+  border-color: rgba(191,161,105,0.5);
+  background: rgba(191,161,105,0.06);
+}
+.works-filter-btn.is-active {
+  color: var(--bg);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.works-filter-count {
+  font-style: normal;
+  font-size: 0.68rem;
+  opacity: 0.6;
+  margin-left: 5px;
+}
+.work-card[hidden] { display: none !important; }
+
 .works__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
