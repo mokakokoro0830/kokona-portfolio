@@ -300,7 +300,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   <h2>同じDB、別の画面という設計</h2>
 
   <p>
-    管理画面は、BotとまったくDBを共有している。お客様がLINEで予約を入れると、同じDBにデータが書き込まれ、管理画面にはそれが即座に反映される。
+    管理画面は、Botとまったく同じデータベースを使っている。お客様がLINEで予約を入れると、同じデータベースにデータが書き込まれ、管理画面にはそれが即座に反映される。
   </p>
 
   <p>
@@ -322,7 +322,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   </p>
 
   <p>
-    どれも今の構成に積み上げていける。Bot・管理画面・DBという基盤が整っているので、機能追加は比較的素直にできる。
+    どれも今の構成に積み上げていける。Bot・管理画面・データベースという基盤が整っているので、機能追加は比較的素直にできる。
   </p>
 
   <div class="nav-next">
@@ -349,5 +349,8 @@ function updateProgress() {
 }
 window.addEventListener('scroll', updateProgress, { passive: true });
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -290,7 +290,7 @@ const state = raw ? JSON.parse(raw) : null;</pre>
   </p>
 
   <p>
-    もう一つは<strong>言葉の誤解</strong>の問題だ。「ニュアンスデザイン」というメニューを選んだとき、Botが「デザイン」という言葉に反応して「作品ギャラリーはこちらです」と엉뚱한返事をしてしまっていた。予約の最中はこういったキーワード検索を完全にオフにすることで解決した。
+    もう一つは<strong>言葉の誤解</strong>の問題だ。「ニュアンスデザイン」というメニューを選んだとき、Botが「デザイン」という言葉に反応して「作品ギャラリーはこちらです」と的外れな返事をしてしまっていた。予約の最中はこういったキーワード検索を完全にオフにすることで解決した。
   </p>
 
   <div class="stat-row">
@@ -363,5 +363,8 @@ function updateProgress() {
 }
 window.addEventListener('scroll', updateProgress, { passive: true });
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>

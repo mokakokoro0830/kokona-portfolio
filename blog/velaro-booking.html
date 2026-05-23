@@ -401,28 +401,28 @@ body { background: #F5F0E8; color: #2A1F12; }
     </div>
   </div>
 
-  <h2>技術構成</h2>
+  <h2>使った道具</h2>
 
   <div class="stack-grid">
     <div class="stack-item">
-      <p class="stack-item__name">Next.js 16</p>
-      <p class="stack-item__role">App Router でフロント＋API Routes を一体管理</p>
+      <p class="stack-item__name">Next.js</p>
+      <p class="stack-item__role">画面側とサーバー側の処理を1つの仕組みで作れる、Webアプリ用の土台</p>
     </div>
     <div class="stack-item">
       <p class="stack-item__name">Supabase</p>
-      <p class="stack-item__role">予約データのDB。RLSで権限を制御</p>
+      <p class="stack-item__role">予約データを保存するデータベース。誰がどのデータを見られるかも細かく制御できる</p>
     </div>
     <div class="stack-item">
       <p class="stack-item__name">Resend</p>
-      <p class="stack-item__role">トランザクションメールの送信。テンプレートはHTML手書き</p>
+      <p class="stack-item__role">メールを自動送信するサービス。ゲスト宛・管理者宛のメールが届く</p>
     </div>
     <div class="stack-item">
       <p class="stack-item__name">Tailwind CSS</p>
-      <p class="stack-item__role">ゲスト画面はミニマル、管理画面は情報密度重視で設計を分けた</p>
+      <p class="stack-item__role">見た目を素早く整えるためのCSS道具</p>
     </div>
     <div class="stack-item">
       <p class="stack-item__name">Vercel</p>
-      <p class="stack-item__role">デプロイ先。環境変数もCLIで管理</p>
+      <p class="stack-item__role">サイトを世界中に高速配信するホスティングサービス</p>
     </div>
   </div>
 
@@ -435,35 +435,35 @@ body { background: #F5F0E8; color: #2A1F12; }
   <div class="security-list">
     <div class="security-item">
       <span class="security-item__badge badge--red">Critical</span>
-      <p class="security-item__text"><strong>管理画面・管理APIに認証がない</strong><br>URLを知っていれば誰でも全予約を閲覧・操作できる状態だった。</p>
+      <p class="security-item__text"><strong>管理画面にパスワード保護がない</strong><br>URLを知っていれば誰でも全予約を閲覧・操作できる状態だった。</p>
     </div>
     <div class="security-item">
       <span class="security-item__badge badge--red">Critical</span>
-      <p class="security-item__text"><strong>予約APIにレート制限がない</strong><br>連打されるとDBとメール送信枠を使い切られる。</p>
+      <p class="security-item__text"><strong>予約送信の回数制限がない</strong><br>悪意あるユーザーが連打すれば、データベースとメール送信枠を使い切られてしまう。</p>
     </div>
     <div class="security-item">
       <span class="security-item__badge badge--yellow">Medium</span>
-      <p class="security-item__text"><strong>日付バリデーションなし</strong><br>チェックインがチェックアウトより後でも通ってしまう。</p>
+      <p class="security-item__text"><strong>日付の入力チェックなし</strong><br>チェックイン日がチェックアウト日より後でも、エラーにならず通ってしまう。</p>
     </div>
     <div class="security-item">
       <span class="security-item__badge badge--yellow">Medium</span>
-      <p class="security-item__text"><strong>メール本文にXSSリスク</strong><br>管理画面から送るメール本文がHTMLエスケープなしでテンプレートに埋め込まれていた。</p>
+      <p class="security-item__text"><strong>メール本文に悪意あるコードが混入できる</strong><br>管理画面から送るメール本文を、安全に変換せずそのまま送る設計になっていた。</p>
     </div>
   </div>
 
   <p>
-    全部修正してデプロイし直した。
-    管理画面はBasic Authで保護、APIにはレート制限（5回/分）、日付はサーバー側で検証、
-    メール本文はHTMLエスケープを通してから埋め込む。
+    全部修正して、もう一度公開し直した。
+    管理画面はパスワードで保護、予約フォームは1分間に5回までの送信制限、日付はサーバー側で検証、
+    メール本文は危険な文字を安全な文字に変換してから送信するように改修。
   </p>
 
   <div class="result-box">
     <p class="result-box__label">— 修正後の構成</p>
     <p>
-      middleware.ts でパスワード認証（/admin, /api/admin/* をまるごとガード）<br>
-      IPベースのレートリミッター（in-memoryで5回/分）<br>
-      チェックイン &lt; チェックアウトをサーバー側でバリデーション<br>
-      カスタムメール本文をescapeHtml()に通してから展開
+      管理画面と管理API（/admin と /api/admin/*）にパスワード保護を導入<br>
+      同じIPアドレスから1分間に5回以上の予約送信を制限<br>
+      チェックイン日 &lt; チェックアウト日 をサーバー側で検証<br>
+      カスタムメール本文を安全な文字に変換してから送信
     </p>
   </div>
 
@@ -477,7 +477,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   <figure style="margin:32px 0;">
     <img src="../images/admin-screen.png" alt="VELARO 管理画面" style="width:100%;border:1px solid rgba(180,145,80,0.3);border-radius:4px;display:block;">
     <figcaption style="font-size:0.8rem;color:#8B6914;font-style:italic;text-align:center;margin-top:12px;letter-spacing:0.05em;">
-      管理画面。Basic Auth で保護されているのでURLを知っていても入れない。
+      管理画面。パスワード保護をかけているのでURLを知っていても入れない。
     </figcaption>
   </figure>
 
@@ -489,7 +489,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   <h2>やってみて分かったこと</h2>
   <p>
     LPは見た目が7割だと思っていた。でもシステムは見た目より設計の方が難しい。
-    「ゲストが何かを送信したとき、バックエンドで何が起きるか」を全部自分で考える必要がある。
+    「ゲストが何かを送信したとき、サーバー側で何が起きるか」を全部自分で考える必要がある。
   </p>
   <p>
     それと、<strong>「動く」と「安全」は別の話</strong>だと改めて実感した。
@@ -528,5 +528,8 @@ function updateProgress() {
 }
 window.addEventListener('scroll', updateProgress, { passive: true });
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>

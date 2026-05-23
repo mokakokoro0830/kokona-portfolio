@@ -470,19 +470,19 @@ body {
     その分だけ、作る時間が増えた。
   </p>
 
-  <h2>技術的なメモ</h2>
-  <h3>使ったもの</h3>
+  <h2>仕組みの裏側</h2>
+  <h3>使った道具</h3>
   <p>
-    Claude（Claude Code）のスラッシュコマンド機能でワークフローを定義。
-    ブラウザ操作はChrome拡張経由のMCPで制御。
-    通知はGAS（Google Apps Script）のWebApp経由でGmailに送信。
-    提案書はMarkdownファイルとしてローカルに保存。
+    Claude Code（AIコーディング環境）にコマンドを登録して、巡回ワークフロー全体を1コマンドで動くようにした。
+    実際のブラウザ操作は Chrome の拡張機能経由で自動化。
+    候補があった日の通知は、Google Apps Script（Googleが提供する自動化ツール）でWeb受付窓口を作り、そこを経由してGmailに送信。
+    提案書はパソコン内に保存されるテキストファイルとして自動生成される。
   </p>
-  <h3>ポイント</h3>
+  <h3>うまくいったポイント</h3>
   <p>
-    評価基準は自分のスキルセットに合わせてカスタマイズしている。
-    「スキップ条件を増やすほど読む量が減る」ので、
-    最初に自分の絶対NGを洗い出しておくことが効いた。
+    判断基準は kokona 自身のスキルセットに合わせて細かくカスタマイズしている。
+    「<strong>スキップ条件を増やすほど読まなくていい案件が増える</strong>」ので、
+    最初に「これは絶対に応募しない」というNGリストを洗い出しておいたことが、結果的に時間短縮に効いた。
   </p>
 
   <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--line);">
@@ -508,5 +508,8 @@ function updateProgress() {
 }
 window.addEventListener('scroll', updateProgress, { passive: true });
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
