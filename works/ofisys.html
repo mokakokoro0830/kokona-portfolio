@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OFISYS — Kokona Portfolio</title>
+<link rel="canonical" href="https://kokona-makes.dev/works/ofisys.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-ofisys.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">13</p>
+    <p class="work-hero__cat">SaaS · SUBSCRIPTION LP</p>
+    <h1 class="work-hero__title">OFISYS<em>オフィシス</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>BtoB SaaS / ITサポートLP</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>HTML / CSS / JavaScript</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>Cloudflare Pages</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>概要</h2>
+      <p>「社内に専任のIT担当者がいない」中小企業に向けた、ひとり情シス代行サブスク（架空サービス）のLP。ヘルプデスク・ネットワーク保守・セキュリティ・PCキッティングを月額定額でまるごと引き受ける、というサービスを想定して設計しました。</p>
+      <p>BtoB SaaSのLPに必要な要素——信頼感のあるヒーロー、サービス内容の整理、料金プランの比較、よくある質問——を、フレームワークを使わず純粋なHTML/CSS/JavaScriptだけで実装しています。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>こだわり</h2>
+      <ul>
+        <li>ヒーローに「サービスが繋がる」構図を採用。中央の専任チームを4つのサービスが囲み、各サービスは<strong>カーソルを乗せる（スマホはタップ）と詳細がポップ</strong>する</li>
+        <li>料金は<strong>月払い／年払いのトグル</strong>で金額がその場で切り替わる、SaaS定番のUI</li>
+        <li>よくある質問はクリックで開閉する<strong>アコーディオン</strong></li>
+        <li>スクロールに応じたフェードイン・追従ヘッダー・モバイルメニューなど、細部の挙動まで実装</li>
+        <li>アイコン・キャラクターイラストは画像生成（gpt-image-2）でトンマナを統一</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>HTML / CSS / JavaScript</strong> — フレームワーク不使用の純粋実装</li>
+        <li><strong>IntersectionObserver</strong> — スクロール連動のフェードイン</li>
+        <li><strong>CSS Custom Properties</strong> — ブルー基調のテーマ変数管理</li>
+        <li><strong>レスポンシブ対応</strong> — PC / タブレット / スマホ</li>
+        <li><strong>Cloudflare Pages</strong> — デプロイ・配信</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d2">
+      <a href="https://ofisys.pages.dev/" target="_blank" rel="noopener" class="work-btn work-btn--primary">サイトを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
