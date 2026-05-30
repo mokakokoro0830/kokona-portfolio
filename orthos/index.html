@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オルト・エウレカ 要注意モンスター早見表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cyan-600:#0891b2;--cyan-500:#06b6d4;--violet-500:#7c3aed;--emerald-600:#059669;--amber-500:#f59e0b;--red-500:#e11d48;
+  --bg:#f5f7fc;--surface-1:#ffffff;--surface-2:#eef2f9;--border:#e4e9f2;--border-strong:#d2dae8;
+  --text:#19202e;--text-muted:#6a7289;--primary:var(--cyan-600);
+  --font:"Inter","Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+  --r-sm:8px;--r-md:14px;--r-full:999px;
+  --sh-1:0 1px 2px rgba(20,30,60,.06),0 1px 1px rgba(20,30,60,.04);
+  --sh-2:0 8px 22px -12px rgba(20,30,60,.16);--sh-3:0 18px 44px -18px rgba(20,30,60,.26);
+  --dur:.18s;--ease:cubic-bezier(0,0,0,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:var(--font);background:
+  radial-gradient(1100px 520px at 82% -10%,rgba(6,182,212,.10),transparent 60%),
+  radial-gradient(820px 460px at -2% 0%,rgba(124,58,237,.08),transparent 55%),var(--bg);
+  color:var(--text);line-height:1.75;font-feature-settings:"palt";-webkit-font-smoothing:antialiased;letter-spacing:.01em;padding-bottom:64px}
+img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:20px}
+.hero{padding:40px 0 18px;border-bottom:1px solid var(--border)}
+.eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
+  color:#04323b;background:linear-gradient(90deg,#a5f3fc,#bbf7d0);padding:.42em 1em;border-radius:var(--r-full)}
+.hero h1{font-size:clamp(1.7rem,4.4vw,2.7rem);font-weight:800;margin:14px 0 8px}
+.hero h1 .grad{background:linear-gradient(110deg,var(--cyan-600),var(--violet-500));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--text-muted);max-width:60ch;text-wrap:pretty}
+.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-muted)}
+.hero .meta b{color:var(--text);font-weight:800;font-size:1.05rem}
+.bar{position:sticky;top:0;z-index:20;background:rgba(245,247,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0}
+.bar__row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nav{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto}
+.pill{font-size:.78rem;font-weight:700;color:var(--text-muted);border:1px solid var(--border-strong);padding:5px 11px;border-radius:var(--r-full);white-space:nowrap;background:var(--surface-1);transition:all var(--dur) var(--ease)}
+.pill:hover{color:var(--primary);border-color:var(--primary)}
+.controls{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{background:var(--surface-1);border:1px solid var(--border-strong);color:var(--text);border-radius:var(--r-full);padding:6px 13px;font-size:.82rem;width:170px}
+.search::placeholder{color:var(--text-muted)}
+.search:focus-visible{outline:2px solid color-mix(in srgb,var(--primary) 50%,transparent);outline-offset:1px}
+.toggle{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text-muted);cursor:pointer;border:1px solid var(--border-strong);background:var(--surface-1);padding:5px 11px;border-radius:var(--r-full);user-select:none;transition:all var(--dur) var(--ease)}
+.toggle input{accent-color:var(--primary)}
+.toggle:has(input:checked){color:var(--primary);border-color:var(--primary);background:#ecfeff}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted);padding:14px 0 0}
+.legend .chip{transform:scale(.92)}
+.floor{padding-top:30px;scroll-margin-top:64px}
+.floor__head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.floor__badge{font-family:Inter,sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.02em;color:#fff;background:linear-gradient(135deg,var(--cyan-500),var(--cyan-600));padding:7px 14px;border-radius:var(--r-sm);box-shadow:var(--sh-2)}
+.floor__label{font-weight:800;color:var(--text);font-size:1rem}
+.floor__count{font-size:.72rem;font-weight:800;color:var(--text-muted);border:1px solid var(--border-strong);border-radius:var(--r-full);min-width:24px;height:24px;display:inline-grid;place-items:center;padding:0 7px;background:var(--surface-1)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
+.card{display:flex;gap:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:13px;box-shadow:var(--sh-1);transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border-strong)}
+.card--danger::before{background:linear-gradient(180deg,var(--red-500),#9f1239)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-3);border-color:var(--border-strong)}
+.card__media{flex:0 0 96px}
+.card__media img{width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);border:1px solid var(--border-strong);background:#eef2f9}
+.card__body{flex:1;min-width:0}
+.card__head{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.card__name{font-size:1.02rem;font-weight:800}
+.flag{font-size:.66rem;font-weight:800;color:#fff;background:var(--red-500);padding:2px 7px;border-radius:var(--r-full);letter-spacing:.04em}
+.chips{display:flex;gap:6px;margin-bottom:7px;flex-wrap:wrap}
+.chip{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:var(--r-full);border:1px solid}
+.chip--stun{color:#fff;background:var(--emerald-600);border-color:var(--emerald-600)}
+.chip--off{color:var(--text-muted);background:var(--surface-2);border-color:var(--border-strong)}
+.chip--patrol{color:#3a2600;background:var(--amber-500);border-color:var(--amber-500)}
+.notes{margin:0;padding-left:1.05em;font-size:.85rem;color:#3a4256;line-height:1.65}
+.notes li{margin:2px 0}.notes li::marker{color:var(--primary)}
+.empty{display:none;color:var(--text-muted);padding:30px;text-align:center}
+.is-empty .floor{display:none}.is-empty .empty{display:block}
+footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
+</style></head><body>
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
+  <h1>要注意モンスター<span class="grad">早見表</span></h1>
+  <p>ナイト目線の攻略メモ。「顔を見ただけで技と安置が浮かぶ」を目指す、F31〜F99のやべーやつ図鑑。</p>
+  <div class="meta"><span><b>38</b> 体収録</span><span><b>7</b> 階層</span><span>スタン可・巡回・危険度つき</span></div>
+</div></header>
+<div class="bar"><div class="wrap bar__row"><nav class="nav"><a class="pill" href="#f0">F31–39</a><a class="pill" href="#f1">F41–49</a><a class="pill" href="#f2">F51–59</a><a class="pill" href="#f3">F61–69</a><a class="pill" href="#f4">F71–79</a><a class="pill" href="#f5">F81–89</a><a class="pill" href="#f6">F91–99</a></nav>
+  <div class="controls"><input class="search" id="q" type="search" placeholder="モンスター名で検索" aria-label="検索">
+  <label class="toggle"><input type="checkbox" id="onlyStun">スタン可のみ</label>
+  <label class="toggle"><input type="checkbox" id="onlyDanger">危険のみ</label></div></div></div>
+<main class="wrap">
+  <div class="legend"><span><span class="chip chip--stun">スタン 効く</span> 入る</span><span><span class="chip chip--off">スタン 不可</span> 入らない</span><span><span class="chip chip--patrol">巡回</span> 徘徊</span><span><span class="flag">要注意</span> 即死・最優先など</span></div>
+  <section class="floor" id="f0"><div class="floor__head"><span class="floor__badge">F31–39</span><span class="floor__label">要注意モンスター</span><span class="floor__count">4</span></div><div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="オルト・スパイダー">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/e5/e1/e5e1656ac870373deff746323a62af89ba5955a9_110_110.jpg" alt="オルト・スパイダー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・スパイダー</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「パーティクルコリジョン」スタン推奨（デバフ喰らうと後で「ニードルスペーサー」死ぬ）</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・ミノタウロス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/14/12/141213589ebfd531772947e56645c23bc4be5772_110_110.jpg" alt="オルト・ミノタウロス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ミノタウロス</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>初手は「111トンズ・スイング」の大きい円範囲くるので、離れる</li><li>ミノタウロスが止まると詠唱始まるが、逆にタンクが逃げ続ければ詠唱を遅らせることは可能</li><li>「スワイプ」は前方扇範囲</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・ファントムレイ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/ae/94/ae949ec19cc1beb0347e1066ad505ffdc77f0e24_110_110.jpg" alt="オルト・ファントムレイ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ファントムレイ</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>「前方剣閃」前方180度即死技</li><li>「剣風」敵中心円範囲即死技</li><li>仲間が集まりやすい場所へ誘導しよう</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・キマイラ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/fe/aa/feaa1a7072aef20d38de8bad0c81daf97f237ec4_110_110.jpg" alt="オルト・キマイラ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・キマイラ</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「雷」近づく、「氷」離れる</li><li>DD勢おなじみのキマイラさん</li></ul>
+  </div></article></div></section><section class="floor" id="f1"><div class="floor__head"><span class="floor__badge">F41–49</span><span class="floor__label">要注意モンスター</span><span class="floor__count">3</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・グゥーブー">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/bb/94/bb94b7d284d80b0ba5da445b181a9ce3db28d3e0_110_110.jpg" alt="オルト・グゥーブー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・グゥーブー</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>あくびみたいな感じで無詠唱予兆なしの前方扇範囲がくる</li><li>背面安置</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・ケルピー">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/0e/29/0e29066a7a5ec301af5589adbcd5896fc473eda2_110_110.jpg" alt="オルト・ケルピー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ケルピー</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>海から来た馬、レイクランドのAモブみたいなやつ</li><li>「ギャロップ」視線切れ有効</li><li>「ブラッディパドル」結構広い、敵から離れる</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・ホアハウンド">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/93/49/93491658ab1280b328980a32a9f92f7684355d38_110_110.jpg" alt="オルト・ホアハウンド" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ホアハウンド</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>オオカミみたいなやつ</li><li>「アビサルクライ」でスタンされた後殺しにくるので、詠唱中に倒すか視線切れでスタンもらわないようにする</li></ul>
+  </div></article></div></section><section class="floor" id="f2"><div class="floor__head"><span class="floor__badge">F51–59</span><span class="floor__label">要注意モンスター</span><span class="floor__count">6</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・ロックフィン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/f6/2e/f62e2c5ea0bef25ee38c12da296238203dd06abe_110_110.jpg" alt="オルト・ロックフィン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ロックフィン</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>サメ</li><li>「アクアスピア」の直線範囲の予兆で繋がったら視線を切る</li><li>タンクは障害物の近くに誘導すると良い</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・タラシナ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/c1/6d/c16d5bd6aab31f1e5d4e05aa6b57f9508170bfa7_110_110.jpg" alt="オルト・タラシナ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・タラシナ</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>サソリ</li><li>ヘイト1位に「ヘヴィ」→「円範囲」で殺しにくる</li><li>ヘヴィもらったら即移動</li><li>デバフもらう前にバリア厚くするのも良い</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・モンク">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/c8/5f/c85f43d0273b16840a5d54e54618bf77e03b1268_110_110.jpg" alt="オルト・モンク" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・モンク</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>「サッカー」で引き寄せて殺しにくる</li><li>引き寄せられたら必ず離れる</li><li>ノックバック無効か「サッカー」詠唱時にめちゃくちゃ離れるのも大丈夫</li></ul>
+  </div></article><article class="card card--danger" data-stun="1" data-danger="1" data-name="オルト・ユミール">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/ec/4b/ec4bc13ce984b97c5cc541caa865bead80357ef6_110_110.jpg" alt="オルト・ユミール" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ユミール</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>カタツムリ？「帯氷」で反射バフが付くので、バフ中に殴ると死ぬ</li><li>バフつく前にスタンするか、バフ切れるまで待つと良い</li><li>ナイトなら初手「バッシュ」が良い</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・ザラタン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/f0/68/f0685e552bf3f6024447d1aef7d3181a5d66dda3_110_110.jpg" alt="オルト・ザラタン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ザラタン</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>やたら触手（？）が長いやつ</li><li>「スーウエッジウォーター」で半円予兆あり攻撃の直後に反対側に予兆なしの半円範囲攻撃が来るので、1回目避けたら予兆の方に移動しよう</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・アイススプライト">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/7d/8f/7d8f6b787ba76c005c7bb594a39c79b33f9a13fb_110_110.jpg" alt="オルト・アイススプライト" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・アイススプライト</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>死んだ後に即死技詠唱してくる怨念系やべーやつ</li><li>倒したら離れる</li><li>敵視リストの詠唱を表示させるとわかりやすい</li><li>鍵の判定はこの詠唱終了後になる</li></ul>
+  </div></article></div></section><section class="floor" id="f3"><div class="floor__head"><span class="floor__badge">F61–69</span><span class="floor__label">要注意モンスター</span><span class="floor__count">5</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・ガウロウ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/08/a5/08a58e2b7f0efa9c95cd9303c5ba1a185d153073_110_110.jpg" alt="オルト・ガウロウ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ガウロウ</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>腕→前方範囲攻撃、しっぽ→背面範囲攻撃、無詠唱なので敵を見る</li></ul>
+  </div></article><article class="card card--danger" data-stun="1" data-danger="1" data-name="オルト・ドレイク">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/81/74/8174a07d35c12a51ee6de93ea462cbecf74f13a9_110_110.jpg" alt="オルト・ドレイク" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ドレイク</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「炎の鱗」で攻撃を反射するので、詠唱中にスタン推奨</li><li>魔法は大丈夫</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・コブラ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/76/6d/766d35f9a3811dfa292bda6a575f6523cec0d3fb_110_110.jpg" alt="オルト・コブラ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・コブラ</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>ヘビ</li><li>「ウィップバック」背面扇範囲、正面か側面安置</li></ul>
+  </div></article><article class="card card--danger" data-stun="1" data-danger="1" data-name="オルト・パレオン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/8f/a4/8fa403fb12989e3fd54df4a69cbc9ca9e1e9f44e_110_110.jpg" alt="オルト・パレオン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・パレオン</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>接触してすぐ「ボディプレス」で敵中心の円範囲即死技が来るので離れる</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・ファラク">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/2d/4a/2d4abbcff9341c1724eb976c23d4435e599ad24e_110_110.jpg" alt="オルト・ファラク" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ファラク</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「雷放射」ドーナツ範囲</li></ul>
+  </div></article></div></section><section class="floor" id="f4"><div class="floor__head"><span class="floor__badge">F71–79</span><span class="floor__label">要注意モンスター</span><span class="floor__count">5</span></div><div class="grid"><article class="card card--danger" data-stun="1" data-danger="1" data-name="オルト・プリメレファス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/3c/70/3c702085c68dd5f220d4a006c3aa40b5c418c1d2_110_110.jpg" alt="オルト・プリメレファス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・プリメレファス</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>赤いゾウ</li><li>突進後に「リア―」で敵近く即死円範囲、すぐ離れよう</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・グログロ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/30/1d/301d88acedd6a51a4bcec8c99fe6be4842117045_110_110.jpg" alt="オルト・グログロ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・グログロ</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>イノシシ？「キリングパウ」前方扇範囲</li><li>1回扇範囲を出した場所に再度無詠唱で扇範囲を出す</li><li>1回目避けたら安置で2回目を待つ</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・サンダービースト">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/32/48/3248af4d8942f3796218b57092aaeeeb2bfd3958_110_110.jpg" alt="オルト・サンダービースト" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・サンダービースト</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>尻尾ぐるぐるした後に敵中心の無詠唱円範囲の即死攻撃、離れる</li><li>「スパーク」ドーナツ範囲、その後尻尾ぐるぐる来るので離れる</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・サスカッチ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/99/49/9949b51c24d94fbd413c67f4c34255d6b86c01e9_110_110.jpg" alt="オルト・サスカッチ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・サスカッチ</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>いつものゴリラ</li><li>待機時に「バナナを食べる」（15秒バフ）→「ドラミング」極大の即死範囲</li><li>壁や障害物に隠れて視線切るか、めっちゃ離れる</li><li>タンクはバフが切れてから釣る</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・フレイムビースト">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/3f/be/3fbed9d902851377a783fe3fbfad333b3ebe1bf8_110_110.jpg" alt="オルト・フレイムビースト" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・フレイムビースト</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「ブリスターロア」前方即死</li></ul>
+  </div></article></div></section><section class="floor" id="f5"><div class="floor__head"><span class="floor__badge">F81–89</span><span class="floor__label">要注意モンスター</span><span class="floor__count">4</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・スペクター">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/27/97/2797a48f7410ffd31e553377f87b5522dce98482_110_110.jpg" alt="オルト・スペクター" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・スペクター</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>青く光る宇宙人</li><li>「左方薙ぎ払い」か「右方薙ぎ払い」の240度扇範囲</li><li>「サークルバースト」めっちゃ広い円範囲、めっちゃ離れる</li><li>「リングバースト」ドーナツ範囲、中安置</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・グルマン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/ee/21/ee21ffbc11f5ebfc41e0924aacfdbd8b0d57c66c_110_110.jpg" alt="オルト・グルマン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・グルマン</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「モルディスニーズ」前方予兆なし扇範囲</li><li>グゥーブーを一緒</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・レイス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/59/34/5934afe61fec32a5ada693496a11e1be50bba558_110_110.jpg" alt="オルト・レイス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・レイス</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「スクリーム」デカい円範囲、めっちゃ離れる</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・ブラックペガサス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/f2/b4/f2b4f53645f2355584b3fab152fbc7a9a13138a9_110_110.jpg" alt="オルト・ブラックペガサス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ブラックペガサス</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>突進後に「天馬のいななぎ」デカい円範囲、めっちゃ離れる</li></ul>
+  </div></article></div></section><section class="floor" id="f6"><div class="floor__head"><span class="floor__badge">F91–99</span><span class="floor__label">要注意モンスター</span><span class="floor__count">11</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・システムγ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/4b/87/4b8768d56db9d0eba8befd2b2bc0f816550066c2_110_110.jpg" alt="オルト・システムγ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・システムγ</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>「高圧電流」巨大円範囲、必ず沈黙で止める</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・マイニングドローン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/80/16/80162e189fa167924c8f7e474a0c37fca2bd3574_110_110.jpg" alt="オルト・マイニングドローン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・マイニングドローン</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>4回突進吹き飛ばし技→「魔科学砲」前方範囲、背面安置</li></ul>
+  </div></article><article class="card card--danger" data-stun="0" data-danger="1" data-name="オルト・ドローン">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/05/08/0508e135e48d965e01bf95227ed4302878109e69_110_110.jpg" alt="オルト・ドローン" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ドローン</h3><span class="flag">要注意</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>倒した後自爆するので、離れる</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・システムα">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/69/74/69745a07b4e8adca5e2b19ae8ccfc0fd64d2f907_110_110.jpg" alt="オルト・システムα" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・システムα</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「魔科学レーザーα」前方扇範囲</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・サーヴォミノタウロス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/d2/25/d225e3d96fc33f1b7316cf457d06be2ab5fc3695_110_110.jpg" alt="オルト・サーヴォミノタウロス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・サーヴォミノタウロス</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>「スワイプ」前方扇範囲→無詠唱突進→「スイング」敵中心円範囲</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・スフィンクス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/7d/72/7d7210f4520f17947a1c66a27a5e827ca00aefe0_110_110.jpg" alt="オルト・スフィンクス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・スフィンクス</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「スイング」扇範囲</li><li>※ミノタウロスのスイングと違う</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・マザービット">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/dd/0a/dd0ac312f9d8d73b723444a311c9591399999e55_110_110.jpg" alt="オルト・マザービット" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・マザービット</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>歩く詩学トークン</li><li>「シタデルバスター」ランタゲ直線ビーム、敵の向いてる方向を確認</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・サーヴォキマイラ">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/80/7d/807d0e8a3b6aab55717585f9a28a39b7efc0c6c2_110_110.jpg" alt="オルト・サーヴォキマイラ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・サーヴォキマイラ</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>「雷」→近づく、「氷」離れる</li><li>「スコーピオンスティング」背面扇範囲</li><li>「コールドブレス」右前に扇範囲</li><li>「サンダーブレス」左前扇範囲</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・ミトリダテス">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/2b/eb/2beb48cfee5cbd1909e9691be7095ed31630b410_110_110.jpg" alt="オルト・ミトリダテス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ミトリダテス</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「レーザーブレード」前方、横の超扇範囲、背面90度安置</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・ドレッドノート">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/70/bb/70bb22bc8d7334d9d1a0584c09b3d1f1f4217d53_110_110.jpg" alt="オルト・ドレッドノート" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ドレッドノート</h3></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「ロトスワイプ」前方小扇範囲攻撃</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="オルト・ドゥルガー">
+  <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/0f/a3/0fa3cb11291fc6ee3baa6e64003f5449e712897c_110_110.jpg" alt="オルト・ドゥルガー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・ドゥルガー</h3></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>「ディフュージョンレイ」前方巨大扇範、背面安置</li><li>「ブレインジャック」混乱デバフ、早く倒す</li></ul>
+  </div></article></div></section>
+  <p class="empty">該当するモンスターがいません。</p>
+</main>
+<footer class="wrap">自分のブログ「オルトエウレカ攻略メモ」を要注意モンスター早見表として再構成。画像・データは元ブログより。実際のゲーム内挙動を優先してください。</footer>
+<script>
+const q=document.getElementById('q'),os=document.getElementById('onlyStun'),od=document.getElementById('onlyDanger');
+const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
+function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
+ cards.forEach(c=>{const ok=(!t||c.dataset.name.toLowerCase().includes(t))&&(!os.checked||c.dataset.stun==='1')&&(!od.checked||c.dataset.danger==='1');c.style.display=ok?'':'none';if(ok)shown++;});
+ document.querySelectorAll('.floor').forEach(f=>{f.style.display=[...f.querySelectorAll('.card')].some(c=>c.style.display!=='none')?'':'none';});
+ main.classList.toggle('is-empty',shown===0);}
+[q,os,od].forEach(el=>el.addEventListener('input',apply));
+</script></body></html>
