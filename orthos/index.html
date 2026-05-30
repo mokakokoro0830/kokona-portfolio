@@ -21,14 +21,14 @@ body{font-family:var(--font);background:
 img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
 .moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;filter:saturate(.92);transition:opacity .25s linear}
-.hero{position:relative;padding:66px 0 36px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(7,11,19,.5),rgba(9,13,21,.7) 52%,rgba(245,247,252,.97) 99%),url("bg.jpg") center 40%/cover no-repeat}
+.hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
   color:#04323b;background:linear-gradient(90deg,#a5f3fc,#bbf7d0);padding:.42em 1em;border-radius:var(--r-full)}
 .hero h1{font-size:clamp(1.7rem,4.4vw,2.7rem);font-weight:800;margin:14px 0 8px;color:#f3f8ff;text-shadow:0 2px 18px rgba(0,0,0,.5)}
 .hero h1 .grad{background:linear-gradient(110deg,var(--cyan-600),var(--violet-500));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .credit{display:inline-block;margin-left:.55em;font-size:.4em;font-weight:700;letter-spacing:.06em;color:#f1d79a;border:1px solid rgba(241,215,154,.55);border-radius:999px;padding:.25em .9em;vertical-align:middle;text-shadow:none;white-space:nowrap}
 .hero p{color:#cbd6e8;max-width:60ch;text-wrap:pretty;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:#aebbd0;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.84rem;color:#dde6f4;text-shadow:0 1px 6px rgba(0,0,0,.7)}
 .hero .meta b{color:#fff;font-weight:800;font-size:1.05rem}
 .bar{position:sticky;top:0;z-index:20;background:rgba(245,247,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0}
 .bar__row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -81,7 +81,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
   <p>ナイト目線の攻略メモ。「顔を見ただけで技と安置が浮かぶ」を目指す、F31〜F99のやべーやつ図鑑。</p>
-  <div class="meta"><span><b>38</b> 体収録</span><span><b>7</b> 階層</span><span>スタン可・巡回・危険度つき</span></div>
+  <div class="meta"><span><b id="mobCount">38</b> 体収録</span><span><b>7</b> 階層</span><span>スタン可・巡回・危険度つき</span></div>
 </div></header>
 <div class="bar"><div class="wrap bar__row"><nav class="nav"><a class="pill" href="#f0">F31–39</a><a class="pill" href="#f1">F41–49</a><a class="pill" href="#f2">F51–59</a><a class="pill" href="#f3">F61–69</a><a class="pill" href="#f4">F71–79</a><a class="pill" href="#f5">F81–89</a><a class="pill" href="#f6">F91–99</a></nav>
   <div class="controls"><input class="search" id="q" type="search" placeholder="モンスター名で検索" aria-label="検索">
@@ -342,6 +342,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
 <script>
 const q=document.getElementById('q'),os=document.getElementById('onlyStun'),od=document.getElementById('onlyDanger');
 const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
+{const mc=document.getElementById('mobCount');if(mc)mc.textContent=cards.length;}
 function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  cards.forEach(c=>{const ok=(!t||c.dataset.name.toLowerCase().includes(t))&&(!os.checked||c.dataset.stun==='1')&&(!od.checked||c.dataset.danger==='1');c.style.display=ok?'':'none';if(ok)shown++;});
  document.querySelectorAll('.floor').forEach(f=>{f.style.display=[...f.querySelectorAll('.card')].some(c=>c.style.display!=='none')?'':'none';});
