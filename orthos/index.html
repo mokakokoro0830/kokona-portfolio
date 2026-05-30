@@ -64,6 +64,9 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .chip--stun{color:#fff;background:var(--emerald-600);border-color:var(--emerald-600)}
 .chip--off{color:var(--text-muted);background:var(--surface-2);border-color:var(--border-strong)}
 .chip--patrol{color:#3a2600;background:var(--amber-500);border-color:var(--amber-500)}
+.chip--sleep{color:#fff;background:#3b82f6;border-color:#3b82f6}
+.card__media .ph{width:96px;height:96px;border-radius:var(--r-sm);border:1px dashed var(--border-strong);background:linear-gradient(135deg,#eef3fb,#dde6f4);display:grid;place-items:center;color:#9aa6bd;font-size:.62rem;font-weight:700;text-align:center;line-height:1.3}
+.cfloor{margin-left:auto;font-size:.7rem;font-weight:800;color:var(--text-muted)}
 .notes{margin:0;padding-left:1.05em;font-size:.85rem;color:#3a4256;line-height:1.65}
 .notes li{margin:2px 0}.notes li::marker{color:var(--primary)}
 .empty{display:none;color:var(--text-muted);padding:30px;text-align:center}
@@ -125,7 +128,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
     <header class="card__head"><h3 class="card__name">オルト・ホアハウンド</h3></header>
     <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
     <ul class="notes"><li>オオカミみたいなやつ</li><li>「アビサルクライ」でスタンされた後殺しにくるので、詠唱中に倒すか視線切れでスタンもらわないようにする</li></ul>
-  </div></article></div></section><section class="floor" id="f2"><div class="floor__head"><span class="floor__badge">F51–59</span><span class="floor__label">要注意モンスター</span><span class="floor__count">6</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・ロックフィン">
+  </div></article></div></section><section class="floor" id="f2"><div class="floor__head"><span class="floor__badge">F51–59</span><span class="floor__label">要注意モンスター</span><span class="floor__count">7</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・ロックフィン">
   <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/f6/2e/f62e2c5ea0bef25ee38c12da296238203dd06abe_110_110.jpg" alt="オルト・ロックフィン" loading="lazy" width="96" height="96"></div>
   <div class="card__body">
     <header class="card__head"><h3 class="card__name">オルト・ロックフィン</h3></header>
@@ -161,6 +164,12 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
     <header class="card__head"><h3 class="card__name">オルト・アイススプライト</h3><span class="flag">要注意</span></header>
     <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
     <ul class="notes"><li>死んだ後に即死技詠唱してくる怨念系やべーやつ</li><li>倒したら離れる</li><li>敵視リストの詠唱を表示させるとわかりやすい</li><li>鍵の判定はこの詠唱終了後になる</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="オルト・スティングレイ">
+  <div class="card__media"><div class="ph">画像なし</div></div>
+  <div class="card__body">
+    <header class="card__head"><h3 class="card__name">オルト・スティングレイ</h3><span class="cfloor">F57–59</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <ul class="notes"><li>視覚感知</li><li>ランタゲに飛び掛かり、敵中心円範囲AoE</li></ul>
   </div></article></div></section><section class="floor" id="f3"><div class="floor__head"><span class="floor__badge">F61–69</span><span class="floor__label">要注意モンスター</span><span class="floor__count">5</span></div><div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="オルト・ガウロウ">
   <div class="card__media"><img src="https://lds-img.finalfantasyxiv.com/accimg2/08/a5/08a58e2b7f0efa9c95cd9303c5ba1a185d153073_110_110.jpg" alt="オルト・ガウロウ" loading="lazy" width="96" height="96"></div>
   <div class="card__body">
