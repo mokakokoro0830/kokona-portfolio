@@ -20,10 +20,7 @@ body{font-family:var(--font);background:
   color:var(--text);line-height:1.75;font-feature-settings:"palt";-webkit-font-smoothing:antialiased;letter-spacing:.01em;padding-bottom:64px}
 img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
-.side-decor{position:fixed;top:0;bottom:0;width:clamp(0px,calc((100vw - 1240px)/2),340px);background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.12);pointer-events:none;z-index:-1;filter:saturate(.85);transition:opacity .25s linear}
-.side-decor.left{left:0;-webkit-mask-image:linear-gradient(90deg,#000,transparent);mask-image:linear-gradient(90deg,#000,transparent)}
-.side-decor.right{right:0;transform:scaleX(-1);-webkit-mask-image:linear-gradient(90deg,#000,transparent);mask-image:linear-gradient(90deg,#000,transparent)}
-@media(max-width:1280px){.side-decor{display:none}}
+.moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;filter:saturate(.92);transition:opacity .25s linear}
 .hero{position:relative;padding:66px 0 36px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(7,11,19,.5),rgba(9,13,21,.7) 52%,rgba(245,247,252,.97) 99%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
   color:#04323b;background:linear-gradient(90deg,#a5f3fc,#bbf7d0);padding:.42em 1em;border-radius:var(--r-full)}
@@ -45,12 +42,12 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .toggle{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text-muted);cursor:pointer;border:1px solid var(--border-strong);background:var(--surface-1);padding:5px 11px;border-radius:var(--r-full);user-select:none;transition:all var(--dur) var(--ease)}
 .toggle input{accent-color:var(--primary)}
 .toggle:has(input:checked){color:var(--primary);border-color:var(--primary);background:#ecfeff}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted);padding:14px 0 0}
+.legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:.78rem;color:var(--text);background:rgba(255,255,255,.7);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-top:14px;backdrop-filter:blur(4px)}
 .legend .chip{transform:scale(.92)}
 .floor{padding-top:30px;scroll-margin-top:64px}
 .floor__head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .floor__badge{font-family:Inter,sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.02em;color:#fff;background:linear-gradient(135deg,var(--cyan-500),var(--cyan-600));padding:7px 14px;border-radius:var(--r-sm);box-shadow:var(--sh-2)}
-.floor__label{font-weight:800;color:var(--text);font-size:1rem}
+.floor__label{font-weight:800;color:var(--text);font-size:1rem;text-shadow:0 1px 3px rgba(255,255,255,.85),0 0 8px rgba(255,255,255,.6)}
 .floor__count{font-size:.72rem;font-weight:800;color:var(--text-muted);border:1px solid var(--border-strong);border-radius:var(--r-full);min-width:24px;height:24px;display:inline-grid;place-items:center;padding:0 7px;background:var(--surface-1)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
 .card{display:flex;gap:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:13px;box-shadow:var(--sh-1);transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);position:relative;overflow:hidden}
@@ -76,10 +73,10 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .notes li{margin:2px 0}.notes li::marker{color:var(--primary)}
 .empty{display:none;color:var(--text-muted);padding:30px;text-align:center}
 .is-empty .floor{display:none}.is-empty .empty{display:block}
-footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0}
+footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0;text-shadow:0 1px 3px rgba(255,255,255,.85)}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
 </style></head><body>
-<div class="side-decor left" aria-hidden="true"></div><div class="side-decor right" aria-hidden="true"></div>
+<div class="moon-full" aria-hidden="true"></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
@@ -346,6 +343,6 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
 [q,os,od].forEach(el=>el.addEventListener('input',apply));
 // スクロールで月の濃さを変える（上=薄い → 下=濃い）。動きを嫌う設定は尊重
 const root=document.documentElement;
-function moon(){const max=Math.max(1,document.body.scrollHeight-innerHeight);const p=Math.min(1,Math.max(0,scrollY/max));root.style.setProperty('--moon-op',(0.10+p*0.5).toFixed(3));}
-if(!matchMedia('(prefers-reduced-motion:reduce)').matches){let t=false;addEventListener('scroll',()=>{if(!t){t=true;requestAnimationFrame(()=>{moon();t=false;});}},{passive:true});addEventListener('resize',moon,{passive:true});moon();}else{root.style.setProperty('--moon-op','.2');}
+function moon(){const max=Math.max(1,document.body.scrollHeight-innerHeight);const p=Math.min(1,Math.max(0,scrollY/max));root.style.setProperty('--moon-op',(0.16+p*0.62).toFixed(3));}
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){let t=false;addEventListener('scroll',()=>{if(!t){t=true;requestAnimationFrame(()=>{moon();t=false;});}},{passive:true});addEventListener('resize',moon,{passive:true});moon();}else{root.style.setProperty('--moon-op','.32');}
 </script></body></html>
