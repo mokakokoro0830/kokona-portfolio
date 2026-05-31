@@ -41,6 +41,13 @@
   "blogPost": [
     {
       "@type": "BlogPosting",
+      "headline": "動きで「何をしてくれる会社か」を伝える — OFISYS 制作記録",
+      "url": "https://kokona-makes.dev/blog/ofisys.html",
+      "datePublished": "2026-05-31",
+      "author": { "@type": "Person", "name": "Kokona" }
+    },
+    {
+      "@type": "BlogPosting",
       "headline": "「社内文書をAIに読ませる」仕組みを作った — RAG 実装記録",
       "url": "https://kokona-makes.dev/blog/rag-demo.html",
       "datePublished": "2026-05-18",
@@ -471,13 +478,13 @@ body {
 <!-- Category filter tabs -->
 <div class="cat-filter" role="tablist" aria-label="記事カテゴリ">
   <button class="cat-btn is-active" data-filter="all" role="tab" aria-selected="true">
-    すべて<span class="cat-count">10</span>
+    すべて<span class="cat-count">11</span>
   </button>
   <button class="cat-btn" data-filter="dev" role="tab" aria-selected="false">
     開発ログ<span class="cat-count">7</span>
   </button>
   <button class="cat-btn" data-filter="site" role="tab" aria-selected="false">
-    HP・サイト制作<span class="cat-count">2</span>
+    HP・サイト制作<span class="cat-count">3</span>
   </button>
   <button class="cat-btn" data-filter="auto" role="tab" aria-selected="false">
     自動化<span class="cat-count">1</span>
@@ -485,6 +492,21 @@ body {
 </div>
 
 <div class="blog-list">
+
+  <a href="ofisys.html" class="blog-card reveal" data-cat="site">
+    <div class="blog-card__thumb">
+      <img src="../images/thumb-ofisys.jpg" alt="OFISYS — ひとり情シス代行サブスクLP" loading="lazy">
+    </div>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span class="blog-card__date">2026.05.31</span>
+        <span class="blog-card__tag">HP・サイト制作</span>
+      </div>
+      <h2 class="blog-card__title">動きで「何をしてくれる会社か」を伝える<br>— OFISYS 制作記録</h2>
+      <p class="blog-card__desc">中小企業向け「ひとり情シス代行」サブスクを想定したBtoB SaaSのLP。タイプライター見出し、道具箱からサービスが飛び出す演出、料金の月年トグルなど、動きでサービスの中身を伝える設計に。ロゴ・画像までオリジナルで揃えた制作記録。</p>
+      <span class="blog-card__link">Read more →</span>
+    </div>
+  </a>
 
   <a href="rag-demo.html" class="blog-card reveal" data-cat="dev">
     <div class="blog-card__thumb">

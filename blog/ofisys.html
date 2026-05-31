@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>動きで「何をしてくれる会社か」を伝える — OFISYS 制作記録 — Kokona Blog</title>
+<meta name="description" content="中小企業向けの『ひとり情シス代行』サブスクを想定したBtoB SaaSのLPを制作。タイプライター見出し、道具箱からサービスが飛び出す演出、料金トグルなど、動きでサービスの中身を伝えるLPの制作記録。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/ofisys.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/ofisys.html">
+<meta property="og:title" content="動きで「何をしてくれる会社か」を伝える — OFISYS 制作記録">
+<meta property="og:description" content="中小企業向けの『ひとり情シス代行』サブスクを想定したBtoB SaaSのLP。動きでサービスの中身を伝える設計と、ロゴ・画像までオリジナルで揃えた制作記録。">
+<meta property="og:image" content="https://kokona-makes.dev/images/thumb-ofisys.jpg">
+<meta property="article:published_time" content="2026-05-31">
+<meta property="article:author" content="Kokona">
+<meta property="article:section" content="制作記録">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="動きで「何をしてくれる会社か」を伝える — OFISYS 制作記録">
+<meta name="twitter:description" content="BtoB SaaSのLPを、動きでサービスの中身が伝わるように作った制作記録。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/thumb-ofisys.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "動きで「何をしてくれる会社か」を伝える — OFISYS 制作記録",
+  "description": "中小企業向けの『ひとり情シス代行』サブスクを想定したBtoB SaaSのLP。動きでサービスの中身を伝える設計と、ロゴ・画像までオリジナルで揃えた制作記録。",
+  "url": "https://kokona-makes.dev/blog/ofisys.html",
+  "image": "https://kokona-makes.dev/images/thumb-ofisys.jpg",
+  "datePublished": "2026-05-31",
+  "dateModified": "2026-05-31",
+  "inLanguage": "ja",
+  "articleSection": "制作記録",
+  "author": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kokona-makes.dev/blog/ofisys.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://kokona-makes.dev/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://kokona-makes.dev/blog/"},
+    {"@type":"ListItem","position":3,"name":"OFISYS 制作記録"}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #F5F0E8; color: #2A1F12; }
+#scroll-progress { background: linear-gradient(to bottom, #8B6914, #5C4510); }
+
+.breadcrumb {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 110px 32px 0;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+}
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 8px; color: rgba(139,105,20,0.5); }
+.breadcrumb a { color: #8B6914; text-decoration: none; transition: opacity 0.2s; }
+.breadcrumb a:hover { opacity: 0.65; }
+.breadcrumb [aria-current] { color: #5C4510; font-style: italic; }
+
+.art-cover {
+  max-width: 1080px;
+  margin: 110px auto 0;
+  padding: 0 32px;
+}
+.art-cover__image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+  box-shadow: 0 20px 60px rgba(28,16,8,0.15);
+}
+
+.art-hero { max-width: 760px; margin: 0 auto; padding: 50px 32px 50px; text-align: left; }
+.art-hero__meta { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; }
+.art-hero__date {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #5C4510;
+  font-weight: 500;
+  background: #EDE5D4;
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+.art-hero__tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6914;
+  border: 1px solid #C4A45A;
+  padding: 3px 12px;
+  border-radius: 2px;
+}
+.art-hero__title {
+  font-family: var(--jp-mincho);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #1C1008;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+.art-hero__lead {
+  font-size: 0.95rem;
+  color: #3D2B1A;
+  line-height: 2;
+  border-left: 3px solid #C4A45A;
+  padding-left: 22px;
+}
+
+.art-body { max-width: 760px; margin: 0 auto; padding: 0 32px 120px; font-size: 0.95rem; line-height: 2.1; color: #2A1F12; }
+.art-body p { margin: 0 0 22px; }
+.art-body h2 {
+  font-family: var(--jp-mincho);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #1C1008;
+  margin: 60px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(180,145,80,0.4);
+}
+.art-body h3 {
+  font-family: var(--jp-mincho);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #1C1008;
+  margin: 36px 0 14px;
+}
+.art-body ul { margin: 0 0 22px 24px; }
+.art-body li { margin-bottom: 6px; }
+.art-body strong { color: #1C1008; font-weight: 600; }
+.art-body code {
+  font-family: 'Menlo', monospace;
+  font-size: 0.85em;
+  background: #EDE5D4;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #5C4510;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.stack-item {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-radius: 4px;
+  padding: 20px;
+}
+.stack-item__name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: #1C1008;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.stack-item__role {
+  font-size: 0.78rem;
+  color: #8B6914;
+  line-height: 1.7;
+}
+
+.result-box {
+  background: #EDE5D4;
+  border: 1px solid rgba(180,145,80,0.3);
+  border-left: 3px solid #C4A45A;
+  border-radius: 4px;
+  padding: 28px;
+  margin: 32px 0;
+}
+.result-box__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: #8B6914;
+  margin-bottom: 14px;
+}
+.result-box p { font-size: 0.88rem; color: #2A1F12; margin: 0; line-height: 1.9; }
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 32px 0;
+}
+.case-gallery__item {
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 16 / 10;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.case-gallery__label {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(245, 240, 232, 0.92);
+  color: #1A2A4A;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.inline-image {
+  margin: 36px 0;
+}
+.inline-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid rgba(180,145,80,0.3);
+}
+.inline-image__caption {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  color: #8B6914;
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .art-cover__image { aspect-ratio: 4 / 3; }
+}
+
+.cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 36px 0;
+}
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2A1F12;
+  color: #F5F0E8;
+  padding: 14px 24px;
+  border-radius: 2px;
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.cta-link:hover { background: #5C4510; }
+.cta-link--outline {
+  background: transparent;
+  color: #5C4510;
+  border: 1px solid #C4A45A;
+}
+.cta-link--outline:hover { background: #EDE5D4; }
+
+.art-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: #8B6914;
+  margin-bottom: 48px;
+  transition: opacity 0.2s;
+}
+.art-back:hover { opacity: 0.65; }
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:#8B6914">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li><a href="./">Blog</a></li>
+    <li aria-current="page">OFISYS 制作記録</li>
+  </ol>
+</nav>
+
+<div class="art-cover">
+  <div class="art-cover__image" style="background-image: url('../images/thumb-ofisys.jpg')" role="img" aria-label="OFISYS ヒーロービジュアル"></div>
+</div>
+
+<div class="art-hero">
+  <div class="art-hero__meta">
+    <span class="art-hero__date">2026.05.31</span>
+    <span class="art-hero__tag">制作記録</span>
+  </div>
+  <h1 class="art-hero__title">動きで「何をしてくれる会社か」を伝える<br>— OFISYS 制作記録</h1>
+  <p class="art-hero__lead">
+    「社内にIT担当者がいない」中小企業に向けた、<br>
+    ひとり情シス代行サブスク「OFISYS（オフィシス）」のLPを作った。<br>
+    文章で説明する代わりに、画面の動きでサービスの中身が伝わるように設計した試み。
+  </p>
+</div>
+
+<div class="art-body">
+
+  <a href="index.html" class="art-back">← Blog に戻る</a>
+
+  <p>BtoB（会社向け）のサービスサイトは、扱う内容が形のないものほど難しい。「ヘルプデスク」「ネットワーク保守」と文字で並べても、読む人の頭にはなかなか絵が浮かばない。今回はそこを、<strong>画面の動きそのものでサービスの中身を伝える</strong>ことに挑戦した。</p>
+  <p>作ったのは、架空のBtoB SaaS <strong>「OFISYS（オフィシス）」</strong>。LPは公開済みで、実物をそのまま触れる。これまでLP・予約システム・コーポレートサイトは作ってきたが、<strong>「月額サブスク型サービスのLP」</strong>は手元になかったので、ポートフォリオの新しい1枚として制作した。</p>
+
+  <h2>何を作ったか</h2>
+  <p>
+    OFISYS は、<strong>「社内に専任のIT担当者がいない」中小企業に向けた、ひとり情シス代行の月額サブスク</strong>という設定のサービス。
+    ヘルプデスク・ネットワーク保守・セキュリティ・PCのキッティング（初期設定）を、月額定額でまるごと引き受ける——という想定で設計した。
+  </p>
+  <p>
+    BtoB SaaSのLPに必要な要素——<strong>信頼感のあるヒーロー、サービス内容の整理、料金プランの比較、よくある質問</strong>——を、
+    外部のフレームワークを一切使わず、純粋な HTML / CSS / JavaScript だけで実装している。
+  </p>
+
+  <h2>できること（4つのサービス）</h2>
+  <p>サービスの中身を表すアイコン画像も、トンマナを揃えて4枚オリジナルで制作した。色味も世界観も「同じサービスの絵」として一貫させている。</p>
+
+  <div class="case-gallery">
+    <div class="case-gallery__item" style="background-image: url('../images/ofisys-helpdesk.jpg')" role="img" aria-label="ヘルプデスクのサービスアイコン">
+      <span class="case-gallery__label">Help Desk</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/ofisys-network.jpg')" role="img" aria-label="ネットワーク保守のサービスアイコン">
+      <span class="case-gallery__label">Network</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/ofisys-security.jpg')" role="img" aria-label="セキュリティのサービスアイコン">
+      <span class="case-gallery__label">Security</span>
+    </div>
+    <div class="case-gallery__item" style="background-image: url('../images/ofisys-kitting.jpg')" role="img" aria-label="PCキッティングのサービスアイコン">
+      <span class="case-gallery__label">Kitting</span>
+    </div>
+  </div>
+
+  <h2>こだわった「動き」</h2>
+  <p>このLPの主役は、文章ではなく動きだ。意味のない装飾ではなく、<strong>一つひとつの動きが「サービスの理解」につながる</strong>ように設計した。</p>
+
+  <h3>1. 打ち替わる見出し（タイプライター演出）</h3>
+  <p>ヒーロー（一番上の大見出し）は、セリフ体の文字が1文字ずつ打ち込まれ、語尾だけが入れ替わる演出にした。「IT業務を、◯◯」の◯◯がタイプし直されることで、<strong>このサービスが何を解決してくれるのかが、読む前に視線へ飛び込んでくる</strong>。最初の数秒で興味を引くための仕掛けだ。</p>
+
+  <h3>2. 道具箱からサービスが飛び出す</h3>
+  <p>「できること」のセクションは、スクロールに合わせて<strong>道具箱の中から4つのサービスが順番に飛び出してくる</strong>演出にした。画面を固定（sticky）したまま、時間差とわずかな跳ね返り（オーバーシュート）をつけて飛び出させることで、<strong>「IT代行＝あなたの会社の道具箱」というテーマを、言葉でなく動きで伝える</strong>。読み手が手を動かす（スクロールする）たびに、サービスが一つずつ顔を出す。</p>
+
+  <h3>3. カーソルを乗せると詳細がひらく</h3>
+  <p>ヒーローには「サービスが繋がる」構図を採用。中央の専任チームを4つのサービスが取り囲み、<strong>各サービスにカーソルを乗せる（スマホはタップ）と、その場で詳細がポップ</strong>する。全部を一度に説明せず、興味を持った部分だけ深掘りできる作りにした。</p>
+
+  <h3>4. 料金は月払い／年払いをその場で切り替え</h3>
+  <p>料金表には、<strong>月払い・年払いを切り替えるトグル</strong>を付けた。スイッチを押すと金額がその場で書き換わる、SaaSサイトでおなじみのUI。「年払いだといくら安くなるか」を、ページを移動せず一目で比べられる。</p>
+  <p>このほか、よくある質問はクリックで開閉する<strong>アコーディオン</strong>、スクロールで追従するヘッダー、スマホ用メニューなど、細部の挙動まで素のJavaScriptで実装している。外部ライブラリに頼らないぶん<strong>ページが軽く、保守のときに「ライブラリのバージョン上げ」みたいな引き継ぎコストが出ない</strong>。</p>
+
+  <div class="inline-image">
+    <img src="../images/thumb-ofisys.jpg" alt="OFISYS ヒーロービジュアル">
+    <p class="inline-image__caption">— ブルー基調のSaaSムード。中央のチームを4つのサービスが囲む構図</p>
+  </div>
+
+  <h2>「世界水準のデザイン基準」を持ち込む</h2>
+  <p>
+    今回は制作と並行して、<strong>自分用のデザインのものさし（デザインシステム）</strong>を整えた。
+    余白・文字サイズ・配色・動きの作法をルール化しておき、案件ごとに「ムード」を切り替えて使えるようにしたもの。
+    OFISYS は、その中の <strong>「SaaS（ブルー基調・信頼感）」ムードの基準実例</strong>として作っている。
+  </p>
+  <p>
+    狙いはシンプルで、<strong>毎回ゼロから悩むのをやめて、品質のスタートラインを引き上げること</strong>。
+    色は <code>CSS Custom Properties</code>（テーマ変数）で一括管理しているので、ブランドカラーを変えたくなっても1箇所の数値を書き換えるだけで全体に反映される。
+  </p>
+
+  <h2>ロゴも画像も、オリジナルで揃える</h2>
+  <p>OFISYS は、<strong>ロゴ・サービスアイコン・人物イラストまで、すべてオリジナルで制作</strong>している。ストック画像は1枚も使っていない。</p>
+  <ul>
+    <li><strong>ロゴ</strong>：頭文字「O」をグラデーションのリングで表現したシンボル。拡大しても滲まない <code>SVG</code> 形式で、どんな画面サイズでも輪郭がくっきり出る</li>
+    <li><strong>サービスアイコン4枚・人物イラスト</strong>：AI画像生成（gpt-image-2）でトンマナを統一して作成。色も世界観も「同じサービスの絵」として揃えた</li>
+  </ul>
+  <p>「写真を撮る」「素材を買う」をやめて、<strong>必要なときに必要なだけ作る</strong>に切り替えると、ブランドの一貫性も、コストも、時間も同時に良くなる。</p>
+
+  <h2>使った道具</h2>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <p class="stack-item__name">HTML / CSS</p>
+      <p class="stack-item__role">ページの骨組みと見た目を作る言語</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">JavaScript</p>
+      <p class="stack-item__role">タイプライター・道具箱演出・料金トグルなど「動き」を素の状態から実装</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">SVG ロゴ</p>
+      <p class="stack-item__role">拡大しても滲まないベクター形式のオリジナルロゴ</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">gpt-image-2</p>
+      <p class="stack-item__role">サービスアイコン・人物イラストを生成</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Cloudflare Pages</p>
+      <p class="stack-item__role">サイトを世界中に高速配信（無料・SSL自動）</p>
+    </div>
+    <div class="stack-item">
+      <p class="stack-item__name">Claude Code</p>
+      <p class="stack-item__role">AIコーディング環境<br>標準の半分〜2/3の時間で実装</p>
+    </div>
+  </div>
+
+  <h2>ポートフォリオへの統合</h2>
+  <p>
+    最後に、これを kokona-makes.dev の <strong>Works No.13</strong> として追加した。
+    作品詳細ページには概要・こだわり・技術構成を載せて、「サイトを見る →」ボタンから本物の OFISYS へ飛べるようにしている。
+    ポートフォリオトップ → 作品詳細 → 実物の3ステップで、「文章で理解 → 実物で確認」が自然に流れる動線だ。
+  </p>
+
+  <div class="result-box">
+    <p class="result-box__label">— What I Made</p>
+    <p>
+      形のないサービスほど、言葉だけでは伝わりにくい。
+      だからこのLPは、タイプライターも、道具箱から飛び出す演出も、料金トグルも、
+      ぜんぶ「サービスの中身を理解してもらう」という1つの目的に向けて作った。
+      動きは飾りではなく、説明の手段になり得る——それを確かめるための1枚。
+    </p>
+  </div>
+
+  <div class="cta-links">
+    <a href="https://ofisys.pages.dev/" target="_blank" rel="noopener" class="cta-link">サイトを見る →</a>
+    <a href="../works/ofisys.html" class="cta-link cta-link--outline">作品詳細を見る →</a>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:40px 0 60px;font-family:var(--serif);font-style:italic;font-size:0.78rem;color:#8B6914;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = (scrolled / total * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
