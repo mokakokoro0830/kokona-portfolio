@@ -47,6 +47,12 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .s4{top:-8vh;left:64vw;--ang:152deg;--dist:66vw;--len:120px;--d:26s;--dl:17s}
 .witch{display:none;position:fixed;top:41%;left:50%;width:clamp(46px,5.2vw,78px);height:auto;z-index:-1;pointer-events:none;opacity:0;animation:witchFly 13s linear infinite;animation-delay:2s;will-change:transform,opacity}
 @keyframes witchFly{0%,66%{opacity:0;transform:translate(-50%,-50%) translate(22vw,-2vh)}72%{opacity:.92}93%{opacity:.92}100%{opacity:0;transform:translate(-50%,-50%) translate(-22vw,2vh)}}
+.moon-scene{position:fixed;top:74px;right:24px;width:132px;height:132px;z-index:7;pointer-events:none}
+.moon-disc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 35%,#fff8e6,#ffe9b6 44%,#f1cd82 74%,#e3b365 100%);box-shadow:0 0 34px 7px rgba(255,223,150,.5),inset -7px -8px 20px rgba(150,108,58,.32)}
+.moon-scene .witch2{position:absolute;top:50%;left:50%;width:58px;height:auto;opacity:0;animation:cross 9s linear infinite;animation-delay:2s}
+@keyframes cross{0%,56%{opacity:0;transform:translate(-50%,-50%) translateX(110px)}63%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) translateX(-110px)}}
+@media(max-width:700px){.moon-scene{top:auto;bottom:18px;right:10px;transform:scale(.72);transform-origin:bottom right}}
+@media(prefers-reduced-motion:reduce){.moon-scene .witch2{display:none}}
 @media (prefers-reduced-motion:reduce){.shoot{display:none}.moon-glow{animation:none;opacity:.24}.witch{display:none}}
 .hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
@@ -107,6 +113,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
 <div class="moon-glow" aria-hidden="true"></div>
 <div class="sky" aria-hidden="true"><span class="shoot s1"><i></i></span><span class="shoot s2"><i></i></span><span class="shoot s3"><i></i></span><span class="shoot s4"><i></i></span></div>
 <img class="witch" src="img/witch.png" alt="" aria-hidden="true">
+<div class="moon-scene" aria-hidden="true"><div class="moon-disc"></div><img class="witch2" src="img/witch.png" alt=""></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
