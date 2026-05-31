@@ -36,13 +36,13 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
 .moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;filter:saturate(.92);transition:opacity .25s linear}
 .sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:calc(.25 + var(--moon-op,.14))}
-.shoot{position:absolute;top:0;left:0;opacity:0;will-change:transform,opacity;animation:fly var(--d,14s) cubic-bezier(.45,0,.25,1) infinite;animation-delay:var(--dl,0s)}
-.shoot i{display:block;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));transform:rotate(18deg);filter:drop-shadow(0 0 5px rgba(190,225,255,.95))}
-@keyframes fly{0%{opacity:0;transform:translate(var(--x0),var(--y0))}5%{opacity:0}10%{opacity:1}28%{opacity:1}44%{opacity:0;transform:translate(var(--x1),var(--y1))}100%{opacity:0;transform:translate(var(--x1),var(--y1))}}
-.s1{--x0:86vw;--y0:-8vh;--x1:34vw;--y1:42vh;--d:11s;--dl:1s}
-.s2{--x0:72vw;--y0:-12vh;--x1:18vw;--y1:34vh;--d:16s;--dl:5s}
-.s3{--x0:97vw;--y0:5vh;--x1:46vw;--y1:56vh;--d:21s;--dl:11s}
-.s4{--x0:62vw;--y0:-6vh;--x1:6vw;--y1:30vh;--d:26s;--dl:17s}
+.shoot{position:absolute;opacity:0;will-change:transform,opacity;animation:fly var(--d,16s) cubic-bezier(.4,0,.2,1) infinite;animation-delay:var(--dl,0s)}
+.shoot i{display:block;width:var(--len,150px);height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);filter:drop-shadow(0 0 5px rgba(190,225,255,.95))}
+@keyframes fly{0%{opacity:0;transform:rotate(var(--ang)) translateX(0)}6%{opacity:0}11%{opacity:1}30%{opacity:1}47%{opacity:0;transform:rotate(var(--ang)) translateX(var(--dist))}100%{opacity:0;transform:rotate(var(--ang)) translateX(var(--dist))}}
+.s1{top:-6vh;left:90vw;--ang:152deg;--dist:82vw;--len:160px;--d:11s;--dl:1s}
+.s2{top:-12vh;left:74vw;--ang:152deg;--dist:72vw;--len:130px;--d:16s;--dl:5s}
+.s3{top:6vh;left:99vw;--ang:152deg;--dist:88vw;--len:150px;--d:21s;--dl:11s}
+.s4{top:-8vh;left:64vw;--ang:152deg;--dist:66vw;--len:120px;--d:26s;--dl:17s}
 @media (prefers-reduced-motion:reduce){.shoot{display:none}}
 .hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
