@@ -34,8 +34,9 @@ body{font-family:var(--font);background:
   color:var(--text);line-height:1.75;font-feature-settings:"palt";-webkit-font-smoothing:antialiased;letter-spacing:.01em;padding-bottom:64px}
 img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
-.moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;transition:opacity .25s linear;animation:moonGlow 7s ease-in-out infinite}
-@keyframes moonGlow{0%,100%{filter:saturate(.9) brightness(.78)}50%{filter:saturate(1.08) brightness(1.55)}}
+.moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") 50% 41%/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;transition:opacity .25s linear}
+.moon-glow{position:fixed;left:50%;top:41%;width:44vmin;height:44vmin;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,249,228,.95),rgba(255,241,208,.45) 26%,rgba(255,236,196,0) 60%);mix-blend-mode:screen;pointer-events:none;z-index:-1;opacity:0;animation:moonPulse 6.5s ease-in-out infinite}
+@keyframes moonPulse{0%,100%{opacity:.04}50%{opacity:.52}}
 .sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:calc(.25 + var(--moon-op,.14))}
 .shoot{position:absolute;opacity:0;will-change:transform,opacity;animation:fly var(--d,16s) cubic-bezier(.4,0,.2,1) infinite;animation-delay:var(--dl,0s)}
 .shoot i{display:block;width:var(--len,150px);height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);filter:drop-shadow(0 0 5px rgba(190,225,255,.95))}
@@ -44,7 +45,7 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .s2{top:-12vh;left:74vw;--ang:152deg;--dist:72vw;--len:130px;--d:16s;--dl:5s}
 .s3{top:6vh;left:99vw;--ang:152deg;--dist:88vw;--len:150px;--d:21s;--dl:11s}
 .s4{top:-8vh;left:64vw;--ang:152deg;--dist:66vw;--len:120px;--d:26s;--dl:17s}
-@media (prefers-reduced-motion:reduce){.shoot{display:none}.moon-full{animation:none}}
+@media (prefers-reduced-motion:reduce){.shoot{display:none}.moon-glow{animation:none;opacity:.24}}
 .hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
   color:#04323b;background:linear-gradient(90deg,#a5f3fc,#bbf7d0);padding:.42em 1em;border-radius:var(--r-full)}
@@ -101,6 +102,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
 @media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
 </style></head><body>
 <div class="moon-full" aria-hidden="true"></div>
+<div class="moon-glow" aria-hidden="true"></div>
 <div class="sky" aria-hidden="true"><span class="shoot s1"><i></i></span><span class="shoot s2"><i></i></span><span class="shoot s3"><i></i></span><span class="shoot s4"><i></i></span></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
