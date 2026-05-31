@@ -35,6 +35,15 @@ body{font-family:var(--font);background:
 img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
 .moon-full{position:fixed;inset:0;background:url("img/moon-bg.jpg") center/cover no-repeat;opacity:var(--moon-op,.14);pointer-events:none;z-index:-1;filter:saturate(.92);transition:opacity .25s linear}
+.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:calc(.25 + var(--moon-op,.14))}
+.shoot{position:absolute;top:0;left:0;opacity:0;will-change:transform,opacity;animation:fly var(--d,14s) cubic-bezier(.45,0,.25,1) infinite;animation-delay:var(--dl,0s)}
+.shoot i{display:block;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));transform:rotate(18deg);filter:drop-shadow(0 0 5px rgba(190,225,255,.95))}
+@keyframes fly{0%{opacity:0;transform:translate(var(--x0),var(--y0))}5%{opacity:0}10%{opacity:1}28%{opacity:1}44%{opacity:0;transform:translate(var(--x1),var(--y1))}100%{opacity:0;transform:translate(var(--x1),var(--y1))}}
+.s1{--x0:86vw;--y0:-8vh;--x1:34vw;--y1:42vh;--d:11s;--dl:1s}
+.s2{--x0:72vw;--y0:-12vh;--x1:18vw;--y1:34vh;--d:16s;--dl:5s}
+.s3{--x0:97vw;--y0:5vh;--x1:46vw;--y1:56vh;--d:21s;--dl:11s}
+.s4{--x0:62vw;--y0:-6vh;--x1:6vw;--y1:30vh;--d:26s;--dl:17s}
+@media (prefers-reduced-motion:reduce){.shoot{display:none}}
 .hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
   color:#04323b;background:linear-gradient(90deg,#a5f3fc,#bbf7d0);padding:.42em 1em;border-radius:var(--r-full)}
@@ -91,6 +100,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
 @media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
 </style></head><body>
 <div class="moon-full" aria-hidden="true"></div>
+<div class="sky" aria-hidden="true"><span class="shoot s1"><i></i></span><span class="shoot s2"><i></i></span><span class="shoot s3"><i></i></span><span class="shoot s4"><i></i></span></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
