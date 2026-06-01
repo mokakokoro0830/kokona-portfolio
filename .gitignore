@@ -6,6 +6,10 @@ images/service-threads.png
 # OS
 .DS_Store
 
+# session handoff notes (internal, do not publish)
+.claude/handoff.md
+.claude/handoff.md.bak
+
 # wrangler files
 .wrangler
 .dev.vars*
