@@ -22,6 +22,35 @@
   .works-filter-btn.is-active { color:var(--bg); background:var(--gold); border-color:var(--gold); }
   .works-filter-count { font-style:normal; font-size:0.68rem; opacity:0.6; margin-left:5px; }
   .work-card[hidden] { display:none !important; visibility:hidden !important; }
+
+  /* Services / できること */
+  .services { padding:140px 0; background:var(--bg); }
+  .services__grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:64px; }
+  .service-card { padding:44px 38px; background:var(--bg-3); border:1px solid var(--line); transition:border-color .3s, transform .3s; }
+  .service-card:hover { border-color:rgba(191,161,105,0.4); transform:translateY(-3px); }
+  .service-card__no { font-family:var(--serif); font-style:italic; font-size:1.5rem; color:var(--gold-d); letter-spacing:0.1em; line-height:1; }
+  .service-card__title { font-family:var(--jp-mincho); font-size:1.15rem; font-weight:500; letter-spacing:0.08em; color:var(--paper); margin:10px 0 14px; }
+  .service-card__desc { font-family:var(--jp-mincho); font-size:0.85rem; color:var(--paper-dim); line-height:1.95; letter-spacing:0.04em; }
+  .service-card__tag { display:inline-block; margin-top:18px; font-family:var(--sans); font-size:0.66rem; letter-spacing:0.15em; color:var(--gold); border:1px solid rgba(191,161,105,0.3); padding:3px 10px; border-radius:2px; }
+  .services__note { text-align:center; margin-top:48px; font-family:var(--jp-mincho); font-size:0.9rem; color:var(--paper-dim); letter-spacing:0.06em; line-height:1.9; }
+  .services__cta { display:inline-block; margin-top:26px; font-family:var(--serif); font-style:italic; font-size:0.95rem; letter-spacing:0.18em; color:var(--bg); background:var(--gold); padding:14px 40px; text-decoration:none; transition:background .3s; }
+  .services__cta:hover { background:var(--gold-l); }
+  @media (max-width:760px){ .services__grid { grid-template-columns:1fr; } }
+
+  /* Showcase / 代表作ダイジェスト */
+  .showcase { padding:96px 0 64px; background:var(--bg); }
+  .showcase__head { text-align:center; margin-bottom:46px; }
+  .showcase__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .showcase-card { position:relative; display:block; aspect-ratio:4/3; border-radius:3px; overflow:hidden; border:1px solid var(--line); text-decoration:none; }
+  .showcase-card__img { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s var(--ease); }
+  .showcase-card:hover .showcase-card__img { transform:scale(1.06); }
+  .showcase-card__overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,6,0.92) 0%, rgba(10,9,6,0.2) 55%, rgba(10,9,6,0) 100%); }
+  .showcase-card__cat { position:absolute; top:12px; left:14px; font-family:var(--sans); font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-l); text-transform:uppercase; }
+  .showcase-card__name { position:absolute; bottom:30px; left:14px; right:14px; font-family:var(--jp-mincho); font-size:1.05rem; font-weight:500; letter-spacing:0.06em; color:var(--paper); margin:0; }
+  .showcase-card__jp { position:absolute; bottom:12px; left:14px; right:14px; font-family:var(--jp-mincho); font-size:0.66rem; color:var(--paper-dim); letter-spacing:0.04em; margin:0; }
+  .showcase__more { font-family:var(--serif); font-style:italic; font-size:0.9rem; letter-spacing:0.18em; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(191,161,105,0.3); padding-bottom:3px; transition:color .3s; }
+  .showcase__more:hover { color:var(--gold-l); }
+  @media (max-width:760px){ .showcase__grid { grid-template-columns:repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -30,9 +59,10 @@
 <!-- Nav -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a href="#" class="nav__logo">Kokona Blog</a>
+    <a href="#" class="nav__logo">Kokona</a>
     <nav class="nav__links">
       <a href="#about">About</a>
+      <a href="#services">Services</a>
       <a href="#works">Works</a>
       <a href="#process">Process</a>
       <a href="blog/">Blog</a>
@@ -54,6 +84,49 @@
   </div>
   <div class="hero__scroll">
     <span></span>
+  </div>
+</section>
+
+<!-- Showcase: 代表作ダイジェスト -->
+<section class="showcase" id="showcase">
+  <div class="wrap">
+    <div class="showcase__head reveal">
+      <p class="kicker">— Selected Works</p>
+      <h2 class="sec-title">こんなものを作っています</h2>
+    </div>
+    <div class="showcase__grid">
+      <a href="works/ofisys.html" class="showcase-card reveal">
+        <div class="showcase-card__img" style="background-image:url('images/thumb-ofisys.jpg')"></div>
+        <div class="showcase-card__overlay"></div>
+        <p class="showcase-card__cat">LP・サービスサイト</p>
+        <p class="showcase-card__name">OFISYS</p>
+        <p class="showcase-card__jp">SaaSサービスのLP</p>
+      </a>
+      <a href="works/aileron.html" class="showcase-card reveal reveal-d1">
+        <div class="showcase-card__img" style="background-image:url('images/thumb-aileron.jpg')"></div>
+        <div class="showcase-card__overlay"></div>
+        <p class="showcase-card__cat">コーポレートサイト</p>
+        <p class="showcase-card__name">Aileron</p>
+        <p class="showcase-card__jp">会社サイト・全13ページ</p>
+      </a>
+      <a href="works/velaro.html" class="showcase-card reveal reveal-d2">
+        <div class="showcase-card__img" style="background-image:url('images/thumb-velaro.jpg')"></div>
+        <div class="showcase-card__overlay"></div>
+        <p class="showcase-card__cat">予約・受付システム</p>
+        <p class="showcase-card__name">VELARO</p>
+        <p class="showcase-card__jp">予約管理システム</p>
+      </a>
+      <a href="works/quill.html" class="showcase-card reveal reveal-d3">
+        <div class="showcase-card__img" style="background-image:url('images/thumb-quill.jpg')"></div>
+        <div class="showcase-card__overlay"></div>
+        <p class="showcase-card__cat">AIツール</p>
+        <p class="showcase-card__name">Quill</p>
+        <p class="showcase-card__jp">AI議事録システム</p>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:34px">
+      <a href="#works" class="showcase__more">すべての作品を見る →</a>
+    </div>
   </div>
 </section>
 
@@ -87,6 +160,50 @@
           <span>HTML / CSS</span>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal" style="text-align:center">
+      <p class="kicker">— Services</p>
+      <h2 class="sec-title">できること</h2>
+      <p class="sec-sub">— What I can build for you —</p>
+    </div>
+    <div class="services__grid">
+      <div class="service-card reveal">
+        <p class="service-card__no">01</p>
+        <h3 class="service-card__title">LP・ホームページ制作</h3>
+        <p class="service-card__desc">お店・サービス・会社の紹介ページを、スマホ対応・お問い合わせフォーム付きで。デザインから公開まで、ひとりで一気通貫。</p>
+        <span class="service-card__tag">LP / HP / コーポレート</span>
+      </div>
+      <div class="service-card reveal reveal-d1">
+        <p class="service-card__no">02</p>
+        <h3 class="service-card__title">予約・受付システム</h3>
+        <p class="service-card__desc">フォーム送信 → データ保存 → 自動メール・LINE通知 → 管理画面まで。受付や問い合わせ対応を、まるごと仕組みにします。</p>
+        <span class="service-card__tag">予約 / フォーム / 通知</span>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <p class="service-card__no">03</p>
+        <h3 class="service-card__title">業務の自動化</h3>
+        <p class="service-card__desc">毎日の繰り返し作業を、人が手を動かさなくていい形に。データ集計・転記・通知・定期チェックなどを、裏側で自動で回します。</p>
+        <span class="service-card__tag">GAS / API / Webhook</span>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <p class="service-card__no">04</p>
+        <h3 class="service-card__title">AIツール・組み込み</h3>
+        <p class="service-card__desc">社内文書をAIに答えさせる仕組み、チャットBot、文章の自動生成など。「AIで何ができる？」のご相談からお受けします。</p>
+        <span class="service-card__tag">Claude / OpenAI / RAG</span>
+      </div>
+    </div>
+    <p class="services__note">
+      料金は内容に応じてお見積もりします。<br>
+      「こんなことできる？」のご相談だけでも歓迎です。まずはお気軽にどうぞ。
+    </p>
+    <div style="text-align:center">
+      <a href="#contact" class="services__cta">相談する →</a>
     </div>
   </div>
 </section>
