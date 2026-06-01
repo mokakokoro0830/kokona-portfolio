@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ピルグリム・トラバース 要注意モンスター早見表（ちゃお監修）</title>
+<meta name="description" content="深層世界ピルグリム・トラバース（F1〜F100）の要注意モンスター早見表。スタン可・睡眠・巡回・危険度つきのナイト目線メモ。ちゃお監修。">
+<meta property="og:type" content="website"><meta property="og:site_name" content="kokona-makes.dev">
+<meta property="og:title" content="ピルグリム・トラバース 要注意モンスター早見表（ちゃお監修）">
+<meta property="og:description" content="深層世界ピルグリム・トラバース（F1〜F100）の要注意モンスターを、スタン可・睡眠・巡回・危険度つきで一覧化。">
+<meta property="og:url" content="https://kokona-makes.dev/pilgrim/">
+<meta property="og:image" content="https://kokona-makes.dev/pilgrim/img/bg.jpg">
+<meta property="og:image:width" content="1600"><meta property="og:image:height" content="837"><meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ピルグリム・トラバース 要注意モンスター早見表（ちゃお監修）">
+<meta name="twitter:description" content="深層世界ピルグリム・トラバース（F1〜F100）の要注意モンスター早見表。スタン可・睡眠・巡回・危険度つき。">
+<meta name="twitter:image" content="https://kokona-makes.dev/pilgrim/img/bg.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --emerald:#118a6e;--emerald-d:#0b6b54;--gold:#c39a3a;--gold-l:#e6c873;--rose:#d75a93;--violet:#7d6bd0;--cyan:#36b1c6;--crimson:#cf4444;
+ --bg:#f2f5ee;--surface-1:#ffffff;--surface-2:#eef3ea;--border:#e1e8d9;--border-strong:#ccd7bf;--text:#222e27;--text-muted:#65746a;--primary:var(--emerald);
+ --font:"Inter","Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+ --serif:"Cormorant Garamond","Noto Serif JP",serif;
+ --r-sm:8px;--r-md:14px;--r-full:999px;
+ --sh-1:0 1px 2px rgba(30,50,30,.06),0 1px 1px rgba(30,50,30,.04);--sh-2:0 8px 22px -12px rgba(30,60,40,.18);--sh-3:0 18px 44px -18px rgba(30,60,40,.28);
+ --dur:.18s;--ease:cubic-bezier(0,0,0,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:var(--font);background:
+ radial-gradient(1100px 520px at 84% -10%,rgba(17,138,110,.10),transparent 60%),
+ radial-gradient(820px 460px at -2% 0%,rgba(215,90,147,.07),transparent 55%),var(--bg);
+ color:var(--text);line-height:1.75;font-feature-settings:"palt";-webkit-font-smoothing:antialiased;letter-spacing:.01em;padding-bottom:64px}
+img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
+
+/* falling petals */
+.petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.petal{position:absolute;top:-6vh;width:13px;height:10px;border-radius:80% 0 80% 0;opacity:.0;will-change:transform,opacity;animation:fall var(--pd,15s) linear infinite;animation-delay:var(--pdl,0s)}
+@keyframes fall{
+ 0%{opacity:0;transform:translate(0,-6vh) rotate(0deg)}
+ 8%{opacity:.8}
+ 50%{transform:translate(var(--sway,40px),52vh) rotate(220deg)}
+ 92%{opacity:.8}
+ 100%{opacity:0;transform:translate(calc(var(--sway,40px)*-1),110vh) rotate(420deg)}}
+.p1{left:8vw;background:#f3a9c8;--pd:16s;--pdl:0s;--sway:50px}
+.p2{left:26vw;background:#e6c873;--pd:21s;--pdl:4s;--sway:-60px}
+.p3{left:46vw;background:#cbb3ef;--pd:19s;--pdl:8s;--sway:70px}
+.p4{left:64vw;background:#f3a9c8;--pd:24s;--pdl:2s;--sway:-45px}
+.p5{left:82vw;background:#a6e3d6;--pd:18s;--pdl:11s;--sway:55px}
+.p6{left:92vw;background:#f3a9c8;--pd:26s;--pdl:6s;--sway:-70px}
+@media(prefers-reduced-motion:reduce){.petal{display:none}}
+
+/* stained-glass rose window (corner) */
+.glass-scene{position:fixed;top:74px;right:24px;width:124px;height:124px;z-index:7}
+.glass{position:absolute;inset:0;border-radius:50%;cursor:pointer;overflow:hidden;border:4px solid var(--gold);
+ background:
+  repeating-conic-gradient(rgba(255,250,235,.5) 0deg 1.4deg, transparent 1.4deg 30deg),
+  conic-gradient(from 10deg,#1b9e7e,#36b1c6,#7d6bd0,#d75a93,#e6c873,#1b9e7e),
+  radial-gradient(circle at 50% 42%,rgba(255,255,245,.7),transparent 46%);
+ background-blend-mode:overlay,normal,screen;
+ box-shadow:0 0 26px 5px rgba(231,200,115,.5),0 0 60px 16px rgba(17,138,110,.22),inset 0 0 16px rgba(0,0,0,.25)}
+.glass::after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(255,250,235,.55);box-shadow:inset 0 0 12px rgba(0,0,0,.2)}
+.glass.glow{animation:glassShine 1.5s ease-out}
+@keyframes glassShine{0%,100%{filter:brightness(1);box-shadow:0 0 26px 5px rgba(231,200,115,.5),0 0 60px 16px rgba(17,138,110,.22),inset 0 0 16px rgba(0,0,0,.25)}
+ 35%{filter:brightness(1.4) saturate(1.2);box-shadow:0 0 44px 12px rgba(255,238,170,.85),0 0 120px 44px rgba(54,177,198,.45),inset 0 0 16px rgba(0,0,0,.15)}}
+@media(max-width:700px){.glass-scene{top:auto;bottom:18px;right:10px;transform:scale(.74);transform-origin:bottom right}}
+
+/* hero */
+.hero{position:relative;padding:70px 0 46px;color:#f4f1e6;overflow:hidden;border-bottom:1px solid var(--border);
+ background:linear-gradient(180deg,rgba(8,40,34,.62),rgba(10,48,40,.6) 55%,rgba(242,245,238,.97) 100%),url("img/bg.jpg") center 36%/cover no-repeat}
+.eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.1em;color:#2a2410;background:linear-gradient(90deg,#f0dd9a,#bfe7c9);padding:.42em 1.1em;border-radius:var(--r-full)}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5.2vw,3.3rem);font-weight:700;letter-spacing:.01em;margin:14px 0 6px;color:#fbf6e6;text-shadow:0 2px 22px rgba(0,0,0,.5)}
+.hero h1 .grad{background:linear-gradient(110deg,#ffe9a8,#e6c873 55%,#bfe7c9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .credit{font-family:var(--font);display:inline-block;margin-left:.5em;font-size:.3em;font-weight:700;letter-spacing:.06em;color:#f1e3a8;border:1px solid rgba(241,227,168,.6);border-radius:999px;padding:.3em 1em;vertical-align:middle;text-shadow:none;white-space:nowrap}
+.hero p{color:#e7ecdf;max-width:62ch;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.84rem;color:#e9eede;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.hero .meta b{color:#fff;font-weight:800;font-size:1.05rem}
+
+.bar{position:sticky;top:0;z-index:20;background:rgba(242,245,238,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0}
+.bar__row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nav{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto}
+.pill{font-size:.78rem;font-weight:700;color:var(--text-muted);border:1px solid var(--border-strong);padding:5px 11px;border-radius:var(--r-full);white-space:nowrap;background:var(--surface-1);transition:all var(--dur) var(--ease)}
+.pill:hover{color:var(--primary);border-color:var(--primary)}
+.controls{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{background:var(--surface-1);border:1px solid var(--border-strong);color:var(--text);border-radius:var(--r-full);padding:6px 13px;font-size:.82rem;width:170px}
+.search::placeholder{color:var(--text-muted)}
+.toggle{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text-muted);cursor:pointer;border:1px solid var(--border-strong);background:var(--surface-1);padding:5px 11px;border-radius:var(--r-full);user-select:none}
+.toggle input{accent-color:var(--primary)}.toggle:has(input:checked){color:var(--primary);border-color:var(--primary);background:#e9f7f1}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:.78rem;color:var(--text);background:rgba(255,255,255,.7);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-top:14px}
+.floor{padding-top:30px;scroll-margin-top:64px}
+.floor__head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.floor__badge{font-family:Inter,sans-serif;font-weight:800;font-size:.95rem;color:#fff;background:linear-gradient(135deg,var(--emerald),var(--emerald-d));padding:7px 14px;border-radius:var(--r-sm);box-shadow:var(--sh-2)}
+.floor__label{font-weight:800;color:var(--text);font-size:1rem;text-shadow:0 1px 3px rgba(255,255,255,.85)}
+.floor__count{font-size:.72rem;font-weight:800;color:var(--text-muted);border:1px solid var(--border-strong);border-radius:var(--r-full);min-width:24px;height:24px;display:inline-grid;place-items:center;padding:0 7px;background:var(--surface-1)}
+.floor-empty{color:var(--text-muted);font-size:.82rem;padding:6px 2px}
+.floor .grid:empty + .floor-empty{display:block}
+.floor .grid:not(:empty) + .floor-empty{display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
+
+.card{display:flex;gap:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:13px;box-shadow:var(--sh-1);transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);position:relative;overflow:hidden}
+.card.danger{border:2px solid var(--crimson)}.card.normal{border:2px solid var(--emerald)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border-strong)}
+.card.danger::before{background:linear-gradient(180deg,var(--crimson),#9c2f2f)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-3);border-color:var(--border-strong);z-index:20;overflow:visible}
+.card__media{flex:0 0 96px}
+.card__media img{width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);border:1px solid var(--border-strong);background:#eef3ea;position:relative;z-index:1;cursor:zoom-in;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card__media img:hover{transform:scale(2.7);transform-origin:left center;z-index:40;border-color:var(--primary);box-shadow:0 16px 40px -10px rgba(20,40,30,.55)}
+@media(hover:none){.card__media img{cursor:auto}.card__media img:hover{transform:none}}
+.card__media .ph{width:96px;height:96px;border-radius:var(--r-sm);border:1px dashed var(--border-strong);background:linear-gradient(135deg,#eef5ee,#dde9da);display:grid;place-items:center;color:#9aab9c;font-size:.62rem;font-weight:700;text-align:center;line-height:1.3}
+.card__body{flex:1;min-width:0}.card__head{display:flex;align-items:center;gap:8px;margin-bottom:7px}.card__name{font-size:1.02rem;font-weight:800;min-width:0}
+.card.danger .card__name{color:var(--crimson)}.card.normal .card__name{color:var(--emerald-d)}
+.flag{font-size:.66rem;font-weight:800;color:#fff;background:var(--crimson);padding:2px 8px;border-radius:var(--r-full);letter-spacing:.04em;white-space:nowrap;flex:none}
+.cfloor{margin-left:auto;font-size:.7rem;font-weight:800;color:var(--text-muted);white-space:nowrap;flex:none}
+.chips{display:flex;gap:6px;margin-bottom:7px;flex-wrap:wrap}
+.chip{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:var(--r-full);border:1px solid}
+.chip--stun{color:#fff;background:#1aa06a;border-color:#1aa06a}.chip--off{color:var(--text-muted);background:var(--surface-2);border-color:var(--border-strong)}
+.chip--sleep{color:#fff;background:#4f74d8;border-color:#4f74d8}.chip--patrol{color:#3a2a05;background:var(--gold);border-color:var(--gold)}
+.notes{margin:0;padding-left:1.05em;font-size:.85rem;color:#3a4740;line-height:1.65}.notes li{margin:2px 0}.notes li::marker{color:var(--primary)}.notes b{color:#1f2a23}
+.empty{display:none;color:var(--text-muted);padding:30px;text-align:center}.is-empty .floor{display:none}.is-empty .empty{display:block}
+footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0;text-shadow:0 1px 3px rgba(255,255,255,.85)}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
+</style></head><body>
+<div class="petals" aria-hidden="true"><span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="petal p6"></span></div>
+<div class="glass-scene" aria-hidden="true"><div class="glass" title="ステンドグラス"></div></div>
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">✦ NORVRANDT ／ ピルグリム・トラバース</span>
+  <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
+  <p>深層世界ピルグリム・トラバース（F1〜F100）の、踏み込む前に知っておきたいモンスターたち。ナイト目線メモ。</p>
+  <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>10</b> 階層</span><span>随時追加中</span></div>
+</div></header>
+<div class="bar"><div class="wrap bar__row"><nav class="nav"><a class="pill" href="#f0">F1–10</a><a class="pill" href="#f1">F11–20</a><a class="pill" href="#f2">F21–30</a><a class="pill" href="#f3">F31–40</a><a class="pill" href="#f4">F41–50</a><a class="pill" href="#f5">F51–60</a><a class="pill" href="#f6">F61–70</a><a class="pill" href="#f7">F71–80</a><a class="pill" href="#f8">F81–90</a><a class="pill" href="#f9">F91–100</a></nav>
+  <div class="controls"><input class="search" id="q" type="search" placeholder="モンスター名で検索" aria-label="検索">
+  <label class="toggle"><input type="checkbox" id="onlyStun">スタン可のみ</label>
+  <label class="toggle"><input type="checkbox" id="onlyDanger">危険のみ</label></div></div></div>
+<main class="wrap">
+  <div class="legend"><span><span class="chip chip--stun">スタン 効く</span> 入る</span><span><span class="chip chip--off">スタン 不可</span> 入らない</span><span><span class="chip chip--sleep">睡眠 効く</span></span><span><span class="chip chip--patrol">巡回</span> 徘徊</span><span><span class="flag">要注意</span> 即死・最優先など</span></div>
+  <section class="floor" id="f0">
+  <div class="floor__head"><span class="floor__badge">F1–10</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f1">
+  <div class="floor__head"><span class="floor__badge">F11–20</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f2">
+  <div class="floor__head"><span class="floor__badge">F21–30</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f3">
+  <div class="floor__head"><span class="floor__badge">F31–40</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f4">
+  <div class="floor__head"><span class="floor__badge">F41–50</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f5">
+  <div class="floor__head"><span class="floor__badge">F51–60</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f6">
+  <div class="floor__head"><span class="floor__badge">F61–70</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f7">
+  <div class="floor__head"><span class="floor__badge">F71–80</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f8">
+  <div class="floor__head"><span class="floor__badge">F81–90</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section><section class="floor" id="f9">
+  <div class="floor__head"><span class="floor__badge">F91–100</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
+  <div class="grid"></div>
+  <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
+</section>
+  <p class="empty">該当するモンスターがいません。</p>
+</main>
+<footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。🪟 右上のステンドグラスはクリックで光ります。</footer>
+<script>
+const q=document.getElementById('q'),os=document.getElementById('onlyStun'),od=document.getElementById('onlyDanger');
+const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
+{const mc=document.getElementById('mobCount');if(mc)mc.textContent=cards.length;}
+function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
+ cards.forEach(c=>{const ok=(!t||c.dataset.name.toLowerCase().includes(t))&&(!os.checked||c.dataset.stun==='1')&&(!od.checked||c.dataset.danger==='1');c.style.display=ok?'':'none';if(ok)shown++;});
+ document.querySelectorAll('.floor').forEach(f=>{f.style.display=[...f.querySelectorAll('.card')].some(c=>c.style.display!=='none')||!f.querySelector('.card')?'':'none';});
+ main.classList.toggle('is-empty',cards.length>0&&shown===0);}
+[q,os,od].forEach(el=>el.addEventListener('input',apply));
+(function(){var g=document.querySelector('.glass');if(!g)return;g.addEventListener('click',function(){g.classList.remove('glow');void g.offsetWidth;g.classList.add('glow');});g.addEventListener('animationend',function(){g.classList.remove('glow');});})();
+</script></body></html>
