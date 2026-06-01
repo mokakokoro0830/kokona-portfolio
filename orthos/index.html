@@ -48,18 +48,7 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 .witch{display:none;position:fixed;top:41%;left:50%;width:clamp(46px,5.2vw,78px);height:auto;z-index:-1;pointer-events:none;opacity:0;animation:witchFly 13s linear infinite;animation-delay:2s;will-change:transform,opacity}
 @keyframes witchFly{0%,66%{opacity:0;transform:translate(-50%,-50%) translate(22vw,-2vh)}72%{opacity:.92}93%{opacity:.92}100%{opacity:0;transform:translate(-50%,-50%) translate(-22vw,2vh)}}
 .moon-scene{position:fixed;top:74px;right:24px;width:132px;height:132px;z-index:7;pointer-events:none}
-.moon-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:
- radial-gradient(circle 6px at 36% 33%,rgba(84,86,100,.36),transparent 70%),
- radial-gradient(circle 4px at 57% 28%,rgba(84,86,100,.30),transparent 72%),
- radial-gradient(circle 8px at 66% 63%,rgba(84,86,100,.32),transparent 72%),
- radial-gradient(circle 4px at 45% 72%,rgba(84,86,100,.26),transparent 72%),
- radial-gradient(circle 5px at 28% 56%,rgba(84,86,100,.24),transparent 72%),
- radial-gradient(circle 3px at 74% 46%,rgba(84,86,100,.22),transparent 72%),
- radial-gradient(ellipse 32% 26% at 50% 45%,rgba(102,108,128,.32),transparent 76%),
- radial-gradient(ellipse 22% 18% at 65% 60%,rgba(102,108,128,.26),transparent 78%),
- radial-gradient(ellipse 18% 22% at 34% 60%,rgba(102,108,128,.20),transparent 78%),
- radial-gradient(circle at 40% 36%,#fcfbf7 0%,#efece2 50%,#d8d3c6 78%,#bcb6a7 94%,#a39d8e 100%);
- box-shadow:0 0 30px 6px rgba(245,240,222,.45),0 0 74px 20px rgba(255,236,188,.16),inset -6px -8px 18px rgba(108,100,86,.32),inset 4px 5px 14px rgba(255,255,250,.22)}
+.moon-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#0a0a0c url("img/moon.jpg") center/108% no-repeat;box-shadow:0 0 28px 6px rgba(240,242,250,.4),0 0 80px 24px rgba(220,228,255,.14),inset -4px -5px 16px rgba(0,0,0,.4)}
 .moon-scene .witch2{position:absolute;top:50%;left:50%;width:58px;height:auto;opacity:.95;transform:translate(-50%,-50%) translateX(var(--witch-x,0px));transition:transform .2s linear}
 @media(max-width:700px){.moon-scene{top:auto;bottom:18px;right:10px;transform:scale(.72);transform-origin:bottom right}}
 @media(prefers-reduced-motion:reduce){.moon-scene .witch2{transition:none}}
