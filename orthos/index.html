@@ -49,13 +49,10 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;letter-spacing:-.01em;
 @keyframes witchFly{0%,66%{opacity:0;transform:translate(-50%,-50%) translate(22vw,-2vh)}72%{opacity:.92}93%{opacity:.92}100%{opacity:0;transform:translate(-50%,-50%) translate(-22vw,2vh)}}
 .moon-scene{position:fixed;top:74px;right:24px;width:132px;height:132px;z-index:7;pointer-events:none}
 .moon-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#0a0a0c url("img/moon.jpg") center/108% no-repeat;box-shadow:0 0 28px 6px rgba(240,242,250,.4),0 0 80px 24px rgba(220,228,255,.14),inset -4px -5px 16px rgba(0,0,0,.4)}
-.moon-scene .frame{position:absolute;left:50%;top:55%;width:104px;height:auto;transform:translate(-50%,-50%);opacity:0}
-.moon-scene .frame-up{animation:fup 1s steps(1,end) infinite}
-.moon-scene .frame-down{animation:fdown 1s steps(1,end) infinite}
-@keyframes fup{0%,59%{opacity:1}60%,83%{opacity:0}84%,100%{opacity:1}}
-@keyframes fdown{0%,59%{opacity:0}60%,83%{opacity:1}84%,100%{opacity:0}}
+.moon-scene .pounder{position:absolute;left:50%;top:54%;width:94px;height:116px;transform:translate(-50%,-50%);background:url("img/rabbit-sheet.png") 0 0/470px 116px no-repeat;animation:pound .95s steps(5) infinite}
+@keyframes pound{from{background-position:0 0}to{background-position:-470px 0}}
 @media(max-width:700px){.moon-scene{top:auto;bottom:18px;right:10px;transform:scale(.72);transform-origin:bottom right}}
-@media(prefers-reduced-motion:reduce){.moon-scene .frame-up{animation:none;opacity:1}.moon-scene .frame-down{display:none}}
+@media(prefers-reduced-motion:reduce){.moon-scene .pounder{animation:none}}
 @media (prefers-reduced-motion:reduce){.shoot{display:none}.moon-glow{animation:none;opacity:.24}.witch{display:none}}
 .hero{position:relative;padding:66px 0 46px;color:#eaf1f8;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,10,18,.58),rgba(8,12,20,.74) 55%,rgba(8,12,20,.7) 90%,rgba(245,247,252,.97) 100%),url("bg.jpg") center 40%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.08em;
@@ -116,7 +113,7 @@ footer{color:var(--text);font-size:.76rem;border-top:1px solid var(--border);mar
 <div class="moon-glow" aria-hidden="true"></div>
 <div class="sky" aria-hidden="true"><span class="shoot s1"><i></i></span><span class="shoot s2"><i></i></span><span class="shoot s3"><i></i></span><span class="shoot s4"><i></i></span></div>
 <img class="witch" src="img/witch.png" alt="" aria-hidden="true">
-<div class="moon-scene" aria-hidden="true"><div class="moon-disc"></div><img class="frame frame-up" src="img/rabbit-up.png" alt=""><img class="frame frame-down" src="img/rabbit-down.png" alt=""></div>
+<div class="moon-scene" aria-hidden="true"><div class="moon-disc"></div><div class="pounder"></div></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">⬢ EUREKA ORTHOS ／ 深層世界 オルトエウレカ</span>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
