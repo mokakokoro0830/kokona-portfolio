@@ -184,6 +184,12 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 @keyframes logoIn{0%{opacity:0;transform:translateY(22px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-9px) rotate(.6deg)}}
 @media(prefers-reduced-motion:reduce){.logo-anim img{animation:none}}
+/* dancing jester (decorative) */
+.jester{position:fixed;right:auto;left:50%;top:50%;transform:translateY(-50%);z-index:-1;width:80px;height:120px;background:url("img/jester-strip.png") 0 0 no-repeat;background-size:640px 120px;pointer-events:none;opacity:.95;filter:drop-shadow(0 6px 13px rgba(40,30,60,.3));animation:jesterBob 3.4s ease-in-out infinite}
+@keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
+@keyframes jesterBob{0%,100%{transform:translateY(-50%)}50%{transform:translateY(calc(-50% - 7px))}}
+@media(max-width:900px){.jester{display:none}}
+@media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
 <div class="bgtint" aria-hidden="true"></div>
@@ -535,6 +541,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <p class="empty">該当するモンスターがいません。</p>
 </main>
 <footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。</footer>
+<div class="jester" aria-hidden="true"></div>
 <div class="fairy" aria-hidden="true"><span class="fl" id="flA"></span><span class="fl off" id="flB"></span></div>
 <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
 <div class="mascot-bubble" id="mascotBubble" aria-live="polite"></div>
@@ -581,9 +588,9 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
  var fw=100,fwid=192,ticking=false;
  var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
- var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart');
+ var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),jester=document.querySelector('.jester');
  function setFairy(fr){if(fr===fairyCur||!flA||!flB)return;fairyCur=fr;var back=(fairyFront===flA)?flB:flA;back.style.backgroundPositionX=(-fr*fwid)+'px';back.classList.remove('off');fairyFront.classList.add('off');fairyFront=back;}
- function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);
+ function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;jester.style.left=(jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180)).toFixed(1)+'px';}
   {var docH=document.documentElement.scrollHeight-window.innerHeight;var p=docH>0?y/docH:0;p=p<0?0:p>1?1:p;var bgMax=mqm.matches?0.95:0.5;if(bgtint)bgtint.style.opacity=(p*bgMax).toFixed(3);if(bgsurf)bgsurf.style.opacity=((1-p)*bgMax).toFixed(3);}ticking=false;}
  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(setFrame);}},{passive:true});
  setFrame();})();
