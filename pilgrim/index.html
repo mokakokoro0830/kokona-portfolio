@@ -30,22 +30,32 @@ body{font-family:var(--font);background:
 img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .wrap{max-width:1200px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
 
+/* butterfly background art (faint, fixed) */
+/* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
+.bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
+.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep.jpg") center/cover no-repeat;will-change:opacity}
+@media(max-width:700px){.bgart{opacity:.4}}
+
 /* falling petals */
-.petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.petal{position:absolute;top:-6vh;width:13px;height:10px;border-radius:80% 0 80% 0;opacity:.0;will-change:transform,opacity;animation:fall var(--pd,15s) linear infinite;animation-delay:var(--pdl,0s)}
+.petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;perspective:700px}
+.petal{position:absolute;top:-10vh;will-change:transform;animation:fall var(--pd,14s) linear infinite;animation-delay:var(--pdl,0s);transform-style:preserve-3d}
+.petal i{display:block;width:var(--sz,14px);height:calc(var(--sz,14px) * .82);
+ background:radial-gradient(125% 125% at 32% 22%,#fff6fa 0%,var(--c,#f7b8d2) 55%,var(--c2,#e684af) 100%);
+ border-radius:100% 0 100% 0;box-shadow:inset 0 0 3px rgba(214,90,140,.28);
+ opacity:var(--op,.85);will-change:transform;animation:flutter var(--fd,3s) ease-in-out infinite;animation-delay:var(--pdl,0s)}
 @keyframes fall{
- 0%{opacity:0;transform:translate(0,-6vh) rotate(0deg)}
- 8%{opacity:.8}
- 50%{transform:translate(var(--sway,40px),52vh) rotate(220deg)}
- 92%{opacity:.8}
- 100%{opacity:0;transform:translate(calc(var(--sway,40px)*-1),110vh) rotate(420deg)}}
-.p1{left:8vw;background:#f3a9c8;--pd:16s;--pdl:0s;--sway:50px}
-.p2{left:26vw;background:#e6c873;--pd:21s;--pdl:4s;--sway:-60px}
-.p3{left:46vw;background:#cbb3ef;--pd:19s;--pdl:8s;--sway:70px}
-.p4{left:64vw;background:#f3a9c8;--pd:24s;--pdl:2s;--sway:-45px}
-.p5{left:82vw;background:#a6e3d6;--pd:18s;--pdl:11s;--sway:55px}
-.p6{left:92vw;background:#f3a9c8;--pd:26s;--pdl:6s;--sway:-70px}
-@media(prefers-reduced-motion:reduce){.petal{display:none}}
+ 0%{opacity:0;transform:translate3d(0,-10vh,0)}
+ 6%{opacity:1}
+ 25%{transform:translate3d(var(--sway,28px),28vh,0)}
+ 50%{transform:translate3d(calc(var(--sway,28px) * -1),52vh,0)}
+ 75%{transform:translate3d(var(--sway,28px),78vh,0)}
+ 94%{opacity:1}
+ 100%{opacity:0;transform:translate3d(0,114vh,0)}}
+@keyframes flutter{
+ 0%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}
+ 50%{transform:rotateX(190deg) rotateY(45deg) rotateZ(18deg)}
+ 100%{transform:rotateX(360deg) rotateY(0deg) rotateZ(40deg)}}
+@media(prefers-reduced-motion:reduce){.petals{display:none}}
 
 /* stained-glass rose window (corner) */
 .glass-scene{position:fixed;top:74px;right:24px;width:124px;height:124px;z-index:7}
@@ -63,8 +73,8 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 @media(max-width:700px){.glass-scene{top:auto;bottom:18px;right:10px;transform:scale(.74);transform-origin:bottom right}}
 
 /* hero */
-.hero{position:relative;padding:70px 0 46px;color:#f4f1e6;overflow:hidden;border-bottom:1px solid var(--border);
- background:linear-gradient(180deg,rgba(8,40,34,.62),rgba(10,48,40,.6) 55%,rgba(242,245,238,.97) 100%),url("img/bg.jpg") center 36%/cover no-repeat}
+.hero{position:relative;padding:18px 0 46px;color:#f4f1e6;overflow:hidden;border-bottom:1px solid var(--border);
+ background:linear-gradient(180deg,rgba(8,40,34,.62),rgba(10,48,40,.6) 55%,rgba(242,245,238,.97) 100%),url("img/bg.jpg") center 62%/cover no-repeat}
 .eyebrow{display:inline-flex;align-items:center;gap:.5em;font-size:.74rem;font-weight:800;letter-spacing:.1em;color:#2a2410;background:linear-gradient(90deg,#f0dd9a,#bfe7c9);padding:.42em 1.1em;border-radius:var(--r-full)}
 .hero h1{font-family:var(--serif);font-size:clamp(2rem,5.2vw,3.3rem);font-weight:700;letter-spacing:.01em;margin:14px 0 6px;color:#fbf6e6;text-shadow:0 2px 22px rgba(0,0,0,.5)}
 .hero h1 .grad{background:linear-gradient(110deg,#ffe9a8,#e6c873 55%,#bfe7c9);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -78,6 +88,10 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .nav{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto}
 .pill{font-size:.78rem;font-weight:700;color:var(--text-muted);border:1px solid var(--border-strong);padding:5px 11px;border-radius:var(--r-full);white-space:nowrap;background:var(--surface-1);transition:all var(--dur) var(--ease)}
 .pill:hover{color:var(--primary);border-color:var(--primary)}
+.nav-toggle{display:none;align-items:center;gap:6px;font-size:.8rem;font-weight:800;color:var(--primary);border:1px solid var(--border-strong);background:var(--surface-1);padding:6px 13px;border-radius:var(--r-full);cursor:pointer;white-space:nowrap}
+.nav-toggle .arr{transition:transform .2s var(--ease)}
+.nav-toggle[aria-expanded="true"] .arr{transform:rotate(180deg)}
+@media(max-width:700px){.nav-toggle{display:inline-flex;order:1}.controls{order:2}.nav{order:3;flex-basis:100%}.nav.collapsed{display:none}}
 .controls{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .search{background:var(--surface-1);border:1px solid var(--border-strong);color:var(--text);border-radius:var(--r-full);padding:6px 13px;font-size:.82rem;width:170px}
 .search::placeholder{color:var(--text-muted)}
@@ -116,17 +130,71 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .notes{margin:0;padding-left:1.05em;font-size:.85rem;color:#3a4740;line-height:1.65}.notes li{margin:2px 0}.notes li::marker{color:var(--primary)}.notes b{color:#1f2a23}
 .empty{display:none;color:var(--text-muted);padding:30px;text-align:center}.is-empty .floor{display:none}.is-empty .empty{display:block}
 footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0;text-shadow:0 1px 3px rgba(255,255,255,.85)}
-@media(max-width:480px){.grid{grid-template-columns:1fr}.card__media{flex-basis:78px}.card__media img{width:78px;height:78px}.controls{width:100%;margin-left:0}.search{flex:1}}
+/* mobile: compact cards (name + stun + flag only / tap → mascot speaks detail) */
+@media(max-width:700px){
+ .grid{grid-template-columns:1fr;gap:9px}
+ .card{cursor:pointer;gap:11px;padding:10px 12px;align-items:center}
+ .card__media{flex:0 0 54px}
+ .card__media img{width:54px;height:54px}
+ .card__media .ph{width:54px;height:54px;font-size:.5rem;line-height:1.25}
+ .card .notes{display:none}
+ .card.open{align-items:flex-start}
+ .card.open .notes{display:block;margin-top:7px}
+ .card__head{margin-bottom:5px}
+ .card .chips{margin-bottom:0}
+ .card__name{font-size:.98rem}
+ .card::after{content:"▾";position:absolute;right:11px;bottom:7px;font-size:.95rem;color:var(--text-muted);opacity:.55;transition:transform .2s var(--ease)}
+ .card.open::after{transform:rotate(180deg)}
+}
+@media(max-width:480px){.controls{width:100%;margin-left:0}.search{flex:1}}
+/* flower mascot */
+.mascot{position:fixed;left:16px;bottom:16px;z-index:30;width:100px;height:134px;background:url("img/mascot-strip.png") 0 0 no-repeat;background-size:1200px 134px;cursor:pointer;filter:drop-shadow(0 8px 11px rgba(40,40,60,.22));animation:mascFloat 4.6s ease-in-out infinite;transition:filter .2s}
+.mascot:hover{filter:drop-shadow(0 12px 16px rgba(40,40,60,.3)) brightness(1.04)}
+.mascot.hop{animation:mascHop .55s ease}
+@keyframes mascPlay{from{background-position-x:0}to{background-position-x:-1200px}}
+@keyframes mascFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes mascHop{0%{transform:translateY(0)}28%{transform:translateY(-24px)}55%{transform:translateY(0)}75%{transform:translateY(-7px)}100%{transform:translateY(0)}}
+.mascot-bubble{position:fixed;left:14px;bottom:158px;z-index:31;width:200px;max-width:200px;max-height:72vh;overflow:hidden;white-space:pre-line;background:#fff;color:#2a3a30;border:1px solid var(--border-strong);border-radius:14px;padding:10px 13px;font-size:.8rem;font-weight:600;line-height:1.5;box-shadow:var(--sh-3);opacity:0;transform:translateY(8px) scale(.96);transform-origin:bottom left;pointer-events:none;transition:opacity .22s var(--ease),transform .22s var(--ease)}
+.mascot-bubble.show{opacity:1;transform:translateY(0) scale(1)}
+.mascot-bubble::after{content:"";position:absolute;left:30px;bottom:-7px;width:13px;height:13px;background:#fff;border-right:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);transform:rotate(45deg)}
+@media(max-width:480px){.mascot{left:10px;bottom:10px}.mascot-bubble{left:10px;bottom:150px;max-width:200px}}
+@media(prefers-reduced-motion:reduce){.mascot{animation:none;background-position-x:0}}
+/* dancing fairy (bottom-right, decorative) */
+.fairy{position:fixed;right:12px;bottom:10px;z-index:8;width:192px;height:170px;pointer-events:auto;cursor:pointer;opacity:.92;filter:drop-shadow(0 9px 15px rgba(120,60,90,.22));will-change:transform;animation:fairySway 12s cubic-bezier(.37,0,.63,1) infinite}
+.fairy.twirl{animation:fairyTwirl .85s cubic-bezier(.3,.7,.3,1)}
+@keyframes fairyTwirl{0%{transform:rotate(0) scale(1)}45%{transform:rotate(210deg) scale(1.14)}100%{transform:rotate(360deg) scale(1)}}
+.spark{position:fixed;z-index:34;width:13px;height:13px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#fff 0%,#ffe08a 42%,rgba(255,170,205,0) 72%);will-change:transform,opacity;animation:sparkFly .8s ease-out forwards}
+@keyframes sparkFly{0%{opacity:1;transform:translate(0,0) scale(.4)}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(1.15)}}
+.fairy .fl{position:absolute;inset:0;background:url("img/fairy-strip.png") 0 0 no-repeat;background-size:2304px 170px;transition:opacity 1.1s ease-in-out;will-change:opacity}
+.fairy .fl.off{opacity:0}
+@keyframes fairyPlay{from{background-position-x:0}to{background-position-x:-2304px}}
+@keyframes fairySway{
+ 0%{transform:translate3d(0,0,0) rotate(-3deg)}
+ 20%{transform:translate3d(-7px,-7px,0) rotate(-1deg)}
+ 40%{transform:translate3d(-3px,-14px,0) rotate(2.5deg)}
+ 60%{transform:translate3d(6px,-11px,0) rotate(3deg)}
+ 80%{transform:translate3d(4px,-4px,0) rotate(.5deg)}
+ 100%{transform:translate3d(0,0,0) rotate(-3deg)}}
+@media(max-width:760px){.fairy{display:none}}
+@media(prefers-reduced-motion:reduce){.fairy{animation:none}}
+/* animated hero logo */
+.logo-anim{width:66%;max-width:540px;min-width:280px;margin:4px 0 10px}
+.logo-anim img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 16px rgba(0,0,0,.5));animation:logoIn 1s cubic-bezier(.2,.7,.2,1) both,logoFloat 5.5s ease-in-out 1.05s infinite}
+@keyframes logoIn{0%{opacity:0;transform:translateY(22px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-9px) rotate(.6deg)}}
+@media(prefers-reduced-motion:reduce){.logo-anim img{animation:none}}
 </style></head><body>
-<div class="petals" aria-hidden="true"><span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="petal p6"></span></div>
-<div class="glass-scene" aria-hidden="true"><div class="glass" title="ステンドグラス"></div></div>
+<div class="bgart" aria-hidden="true"></div>
+<div class="bgtint" aria-hidden="true"></div>
+<div class="petals" aria-hidden="true"></div>
 <header class="hero"><div class="wrap">
-  <span class="eyebrow">✦ NORVRANDT ／ ピルグリム・トラバース</span>
+  <span class="eyebrow">✦ NORVRANDT ／ 深層世界</span>
+  <div class="logo-anim"><img src="img/logo.png" alt="ぴるぐりむとらばーす（ピルグリム・トラバース）" width="900" height="358"></div>
   <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
   <p>深層世界ピルグリム・トラバース（F1〜F100）の、踏み込む前に知っておきたいモンスターたち。ナイト目線メモ。</p>
   <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>10</b> 階層</span><span>随時追加中</span></div>
 </div></header>
-<div class="bar"><div class="wrap bar__row"><nav class="nav"><a class="pill" href="#f0">F1–10</a><a class="pill" href="#f1">F11–20</a><a class="pill" href="#f2">F21–30</a><a class="pill" href="#f3">F31–40</a><a class="pill" href="#f4">F41–50</a><a class="pill" href="#f5">F51–60</a><a class="pill" href="#f6">F61–70</a><a class="pill" href="#f7">F71–80</a><a class="pill" href="#f8">F81–90</a><a class="pill" href="#f9">F91–100</a></nav>
+<div class="bar"><div class="wrap bar__row"><button class="nav-toggle" id="navToggle" type="button" aria-expanded="true" aria-controls="floorNav"><span>📂 階層ジャンプ</span><span class="arr" aria-hidden="true">▾</span></button><nav class="nav" id="floorNav"><a class="pill" href="#f0">F1–10</a><a class="pill" href="#f1">F11–20</a><a class="pill" href="#f2">F21–30</a><a class="pill" href="#f3">F31–40</a><a class="pill" href="#f4">F41–50</a><a class="pill" href="#f5">F51–60</a><a class="pill" href="#f6">F61–70</a><a class="pill" href="#f7">F71–80</a><a class="pill" href="#f8">F81–90</a><a class="pill" href="#f9">F91–100</a></nav>
   <div class="controls"><input class="search" id="q" type="search" placeholder="モンスター名で検索" aria-label="検索">
   <label class="toggle"><input type="checkbox" id="onlyStun">スタン可のみ</label>
   <label class="toggle"><input type="checkbox" id="onlyDanger">危険のみ</label></div></div></div>
@@ -153,29 +221,212 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section><section class="floor" id="f5">
-  <div class="floor__head"><span class="floor__badge">F51–60</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
-  <div class="grid"></div>
+  <div class="floor__head"><span class="floor__badge">F51–60</span><span class="floor__label">要注意モンスター</span><span class="floor__count">6</span></div>
+  <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="トラバース・フォルスラコス">
+  <div class="card__media"><img src="img/falsraco.jpg" alt="トラバース・フォルスラコス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・フォルスラコス</h3><span class="cfloor">F51〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li><b>攻撃が全部広範囲</b>。複数を同時に釣ると一気に事故るので、釣りすぎ注意。</li><li><b>ペインストーム</b>＝前方扇／<b>ペインフルガスト</b>＝自身中心の円／<b>ペインサイクロン</b>＝自身中心のドーナツ。詠唱を見て安置へ移動。</li><li>スタンが入るので、止めれば事故りにくい。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・モニター">
+  <div class="card__media"><img src="img/monitor.jpg" alt="トラバース・モニター" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・モニター</h3><span class="cfloor">F51〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>炎を纏っている間は<b>近接攻撃を反射</b>（殴るとダメージが自分に返る）。遠隔の魔法攻撃は反射されないので、炎が出ている間は遠隔で削るのが安全。</li><li>スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・イビルエイビス">
+  <div class="card__media"><img src="img/evilavis.jpg" alt="トラバース・イビルエイビス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・イビルエイビス</h3><span class="cfloor">F54〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプで<b>視覚感知</b>（見つかると寄ってくる）。横切るときは視界に注意。</li><li>円範囲の<b>ファイアボール</b>と、前方一直線の<b>ブレイジングトレイル</b>。特にブレイジングトレイルは極太なので、横にズレて回避。</li><li>スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ギガント">
+  <div class="card__media"><img src="img/gigant.jpg" alt="トラバース・ギガント" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ギガント</h3><span class="cfloor">F54〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li><b>吸い込み</b>のあと、すぐ敵中心の円範囲<b>ヘビーラリアット</b>を撃つ。吸い込まれたら即離れる。</li><li><b>ヘビートス</b>は前方扇の範囲攻撃。正面を避ける。</li><li>スタンで止められる。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・サーペント">
+  <div class="card__media"><img src="img/serpent.jpg" alt="トラバース・サーペント" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・サーペント</h3><span class="cfloor">F56〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプ。<b>アースオーガー</b>は前方300度というほぼ全周に近い範囲攻撃。<b>スタンで必ず止める</b>。</li><li>止めるのが間に合わないときは、敵の<b>真下か背面</b>に潜り込んで避ける。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ハウラー">
+  <div class="card__media"><img src="img/howler.jpg" alt="トラバース・ハウラー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ハウラー</h3><span class="cfloor">F56〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>突進「<b>バレリングスマッシュ</b>」のあと、中心範囲「<b>サイズテール</b>」かドーナツ超範囲「<b>外輪雷</b>」のどちらかが来る。</li><li>スタン可。</li></ul>
+  </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section><section class="floor" id="f6">
-  <div class="floor__head"><span class="floor__badge">F61–70</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
-  <div class="grid"></div>
+  <div class="floor__head"><span class="floor__badge">F61–70</span><span class="floor__label">要注意モンスター</span><span class="floor__count">12</span></div>
+  <div class="grid"><article class="card danger" data-stun="1" data-danger="1" data-name="フォーギヴン・ダウト">
+  <div class="card__media"><img src="img/doubt.jpg" alt="フォーギヴン・ダウト" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ダウト</h3><span class="flag">要注意</span><span class="cfloor">F61〜65</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>接近するまで姿が見えず、<b>ターゲットもできない</b>透明タイプ。視認されると<b>飛びつき→中心円範囲</b>のコンボ。</li><li><b>F65あたりまで</b>出現するので、その辺りまでは「どこかに潜んでいる」前提で動くのが安全。部屋に不自然に敵がいない時は大体これ。</li><li>スタンは効くが反応が遅れがち。避けるのが無難。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ノーム">
+  <div class="card__media"><img src="img/gnome.jpg" alt="トラバース・ノーム" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ノーム</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>普段は詠唱してこないが、突然ほぼ見えない円範囲を出すことがある。スタンで止まる。</li></ul>
+  </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="フォーギヴン・ライオディング">
+  <div class="card__media"><img src="img/lyodyne.jpg" alt="フォーギヴン・ライオディング" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ライオディング</h3><span class="flag">要注意</span><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li><b>ライト／レフトサイドショックウェーブ</b>で半面の超巨大攻撃。着弾後すぐ逆サイドにも来るので、必ず反対側へ動く。</li><li><b>スタンが効かない</b>ので避け必須。複数を同時に釣らない。</li></ul>
+  </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="トラバース・タロース">
+  <div class="card__media"><img src="img/talos.jpg" alt="トラバース・タロース" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・タロース</h3><span class="flag">要注意</span><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプ。ランダム対象へ飛びつく円範囲のあと、その中心が空く<b>ドーナツ範囲</b>が続く。</li><li><b>スタン無効</b>なので、避けで対処する。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・クリフモール">
+  <div class="card__media"><img src="img/griffmole.jpg" alt="トラバース・クリフモール" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・クリフモール</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>前方に小さな扇範囲（ヘッドバット）だけの比較的安全な相手。スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・グラッジ">
+  <div class="card__media"><img src="img/grudge.jpg" alt="フォーギヴン・グラッジ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・グラッジ</h3><span class="cfloor">F63〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回する蠍。<b>ヘイルファイア</b>が前方の細長い範囲。</li><li>HPが一定以下になると巨大範囲（クリスタル系）を詠唱するが、倒しきれば問題なし。スタンでも止まる。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・イムパリティー">
+  <div class="card__media"><img src="img/imparity.jpg" alt="フォーギヴン・イムパリティー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・イムパリティー</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「アイルドロップ」は見える円範囲。危険なのは<b>不可視の十字範囲（ロックスライド）</b>でかなり大きい。</li><li>スタンで止めれば終わり。</li></ul>
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="トラバース・クイーンビー">
+  <div class="card__media"><img src="img/queenbee.jpg" alt="トラバース・クイーンビー" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・クイーンビー</h3><span class="flag">要注意</span><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>ハチ。ランダム対象への直線攻撃のあと、やがて<b>ファイナルスピア</b>を詠唱。完成すると即死の可能性が高い。</li><li>スタンで止めて、詠唱を完成させない。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ヴォラシティ">
+  <div class="card__media"><img src="img/voracity.jpg" alt="フォーギヴン・ヴォラシティ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ヴォラシティ</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「ストーンゲイズ」の扇範囲（石化の可能性）→直後に本体中心の円範囲（ボディプレス）。</li><li>スタンすればザコ。</li></ul>
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="フォーギヴン・アタッチメント">
+  <div class="card__media"><img src="img/attachment.jpg" alt="フォーギヴン・アタッチメント" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アタッチメント</h3><span class="flag">要注意</span><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li><b>スーウェッジウォーター</b>が前方／後方の半円で、回ごとに前後が入れ替わる（挙動が不安定との報告も）。<b>当たるとタンクでも即死級</b>。</li><li>必ずスタンで止めるのが安全。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ンゴツィ">
+  <div class="card__media"><img src="img/ngotsi.jpg" alt="トラバース・ンゴツィ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ンゴツィ</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>石のような敵。「投石」で見える円範囲。スタンで止まる。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・コンテンション">
+  <div class="card__media"><img src="img/contention.jpg" alt="フォーギヴン・コンテンション" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・コンテンション</h3><span class="cfloor">F61〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>白いサボテン。「針幾千本」で前方の太い長方形範囲。</li><li>突然自分に<b>ヘイスト</b>を付けて詠唱を速めてくるので注意。スタン有効。</li></ul>
+  </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section><section class="floor" id="f7">
-  <div class="floor__head"><span class="floor__badge">F71–80</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
-  <div class="grid"></div>
+  <div class="floor__head"><span class="floor__badge">F71–80</span><span class="floor__label">要注意モンスター</span><span class="floor__count">13</span></div>
+  <div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="トラバース・フルドゥ">
+  <div class="card__media"><img src="img/fuldu.jpg" alt="トラバース・フルドゥ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・フルドゥ</h3><span class="cfloor">F71〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回・スタン無効。「炸裂」など中心範囲を撃つ。</li><li>倒した直後に中心範囲の<b>自爆</b>をするので、撃破したら大きく離れる。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・アンビリーフ">
+  <div class="card__media"><img src="img/unbelief.jpg" alt="フォーギヴン・アンビリーフ" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アンビリーフ</h3><span class="cfloor">F71〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「グラベルシャワー」はランダム対象への前方直線範囲。スタンで止められる。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ホイップカスタード">
+  <div class="card__media"><img src="img/custard.jpg" alt="トラバース・ホイップカスタード" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ホイップカスタード</h3><span class="cfloor">F71〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「ファイラ」はランダム対象の円範囲（沈黙でも止まる）。スタン可。</li></ul>
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="トラバース・シサージョウ">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・シサージョウ</h3><span class="flag">要注意</span><span class="cfloor">F71〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「サンドブラスト」は前方扇範囲。<b>避けず止めずに受けると即死級</b>なので、必ずスタンで止めるか避ける。</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="フォーギヴン・スパイト">
+  <div class="card__media"><img src="img/spite.jpg" alt="フォーギヴン・スパイト" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・スパイト</h3><span class="cfloor">F72〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>スタン無効。<b>双水流・円輪／輪円</b>は、円→ドーナツ／ドーナツ→円と安置が入れ替わる二段範囲。詠唱名を見て近寄る・離れるを判断。</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="フォーギヴン・アロガンス">
+  <div class="card__media"><img src="img/arrogance.jpg" alt="フォーギヴン・アロガンス" loading="lazy" width="96" height="96"></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アロガンス</h3><span class="cfloor">F73〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回・スタン無効。「連蹴り」は前方への4連続蹴り。後衛ならある程度離れれば前方でも範囲外。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ウォーム">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ウォーム</h3><span class="cfloor">F74〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li><b>音で感知</b>（聴覚感知）するタイプ。「地震」は中心範囲。スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ロックイーター">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ロックイーター</h3><span class="cfloor">F75〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプ。突進＋ノックバックを使うので、<b>壁を背</b>にして落下を防ぐ。スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・アメミット">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・アメミット</h3><span class="cfloor">F75〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>「トップル」は中心範囲。スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ディセンション">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ディセンション</h3><span class="cfloor">F76〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>前方扇「トラウンス」と中心範囲「マイティスピン」。通路で処理するときは範囲に注意。スタン可。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・コラプション">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・コラプション</h3><span class="cfloor">F76〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>中心超範囲「ローリングバラージ」＋前方扇「フロントバラージ」。敵視（ヘイト）を取ると詠唱が解けるので、放置せず<b>最優先で倒す</b>。巡回にも警戒。スタン可。</li></ul>
+  </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="フォーギヴン・ヴァニティー">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ヴァニティー</h3><span class="flag">要注意</span><span class="cfloor">F77〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li><b>接近で感知</b>。詠唱バーが出ず、<b>ドーナツ範囲</b>と<b>十字範囲</b>をエフェクト（見た目）で判断。スタン無効。特に通路では十字範囲に注意。</li></ul>
+  </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・スランダー">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・スランダー</h3><span class="cfloor">F77〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <ul class="notes"><li>接近感知。「オロジェニックストーム」（ランダム対象の不可視の円）と「メタモーフィックブラスト」（不可視の前方扇）。見えない範囲なので位置取りに注意。スタン可。</li></ul>
+  </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section><section class="floor" id="f8">
-  <div class="floor__head"><span class="floor__badge">F81–90</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
-  <div class="grid"></div>
+  <div class="floor__head"><span class="floor__badge">F81–90</span><span class="floor__label">要注意モンスター</span><span class="floor__count">3</span></div>
+  <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ライダー">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ライダー</h3><span class="cfloor">F81〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプ。<b>ヴァルファズル</b>やランダム対象への突進4連はノックバック付き。壁際だと落下に繋がるので位置取りに注意。</li><li>スタン可。</li></ul>
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="インヴォークド・サキュバス">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・サキュバス</h3><span class="flag">要注意</span><span class="cfloor">F84〜</span></header>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>巡回タイプ。<b>ハートヒート</b>でヒート（熱）デバフが付き、約3秒の間に動くと即死の可能性。デバフ中は完全停止で耐える。</li><li>スタン可。</li></ul>
+  </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="インヴォークド・フンババ">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・フンババ</h3><span class="flag">要注意</span><span class="cfloor">F86〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <ul class="notes"><li>スタン無効・巡回。<b>トリプルブロー／クアドラブロー</b>の連打後に前方へ即死範囲が出る。正面を避けて側面・背後へ回る。</li></ul>
+  </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section><section class="floor" id="f9">
-  <div class="floor__head"><span class="floor__badge">F91–100</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
-  <div class="grid"></div>
+  <div class="floor__head"><span class="floor__badge">F91–100</span><span class="floor__label">要注意モンスター</span><span class="floor__count">2</span></div>
+  <div class="grid"><article class="card danger" data-stun="0" data-danger="1" data-name="インヴォークド・ドリームエビル">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ドリームエビル</h3><span class="flag">要注意</span><span class="cfloor">F91〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>スタン無効。<b>夢魔の視線</b>は壁を貫通する前方直線範囲なので、物陰でも油断しない。倒した後に自爆するため、撃破後は離れる。</li></ul>
+  </div></article><article class="card" data-stun="0" data-danger="0" data-name="インヴォークド・クシオン">
+  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・クシオン</h3><span class="cfloor">F96〜</span></header>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <ul class="notes"><li>スタン無効。<b>ライトスラム／レフトスラム</b>は左右どちらか半面を薙ぐ範囲。詠唱名で安置（反対側）を見極める。</li></ul>
+  </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
 </section>
   <p class="empty">該当するモンスターがいません。</p>
 </main>
-<footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。🪟 右上のステンドグラスはクリックで光ります。</footer>
+<footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。</footer>
+<div class="fairy" aria-hidden="true"><span class="fl" id="flA"></span><span class="fl off" id="flB"></span></div>
+<div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
+<div class="mascot-bubble" id="mascotBubble" aria-live="polite"></div>
 <script>
 const q=document.getElementById('q'),os=document.getElementById('onlyStun'),od=document.getElementById('onlyDanger');
 const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
@@ -185,5 +436,66 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  document.querySelectorAll('.floor').forEach(f=>{f.style.display=[...f.querySelectorAll('.card')].some(c=>c.style.display!=='none')||!f.querySelector('.card')?'':'none';});
  main.classList.toggle('is-empty',cards.length>0&&shown===0);}
 [q,os,od].forEach(el=>el.addEventListener('input',apply));
+(function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ var cols=[['#f9c2d8','#ec90b6'],['#fbd0e0','#f3a9c8'],['#ffe3ee','#f7b8d2'],['#f6cbe8','#e58fcb'],['#ffd9c2','#f4a98a']];
+ var N=18;var f=document.createDocumentFragment();
+ for(var k=0;k<N;k++){var p=document.createElement('span');p.className='petal';var i=document.createElement('i');p.appendChild(i);
+  var sz=8+Math.random()*10,op=.5+Math.random()*.42,pd=11+Math.random()*10,fd=2.2+Math.random()*2.6,dl=-Math.random()*pd,sway=18+Math.random()*44;if(Math.random()<.5)sway=-sway;
+  var c=cols[k%cols.length];
+  p.style.left=(Math.random()*100)+'vw';p.style.setProperty('--pd',pd.toFixed(1)+'s');p.style.setProperty('--fd',fd.toFixed(1)+'s');p.style.setProperty('--pdl',dl.toFixed(1)+'s');p.style.setProperty('--sway',sway.toFixed(0)+'px');
+  i.style.setProperty('--sz',sz.toFixed(0)+'px');i.style.setProperty('--op',op.toFixed(2));i.style.setProperty('--c',c[0]);i.style.setProperty('--c2',c[1]);
+  f.appendChild(p);}
+ box.appendChild(f);})();
+(function(){var m=document.getElementById('mascot'),b=document.getElementById('mascotBubble');if(!m||!b)return;
+ var lines=["ようこそ！F1〜F100の要注意モブをまとめてるよ🌻","カードにカーソルを乗せると、そのモンスターの詳しい話をするよ🌻","「危険のみ」を押すと即死系だけ表示できるよ⚠️","上の検索窓でモンスター名から探せるよ🔍","ナイト目線のメモだから、実際のゲーム内挙動を優先してね"];
+ var t;
+ function show(txt,ms){b.textContent=txt;b.classList.add('show');clearTimeout(t);if(ms)t=setTimeout(function(){b.classList.remove('show');},ms);}
+ function hop(){m.classList.remove('hop');void m.offsetWidth;m.classList.add('hop');setTimeout(function(){m.classList.remove('hop');},560);}
+ function talk(){show(lines[Math.floor(Math.random()*lines.length)],4800);hop();}
+ m.addEventListener('click',talk);
+ m.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();talk();}});
+ // カードにホバー → その子の詳細をマスコットが話す
+ function cardText(c,full){var n=c.dataset.name||'';var flEl=c.querySelector('.cfloor');var fl=flEl?flEl.textContent.trim():'';
+  var tags=[];if(c.dataset.danger==='1')tags.push('⚠️要注意');tags.push(c.dataset.stun==='1'?'スタン◯':'スタン×');
+  if(c.querySelector('.chip--sleep'))tags.push('睡眠◯');if(c.querySelector('.chip--patrol'))tags.push('巡回');
+  var body;
+  if(full){body=[].map.call(c.querySelectorAll('.notes li'),function(li){return '・'+li.textContent.trim();}).join('\n');}
+  else{var li=c.querySelector('.notes li');var s=li?li.textContent.trim():'';var dot=s.indexOf('。');if(dot>0)s=s.slice(0,dot+1);if(s.length>44)s=s.slice(0,42)+'…';body=s;}
+  return '🌻 '+n+(fl?'（'+fl+'）':'')+'\n'+tags.join(' ｜ ')+(body?'\n'+body:'');}
+ var mqm=window.matchMedia('(max-width:700px)');
+ [].forEach.call(document.querySelectorAll('.card'),function(c){
+  c.addEventListener('mouseenter',function(){if(!mqm.matches)show(cardText(c,false),0);});
+  c.addEventListener('mouseleave',function(){if(!mqm.matches){clearTimeout(t);t=setTimeout(function(){b.classList.remove('show');},700);}});
+  c.addEventListener('click',function(){if(mqm.matches){c.classList.toggle('open');}else{show(cardText(c,true),8000);hop();}});});
+ // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
+ var fw=100,fwid=192,ticking=false;
+ var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
+ var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart');
+ function setFairy(fr){if(fr===fairyCur||!flA||!flB)return;fairyCur=fr;var back=(fairyFront===flA)?flB:flA;back.style.backgroundPositionX=(-fr*fwid)+'px';back.classList.remove('off');fairyFront.classList.add('off');fairyFront=back;}
+ function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);
+  {var docH=document.documentElement.scrollHeight-window.innerHeight;var p=docH>0?y/docH:0;p=p<0?0:p>1?1:p;if(bgtint)bgtint.style.opacity=(p*0.5).toFixed(3);if(bgsurf)bgsurf.style.opacity=((1-p)*0.5).toFixed(3);}ticking=false;}
+ window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(setFrame);}},{passive:true});
+ setFrame();})();
+(function(){var t=document.getElementById('navToggle'),nav=document.getElementById('floorNav');if(!t||!nav)return;
+ var mq=window.matchMedia('(max-width:700px)');
+ function set(exp){nav.classList.toggle('collapsed',!exp);t.setAttribute('aria-expanded',exp?'true':'false');}
+ set(!mq.matches); // モバイルは初期で畳む
+ t.addEventListener('click',function(){set(t.getAttribute('aria-expanded')!=='true');});
+ nav.addEventListener('click',function(e){if(e.target.classList.contains('pill')&&mq.matches)set(false);});})();
+(function(){var f=document.querySelector('.fairy');if(!f)return;
+ f.addEventListener('click',function(){
+  f.classList.remove('twirl');void f.offsetWidth;f.classList.add('twirl');
+  setTimeout(function(){f.classList.remove('twirl');},870);
+  var r=f.getBoundingClientRect();var cx=r.left+r.width*0.5,cy=r.top+r.height*0.42;
+  for(var i=0;i<11;i++){var s=document.createElement('span');s.className='spark';
+   var ang=Math.PI*2*(i/11)+Math.random()*0.5,dist=42+Math.random()*60;
+   s.style.left=(cx-6)+'px';s.style.top=(cy-6)+'px';
+   s.style.setProperty('--dx',(Math.cos(ang)*dist).toFixed(0)+'px');
+   s.style.setProperty('--dy',(Math.sin(ang)*dist).toFixed(0)+'px');
+   s.style.animationDelay=(Math.random()*0.09).toFixed(2)+'s';
+   document.body.appendChild(s);
+   (function(el){setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},950);})(s);
+  }
+ });})();
 (function(){var g=document.querySelector('.glass');if(!g)return;g.addEventListener('click',function(){g.classList.remove('glow');void g.offsetWidth;g.classList.add('glow');});g.addEventListener('animationend',function(){g.classList.remove('glow');});})();
 </script></body></html>
