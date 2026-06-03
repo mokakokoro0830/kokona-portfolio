@@ -37,25 +37,41 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep.jpg") center/cover no-repeat;will-change:opacity}
 @media(max-width:700px){.bgart{opacity:.4}}
 
-/* falling petals */
-.petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;perspective:700px}
-.petal{position:absolute;top:-10vh;will-change:transform;animation:fall var(--pd,14s) linear infinite;animation-delay:var(--pdl,0s);transform-style:preserve-3d}
-.petal i{display:block;width:var(--sz,14px);height:calc(var(--sz,14px) * .82);
+/* seasonal particles */
+.petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;perspective:900px}
+.petal{position:absolute;top:-14vh;will-change:transform,opacity;animation:fall var(--pd,14s) linear infinite;animation-delay:var(--pdl,0s);transform-style:preserve-3d;filter:blur(var(--blur,0px))}
+.petal i{display:block;position:relative;width:var(--sz,14px);height:calc(var(--sz,14px) * .82);
  background:radial-gradient(125% 125% at 32% 22%,#fff6fa 0%,var(--c,#f7b8d2) 55%,var(--c2,#e684af) 100%);
- border-radius:100% 0 100% 0;box-shadow:inset 0 0 3px rgba(214,90,140,.28);
- opacity:var(--op,.85);will-change:transform;animation:flutter var(--fd,3s) ease-in-out infinite;animation-delay:var(--pdl,0s)}
+ border-radius:78% 18% 86% 22%;box-shadow:inset 0 0 3px rgba(214,90,140,.28),0 1px 3px rgba(255,170,205,.16);
+ opacity:var(--op,.85);will-change:transform;animation:flutter var(--fd,3s) cubic-bezier(.45,0,.55,1) infinite;animation-delay:var(--pdl,0s);transform-origin:45% 55%}
+.petal--leaf i{width:calc(var(--sz,28px) * 1.13);height:var(--sz,28px);border-radius:0;background:url("img/season-leaf.png") center/contain no-repeat;box-shadow:none;filter:drop-shadow(0 3px 5px rgba(62,118,57,.22))}
+.petal--maple i::after{content:"";position:absolute;inset:18% 48% 16% 48%;background:rgba(255,255,230,.42);border-radius:999px;transform:rotate(18deg)}
+.petal--maple i{width:calc(var(--sz,14px) * 1.25);height:var(--sz,14px);border-radius:24% 55% 28% 60%;clip-path:polygon(50% 0,59% 28%,83% 10%,74% 42%,100% 48%,72% 58%,82% 91%,56% 70%,50% 100%,43% 70%,17% 91%,27% 58%,0 48%,26% 42%,17% 10%,41% 28%);background:linear-gradient(135deg,#ffe0a8 0%,var(--c,#e88445) 48%,var(--c2,#b43833) 100%);box-shadow:0 2px 7px rgba(171,72,45,.2)}
+.petal--snow i{width:var(--sz,8px);height:var(--sz,8px);border-radius:50%;background:radial-gradient(circle,#fff 0%,#f8fbff 48%,rgba(224,242,255,.58) 72%,rgba(224,242,255,0) 100%);box-shadow:0 0 9px rgba(255,255,255,.7);animation:snowFloat var(--fd,4s) ease-in-out infinite}
+.petal--firefly{top:62vh;animation:fireflyDrift var(--pd,12s) ease-in-out infinite;animation-delay:var(--pdl,0s)}
+.petal--firefly i{width:var(--sz,7px);height:var(--sz,7px);border-radius:50%;background:radial-gradient(circle,#fffbd0 0%,#ffe978 32%,rgba(255,224,82,.38) 58%,rgba(255,224,82,0) 78%);box-shadow:0 0 12px rgba(255,229,86,.8),0 0 24px rgba(127,214,104,.38);animation:fireflyBlink var(--fd,3s) ease-in-out infinite}
 @keyframes fall{
- 0%{opacity:0;transform:translate3d(0,-10vh,0)}
- 6%{opacity:1}
- 25%{transform:translate3d(var(--sway,28px),28vh,0)}
- 50%{transform:translate3d(calc(var(--sway,28px) * -1),52vh,0)}
- 75%{transform:translate3d(var(--sway,28px),78vh,0)}
- 94%{opacity:1}
- 100%{opacity:0;transform:translate3d(0,114vh,0)}}
+ 0%{opacity:0;transform:translate3d(0,-14vh,var(--z,0px)) rotateZ(var(--r0,0deg))}
+ 7%{opacity:var(--op,.85)}
+ 22%{transform:translate3d(calc(var(--wind,44px) * .45),20vh,var(--z,0px)) rotateZ(calc(var(--r0,0deg) + 34deg))}
+ 46%{transform:translate3d(calc(var(--wind,44px) * -1),48vh,var(--z,0px)) rotateZ(calc(var(--r0,0deg) + 120deg))}
+ 70%{transform:translate3d(calc(var(--wind,44px) * .7),76vh,var(--z,0px)) rotateZ(calc(var(--r0,0deg) + 210deg))}
+ 92%{opacity:var(--op,.85)}
+ 100%{opacity:0;transform:translate3d(calc(var(--wind,44px) * -1.35),116vh,var(--z,0px)) rotateZ(calc(var(--r0,0deg) + 300deg))}}
 @keyframes flutter{
- 0%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}
- 50%{transform:rotateX(190deg) rotateY(45deg) rotateZ(18deg)}
- 100%{transform:rotateX(360deg) rotateY(0deg) rotateZ(40deg)}}
+ 0%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1)}
+ 22%{transform:rotateX(95deg) rotateY(-35deg) rotateZ(12deg) scaleX(.9)}
+ 50%{transform:rotateX(210deg) rotateY(48deg) rotateZ(28deg) scaleX(1.05)}
+ 78%{transform:rotateX(315deg) rotateY(-22deg) rotateZ(46deg) scaleX(.92)}
+ 100%{transform:rotateX(420deg) rotateY(0deg) rotateZ(62deg) scaleX(1)}}
+@keyframes snowFloat{0%,100%{transform:translateX(0) scale(.9);opacity:.72}50%{transform:translateX(8px) scale(1.12);opacity:1}}
+@keyframes fireflyDrift{
+ 0%,100%{opacity:0;transform:translate3d(0,0,var(--z,0px)) scale(.88)}
+ 16%,82%{opacity:var(--op,.75)}
+ 35%{transform:translate3d(calc(var(--wind,60px) * .45),-10vh,var(--z,0px)) scale(1)}
+ 62%{transform:translate3d(calc(var(--wind,60px) * -1),-21vh,var(--z,0px)) scale(.92)}
+ 88%{transform:translate3d(calc(var(--wind,60px) * .7),-32vh,var(--z,0px)) scale(1.05)}}
+@keyframes fireflyBlink{0%,100%{opacity:.28;transform:scale(.72)}45%{opacity:1;transform:scale(1.28)}72%{opacity:.55;transform:scale(.94)}}
 @media(prefers-reduced-motion:reduce){.petals{display:none}}
 
 /* stained-glass rose window (corner) */
@@ -198,9 +214,16 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 @media(prefers-reduced-motion:reduce){.logo-anim img{animation:none}}
 /* dancing jester (decorative) */
 .jester{position:fixed;right:auto;left:50%;top:50%;--jester-face:1;transform:translateY(-50%) scaleX(var(--jester-face));z-index:-1;width:80px;height:120px;background:url("img/jester-strip.png") 0 0 no-repeat;background-size:640px 120px;pointer-events:none;opacity:.95;filter:drop-shadow(0 6px 13px rgba(40,30,60,.3));animation:jesterBob 3.4s ease-in-out infinite}
+.jester-hit{position:fixed;left:50%;top:50%;z-index:29;width:80px;height:120px;transform:translateY(-50%);cursor:pointer;background:transparent;border:0;padding:0;appearance:none;-webkit-appearance:none}
+.jester-hit:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
+.jester-bubble{position:fixed;z-index:30;width:188px;max-width:min(188px,calc(100vw - 28px));background:#fffdf6;color:#2b2a25;border:1px solid rgba(218,190,105,.9);border-radius:13px;padding:9px 11px;font-size:.78rem;font-weight:800;line-height:1.45;box-shadow:0 14px 34px -20px rgba(38,28,20,.55),0 1px 0 rgba(255,255,255,.9) inset;opacity:0;transform:translateY(8px) scale(.96);pointer-events:none;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.jester-bubble.show{opacity:1;transform:translateY(0) scale(1)}
+.jester-bubble::after{content:"";position:absolute;left:22px;bottom:-7px;width:13px;height:13px;background:#fffdf6;border-right:1px solid rgba(218,190,105,.9);border-bottom:1px solid rgba(218,190,105,.9);transform:rotate(45deg)}
+.jester.quip{filter:drop-shadow(0 8px 16px rgba(117,44,92,.42)) brightness(1.08)}
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
 @keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
+@media(max-width:760px){.jester-bubble{width:164px;font-size:.72rem}}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
@@ -497,9 +520,9 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヴァイオレットトリフィド</h3><span class="cfloor">F91〜93</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>クリープアイヴィ</b>は正面の扇範囲。スタン・睡眠可。</li></ul>
-  </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ヤテベオ">
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="トラバース・ヤテベオ">
   <div class="card__media"><img src="img/yateveo.jpg" alt="トラバース・ヤテベオ" loading="lazy" width="96" height="96"></div>
-  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヤテベオ</h3><span class="cfloor">F91〜92</span></header>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヤテベオ</h3><span class="flag">要注意</span><span class="cfloor">F91〜92</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>ロトンステンチ</b>は<b>壁を貫通する直線範囲</b>。物陰でも油断しない。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="0" data-danger="0" data-name="トラバース・ワーグ">
@@ -512,9 +535,9 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ソウトゥース</h3><span class="cfloor">F93〜98</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li>巡回・聴覚感知。ライト／レフトの半面攻撃。スタン・睡眠可。</li></ul>
-  </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・ダハーカ">
+  </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="インヴォークド・ダハーカ">
   <div class="card__media"><img src="img/dahaka.jpg" alt="インヴォークド・ダハーカ" loading="lazy" width="96" height="96"></div>
-  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ダハーカ</h3><span class="cfloor">F93〜95</span></header>
+  <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ダハーカ</h3><span class="flag">要注意</span><span class="cfloor">F93〜95</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>リシックブレス</b>＝不可視の前方扇、<b>テイルドライブ</b>＝不可視の後方扇。前後に注意。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・バチェラー">
@@ -554,6 +577,8 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 </main>
 <footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。<br>© SQUARE ENIX</footer>
 <div class="jester" aria-hidden="true"></div>
+<button class="jester-hit" id="jesterHit" type="button" aria-label="ピエロに話しかける" title="ピエロに話しかける"></button>
+<div class="jester-bubble" id="jesterBubble" aria-live="polite"></div>
 <div class="fairy" aria-hidden="true"><span class="fl" id="flA"></span><span class="fl off" id="flB"></span></div>
 <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
 <div class="mascot-bubble" id="mascotBubble" aria-live="polite"></div>
@@ -567,12 +592,22 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  main.classList.toggle('is-empty',cards.length>0&&shown===0);}
 [q,os,od,op].forEach(el=>el.addEventListener('input',apply));
 (function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
- var cols=[['#f9c2d8','#ec90b6'],['#fbd0e0','#f3a9c8'],['#ffe3ee','#f7b8d2'],['#f6cbe8','#e58fcb'],['#ffd9c2','#f4a98a']];
- var N=18;var f=document.createDocumentFragment();
- for(var k=0;k<N;k++){var p=document.createElement('span');p.className='petal';var i=document.createElement('i');p.appendChild(i);
-  var sz=8+Math.random()*10,op=.5+Math.random()*.42,pd=11+Math.random()*10,fd=2.2+Math.random()*2.6,dl=-Math.random()*pd,sway=18+Math.random()*44;if(Math.random()<.5)sway=-sway;
-  var c=cols[k%cols.length];
-  p.style.left=(Math.random()*100)+'vw';p.style.setProperty('--pd',pd.toFixed(1)+'s');p.style.setProperty('--fd',fd.toFixed(1)+'s');p.style.setProperty('--pdl',dl.toFixed(1)+'s');p.style.setProperty('--sway',sway.toFixed(0)+'px');
+ var month=(new Date()).getMonth()+1;
+ var seasons={
+  sakura:{cls:'sakura',count:26,size:[6,19],dur:[10,26],flutter:[1.8,5.4],colors:[['#f9c2d8','#ec90b6'],['#fbd0e0','#f3a9c8'],['#ffe3ee','#f7b8d2'],['#f6cbe8','#e58fcb'],['#ffd9c2','#f4a98a'],['#fff0f5','#f8bdd4']]},
+  leaf:{cls:'leaf',count:18,size:[18,42],dur:[14,33],flutter:[2.8,7.2],colors:[['#d6efa3','#65b870'],['#c6e88a','#3f9f64'],['#f0e7a3','#8fbe62'],['#aee0a2','#4aa886'],['#e7f6ba','#75aa4f']]},
+  firefly:{cls:'firefly',count:18,size:[4,11],dur:[11,23],flutter:[1.7,4.8],colors:[['#fffbd0','#ffe978']]},
+  maple:{cls:'maple',count:24,size:[7,20],dur:[12,27],flutter:[2.1,5.8],colors:[['#f6b05d','#c84a3a'],['#e88445','#9f3431'],['#ffd080','#d96537'],['#c96b37','#7d2d2c'],['#f1c25f','#b35b2f']]},
+  snow:{cls:'snow',count:34,size:[3,10],dur:[13,30],flutter:[3.2,7.2],colors:[['#fff','#dff4ff']]}
+ };
+ var season=month>=3&&month<=4?seasons.sakura:month>=5&&month<=7?seasons.leaf:month===8?seasons.firefly:month>=9&&month<=11?seasons.maple:seasons.snow;
+ box.dataset.season=season.cls;
+ var f=document.createDocumentFragment();
+ for(var k=0;k<season.count;k++){var p=document.createElement('span');p.className='petal petal--'+season.cls;var i=document.createElement('i');p.appendChild(i);
+  var depth=Math.random(),sz=season.size[0]+depth*(season.size[1]-season.size[0]),op=.32+depth*.58,pd=season.dur[0]+(1-depth)*(season.dur[1]-season.dur[0])+Math.random()*5,fd=season.flutter[0]+Math.random()*(season.flutter[1]-season.flutter[0]),dl=-Math.random()*pd,wind=(22+Math.random()*92)*(Math.random()<.5?-1:1),z=-260+depth*520,blur=(1-depth)*1.55,r0=(Math.random()*360).toFixed(0);
+  var c=season.colors[k%season.colors.length];
+  p.style.left=(Math.random()*104-2)+'vw';if(season.cls==='firefly')p.style.top=(54+Math.random()*28)+'vh';
+  p.style.setProperty('--pd',pd.toFixed(1)+'s');p.style.setProperty('--fd',fd.toFixed(1)+'s');p.style.setProperty('--pdl',dl.toFixed(1)+'s');p.style.setProperty('--wind',wind.toFixed(0)+'px');p.style.setProperty('--z',z.toFixed(0)+'px');p.style.setProperty('--blur',blur.toFixed(2)+'px');p.style.setProperty('--r0',r0+'deg');
   i.style.setProperty('--sz',sz.toFixed(0)+'px');i.style.setProperty('--op',op.toFixed(2));i.style.setProperty('--c',c[0]);i.style.setProperty('--c2',c[1]);
   f.appendChild(p);}
  box.appendChild(f);})();
@@ -600,12 +635,45 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
  var fw=100,fwid=192,ticking=false;
  var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
- var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),jester=document.querySelector('.jester'),jesterX=null;
+ var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),jester=document.querySelector('.jester'),jesterHit=document.getElementById('jesterHit'),jesterX=null;
  function setFairy(fr){if(fr===fairyCur||!flA||!flB)return;fairyCur=fr;var back=(fairyFront===flA)?flB:flA;back.style.backgroundPositionX=(-fr*fwid)+'px';back.classList.remove('off');fairyFront.classList.add('off');fairyFront=back;}
- function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;var nx=jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180);if(jesterX!==null&&Math.abs(nx-jesterX)>0.5)jester.style.setProperty('--jester-face',nx>jesterX?'1':'-1');jesterX=nx;jester.style.left=nx.toFixed(1)+'px';}
+ function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;var nx=jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180);if(jesterX!==null&&Math.abs(nx-jesterX)>0.5)jester.style.setProperty('--jester-face',nx>jesterX?'1':'-1');jesterX=nx;jester.style.left=nx.toFixed(1)+'px';if(jesterHit)jesterHit.style.left=nx.toFixed(1)+'px';}
   {var docH=document.documentElement.scrollHeight-window.innerHeight;var p=docH>0?y/docH:0;p=p<0?0:p>1?1:p;var bgMax=mqm.matches?0.95:0.5;if(bgtint)bgtint.style.opacity=(p*bgMax).toFixed(3);if(bgsurf)bgsurf.style.opacity=((1-p)*bgMax).toFixed(3);}ticking=false;}
  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(setFrame);}},{passive:true});
  setFrame();})();
+(function(){var h=document.getElementById('jesterHit'),j=document.querySelector('.jester'),b=document.getElementById('jesterBubble');if(!h||!j||!b)return;
+ var lines=[
+  'その宝箱、開ける前から嫌な予感してた。',
+  'スタン効かない顔してるやつ、だいたい効かない。',
+  '巡回さん、空気読んで一周待って。',
+  '罠を踏んだ？今のは床からの挨拶。',
+  '迷ったら壁沿い。でも壁も信用しすぎないで。',
+  'その一歩、ほんとうに押していい一歩？',
+  'ピンチの時ほど深呼吸。あとポーション。',
+  'この踊り？誘引トラップをなだめてる。',
+  '眠らせられる敵は、寝かせたほうが平和。',
+  '要注意タグは、未来の自分からの手紙。'
+ ];
+ var last=-1,t;
+ function pick(){var n=Math.floor(Math.random()*lines.length);if(lines.length>1&&n===last)n=(n+1)%lines.length;last=n;return lines[n];}
+ function show(){
+  b.textContent=pick();
+  var r=h.getBoundingClientRect(),vw=window.innerWidth,bw=188;
+  var left=Math.max(10,Math.min(vw-bw-10,r.left+r.width*.5-34));
+  var top=Math.max(12,r.top-68);
+  b.style.left=left+'px';b.style.top=top+'px';
+  b.classList.add('show');j.classList.add('quip');
+  clearTimeout(t);t=setTimeout(function(){b.classList.remove('show');j.classList.remove('quip');},3600);
+ }
+ h.addEventListener('click',function(e){
+  h.style.pointerEvents='none';
+  var under=document.elementFromPoint(e.clientX,e.clientY);
+  h.style.pointerEvents='';
+  var passthrough=under&&under.closest('a,button,input,label,.card,.mascot,.fairy');
+  if(passthrough){passthrough.click();return;}
+  show();
+ });
+})();
 (function(){var t=document.getElementById('navToggle'),nav=document.getElementById('floorNav');if(!t||!nav)return;
  var mq=window.matchMedia('(max-width:700px)');
  function set(exp){nav.classList.toggle('collapsed',!exp);t.setAttribute('aria-expanded',exp?'true':'false');}
