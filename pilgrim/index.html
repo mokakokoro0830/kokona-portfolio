@@ -114,8 +114,9 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border-strong)}
 .card.danger::before{background:linear-gradient(180deg,var(--crimson),#9c2f2f)}
 .card:hover{transform:translateY(-3px);box-shadow:var(--sh-3);border-color:var(--border-strong);z-index:20;overflow:visible}
-.card__media{flex:0 0 96px}
+.card__media{flex:0 0 96px;position:relative}
 .card__media img{width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);border:1px solid var(--border-strong);background:#eef3ea;position:relative;z-index:1;cursor:zoom-in;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card__media--ai::after{content:"AI仮";position:absolute;right:5px;bottom:5px;z-index:3;color:#fff;background:rgba(44,33,24,.78);border:1px solid rgba(255,255,255,.45);border-radius:5px;padding:1px 5px;font-size:.56rem;font-weight:800;line-height:1.25;pointer-events:none}
 .card__media img:hover{transform:scale(2.7);transform-origin:left center;z-index:40;border-color:var(--primary);box-shadow:0 16px 40px -10px rgba(20,40,30,.55)}
 @media(hover:none){.card__media img{cursor:auto}.card__media img:hover{transform:none}}
 .card__media .ph{width:96px;height:96px;border-radius:var(--r-sm);border:1px dashed var(--border-strong);background:linear-gradient(135deg,#eef5ee,#dde9da);display:grid;place-items:center;color:#9aab9c;font-size:.62rem;font-weight:700;text-align:center;line-height:1.3}
@@ -137,6 +138,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
  .card{cursor:pointer;gap:11px;padding:10px 12px;align-items:center}
  .card__media{flex:0 0 54px}
  .card__media img{width:54px;height:54px}
+ .card__media--ai::after{right:3px;bottom:3px;font-size:.45rem;padding:1px 3px;border-radius:4px}
  .card__media .ph{width:54px;height:54px;font-size:.5rem;line-height:1.25}
  .card .notes{display:none}
  .card.open{align-items:flex-start}
@@ -476,7 +478,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
     <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span></div>
     <ul class="notes"><li>スタン無効。<b>夢魔の視線</b>は直線AoE。</li><li><b>死重爆</b>＝HPを削り切ると爆発するので、撃破時は離れる。睡眠は効く。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・パペット">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__media card__media--ai"><img src="img/puppet.jpg" alt="インヴォークド・パペット（AI仮イメージ）" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・パペット</h3><span class="cfloor">F91〜94</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
     <ul class="notes"><li>巡回タイプ。「キエエエエ」はチャリオット（中心円）。スタン・睡眠可。</li></ul>
@@ -486,7 +488,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>クリープアイヴィ</b>は正面の扇範囲。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ヤテベオ">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__media card__media--ai"><img src="img/yateveo.jpg" alt="トラバース・ヤテベオ（AI仮イメージ）" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヤテベオ</h3><span class="cfloor">F91〜92</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>ロトンステンチ</b>は<b>壁を貫通する直線範囲</b>。物陰でも油断しない。スタン・睡眠可。</li></ul>
@@ -496,7 +498,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
     <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
     <ul class="notes"><li><b>スタン／睡眠とも無効</b>。「トリプル／クアドラダッシャー」（3〜4連）の後にチャリオット（中心円）。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・ソウトゥース">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+  <div class="card__media"><img src="img/sawtooth.jpg" alt="インヴォークド・ソウトゥース" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ソウトゥース</h3><span class="cfloor">F93〜98</span></header>
     <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
     <ul class="notes"><li>巡回・聴覚感知。ライト／レフトの半面攻撃。スタン・睡眠可。</li></ul>
@@ -540,7 +542,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 </section>
   <p class="empty">該当するモンスターがいません。</p>
 </main>
-<footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。</footer>
+<footer class="wrap">ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。<br>© SQUARE ENIX</footer>
 <div class="jester" aria-hidden="true"></div>
 <div class="fairy" aria-hidden="true"><span class="fl" id="flA"></span><span class="fl off" id="flB"></span></div>
 <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
