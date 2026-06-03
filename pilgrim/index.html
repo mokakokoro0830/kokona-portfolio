@@ -117,13 +117,13 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .floor .grid:not(:empty) + .floor-empty{display:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start}
 
-.card{display:flex;gap:13px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(246,251,245,.82));border:1px solid rgba(203,217,190,.9);border-radius:var(--r-md);padding:13px;box-shadow:0 12px 30px -26px rgba(24,55,36,.5),0 1px 0 rgba(255,255,255,.95) inset;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease),background var(--dur) var(--ease);position:relative;overflow:hidden;backdrop-filter:blur(9px) saturate(1.06)}
+.card{display:flex;align-items:flex-start;gap:13px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(246,251,245,.82));border:1px solid rgba(203,217,190,.9);border-radius:var(--r-md);padding:13px;box-shadow:0 12px 30px -26px rgba(24,55,36,.5),0 1px 0 rgba(255,255,255,.95) inset;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease),background var(--dur) var(--ease);position:relative;overflow:hidden;backdrop-filter:blur(9px) saturate(1.06)}
 .card.danger{border:2px solid rgba(207,68,68,.82);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,247,244,.82))}.card.normal{border:2px solid rgba(17,138,110,.78)}
 .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border-strong);z-index:1}
 .card.danger::before{background:linear-gradient(180deg,var(--crimson),#9c2f2f)}
 .card::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.55),transparent 28%,transparent 72%,rgba(255,239,183,.18));opacity:.72;z-index:0}
 .card:hover{transform:translateY(-3px);box-shadow:0 24px 48px -28px rgba(23,58,40,.58);border-color:var(--border-strong);z-index:20;overflow:visible;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(248,252,246,.9))}
-.card__media{flex:0 0 96px;position:relative;z-index:2}
+.card__media{flex:0 0 96px;height:96px;position:relative;z-index:2}
 .card__media:hover{z-index:30}
 .card__media::before{content:"";position:absolute;inset:-4px;border-radius:11px;background:linear-gradient(135deg,rgba(230,200,115,.78),rgba(17,138,110,.32),rgba(215,90,147,.25));opacity:.65;z-index:0}
 .card__media img{width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.8);background:#eef3ea;position:relative;z-index:1;cursor:zoom-in;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;box-shadow:0 10px 20px -14px rgba(18,45,32,.58)}
@@ -137,7 +137,8 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .chips{display:flex;gap:6px;margin-bottom:7px;flex-wrap:wrap}
 .chip{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:var(--r-full);border:1px solid;box-shadow:0 1px 0 rgba(255,255,255,.25) inset}
 .chip--stun{color:#fff;background:linear-gradient(135deg,#22a874,#118a6e);border-color:#15936f}.chip--off{color:var(--text-muted);background:rgba(238,243,234,.88);border-color:var(--border-strong)}
-.chip--sleep{color:#fff;background:linear-gradient(135deg,#6b86df,#4f67c9);border-color:#5972d4}.chip--patrol{color:#3a2a05;background:linear-gradient(135deg,#e0ba58,var(--gold));border-color:#c39a3a}
+.chip--sleep{color:#fff;background:linear-gradient(135deg,#6b86df,#4f67c9);border-color:#5972d4}.chip--patrol{color:#3a2a05;background:linear-gradient(135deg,#e0ba58,var(--gold));border-color:#c39a3a}.chip--sense{color:#153f48;background:linear-gradient(135deg,#dff7f3,#bfe6dc);border-color:#95cabd}
+.chip--sight{color:#fff;background:linear-gradient(135deg,#24a7c7,#2472c7);border-color:#2472c7}.chip--sound{color:#fff;background:linear-gradient(135deg,#8a63da,#6747b9);border-color:#6747b9}.chip--near{color:#fff;background:linear-gradient(135deg,#e06b58,#be3e52);border-color:#be3e52}
 .notes{margin:0;padding-left:1.05em;font-size:.85rem;color:#3a4740;line-height:1.65}.notes li{margin:2px 0}.notes li::marker{color:var(--primary)}.notes b{color:#1f2a23}
 .empty{display:none;color:var(--text-muted);padding:30px;text-align:center}.is-empty .floor{display:none}.is-empty .empty{display:block}
 footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--border);margin-top:36px;padding:18px 0;text-shadow:0 1px 3px rgba(255,255,255,.85)}
@@ -146,7 +147,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
  .floor{padding-top:110px}
  .grid{grid-template-columns:1fr;gap:9px}
  .card{cursor:pointer;gap:11px;padding:10px 12px;align-items:center}
- .card__media{flex:0 0 54px}
+ .card__media{flex:0 0 54px;height:54px}
  .card__media img{width:54px;height:54px}
  .card__media .ph{width:54px;height:54px;font-size:.5rem;line-height:1.25}
  .card .notes{display:none}
@@ -196,9 +197,9 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 @keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-9px) rotate(.6deg)}}
 @media(prefers-reduced-motion:reduce){.logo-anim img{animation:none}}
 /* dancing jester (decorative) */
-.jester{position:fixed;right:auto;left:50%;top:50%;transform:translateY(-50%);z-index:-1;width:80px;height:120px;background:url("img/jester-strip.png") 0 0 no-repeat;background-size:640px 120px;pointer-events:none;opacity:.95;filter:drop-shadow(0 6px 13px rgba(40,30,60,.3));animation:jesterBob 3.4s ease-in-out infinite}
+.jester{position:fixed;right:auto;left:50%;top:50%;--jester-face:1;transform:translateY(-50%) scaleX(var(--jester-face));z-index:-1;width:80px;height:120px;background:url("img/jester-strip.png") 0 0 no-repeat;background-size:640px 120px;pointer-events:none;opacity:.95;filter:drop-shadow(0 6px 13px rgba(40,30,60,.3));animation:jesterBob 3.4s ease-in-out infinite}
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
-@keyframes jesterBob{0%,100%{transform:translateY(-50%)}50%{transform:translateY(calc(-50% - 7px))}}
+@keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
@@ -217,7 +218,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <label class="toggle"><input type="checkbox" id="onlyStun">スタン可のみ</label>
   <label class="toggle"><input type="checkbox" id="onlyDanger">危険のみ</label><label class="toggle"><input type="checkbox" id="onlyPatrol">巡回のみ</label></div></div></div>
 <main class="wrap">
-  <div class="legend"><span><span class="chip chip--stun">スタン 効く</span> 入る</span><span><span class="chip chip--off">スタン 不可</span> 入らない</span><span><span class="chip chip--sleep">睡眠 効く</span></span><span><span class="chip chip--patrol">巡回</span> 徘徊</span><span><span class="flag">要注意</span> 即死・最優先など</span></div>
+  <div class="legend"><span><span class="chip chip--stun">スタン 効く</span> 入る</span><span><span class="chip chip--off">スタン 不可</span> 入らない</span><span><span class="chip chip--sleep">睡眠 効く</span></span><span><span class="chip chip--patrol">巡回</span> 徘徊</span><span><span class="chip chip--sense chip--sight">視覚</span> 感知方式</span><span><span class="flag">要注意</span> 即死・最優先など</span></div>
   <section class="floor" id="f0">
   <div class="floor__head"><span class="floor__badge">F1–10</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
   <div class="grid"></div>
@@ -243,32 +244,32 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="トラバース・フォルスラコス">
   <div class="card__media"><img src="img/falsraco.jpg" alt="トラバース・フォルスラコス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・フォルスラコス</h3><span class="cfloor">F51〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>攻撃が全部広範囲</b>。複数を同時に釣ると一気に事故るので、釣りすぎ注意。</li><li><b>ペインストーム</b>＝前方扇／<b>ペインフルガスト</b>＝自身中心の円／<b>ペインサイクロン</b>＝自身中心のドーナツ。詠唱を見て安置へ移動。</li><li>スタンが入るので、止めれば事故りにくい。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・モニター">
   <div class="card__media"><img src="img/monitor.jpg" alt="トラバース・モニター" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・モニター</h3><span class="cfloor">F51〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>炎を纏っている間は<b>近接攻撃を反射</b>（殴るとダメージが自分に返る）。遠隔の魔法攻撃は反射されないので、炎が出ている間は遠隔で削るのが安全。</li><li>スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・イビルエイビス">
   <div class="card__media"><img src="img/evilavis.jpg" alt="トラバース・イビルエイビス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・イビルエイビス</h3><span class="cfloor">F54〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプで<b>視覚感知</b>（見つかると寄ってくる）。横切るときは視界に注意。</li><li>円範囲の<b>ファイアボール</b>と、前方一直線の<b>ブレイジングトレイル</b>。特にブレイジングトレイルは極太なので、横にズレて回避。</li><li>スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ギガント">
   <div class="card__media"><img src="img/gigant.jpg" alt="トラバース・ギガント" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ギガント</h3><span class="cfloor">F54〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>吸い込み</b>のあと、すぐ敵中心の円範囲<b>ヘビーラリアット</b>を撃つ。吸い込まれたら即離れる。</li><li><b>ヘビートス</b>は前方扇の範囲攻撃。正面を避ける。</li><li>スタンで止められる。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・サーペント">
   <div class="card__media"><img src="img/serpent.jpg" alt="トラバース・サーペント" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・サーペント</h3><span class="cfloor">F56〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ。<b>アースオーガー</b>は前方300度というほぼ全周に近い範囲攻撃。<b>スタンで必ず止める</b>。</li><li>止めるのが間に合わないときは、敵の<b>真下か背面</b>に潜り込んで避ける。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ハウラー">
   <div class="card__media"><img src="img/howler.jpg" alt="トラバース・ハウラー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ハウラー</h3><span class="cfloor">F56〜</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>突進「<b>バレリングスマッシュ</b>」のあと、中心範囲「<b>サイズテール</b>」かドーナツ超範囲「<b>外輪雷</b>」のどちらかが来る。</li><li>スタン可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
@@ -277,67 +278,67 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ミスチーフ">
   <div class="card__media"><img src="img/mischief.jpg" alt="フォーギヴン・ミスチーフ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ミスチーフ</h3><span class="cfloor">F61〜64</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ（視覚感知）。<b>スキルトロン</b>は与ダメージ30%カットのデバフ（沈黙でも止まる）。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ノーム">
   <div class="card__media"><img src="img/gnome.jpg" alt="トラバース・ノーム" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ノーム</h3><span class="cfloor">F61〜63</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>普段は詠唱せず、突然ほぼ見えない円範囲を出すことがある。通常攻撃(AA)が痛いので注意。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・クリフモール">
   <div class="card__media"><img src="img/griffmole.jpg" alt="トラバース・クリフモール" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・クリフモール</h3><span class="cfloor">F61〜63</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>ヘッドバット</b>は不可視の前方扇範囲。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="フォーギヴン・ダウト">
   <div class="card__media"><img src="img/doubt.jpg" alt="フォーギヴン・ダウト" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ダウト</h3><span class="flag">要注意</span><span class="cfloor">F61〜64</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>接近するまで姿が見えず、<b>ターゲットもできない</b>透明タイプ。視認されると飛びつき→<b>ボディプレス</b>（中心円範囲）。</li><li>スタン・睡眠は効くが反応が遅れがち。避けるのが無難。部屋に不自然に敵がいない時は大体これ。</li></ul>
   </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="トラバース・タロース">
   <div class="card__media"><img src="img/talos.jpg" alt="トラバース・タロース" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・タロース</h3><span class="flag">要注意</span><span class="cfloor">F61〜69</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回・<b>スタン／睡眠とも無効</b>。「突貫する」は不可視のAoEで、その後ドーナツ（ダイナモ）が続く。避けで対処。</li></ul>
   </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="フォーギヴン・ライオディング">
   <div class="card__media"><img src="img/lyodyne.jpg" alt="フォーギヴン・ライオディング" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ライオディング</h3><span class="flag">要注意</span><span class="cfloor">F62〜65</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>スタン／睡眠とも無効</b>。ライト／レフトの半面超範囲→すぐ逆サイドにも来るので、必ず反対側へ動く。複数を同時に釣らない。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・グラッジ">
   <div class="card__media"><img src="img/grudge.jpg" alt="フォーギヴン・グラッジ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・グラッジ</h3><span class="cfloor">F63〜66</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回する蠍。<b>ヘルファイア</b>は不可視の直線AoE。</li><li>HP25%付近で<b>クリスタルスティンガー</b>（広範囲・大ダメージ）。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・イムパリティー">
   <div class="card__media"><img src="img/imparity.jpg" alt="フォーギヴン・イムパリティー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・イムパリティー</h3><span class="cfloor">F64〜66</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>ロックスライド</b>は不可視の十字範囲。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="トラバース・クイーンビー">
   <div class="card__media"><img src="img/queenbee.jpg" alt="トラバース・クイーンビー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・クイーンビー</h3><span class="flag">要注意</span><span class="cfloor">F65〜68</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>HP15%以下で<b>ファイナルスピア</b>（単体に大ダメージ）。スタン・睡眠で止められる。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="フォーギヴン・アタッチメント">
   <div class="card__media"><img src="img/attachment.jpg" alt="フォーギヴン・アタッチメント" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アタッチメント</h3><span class="flag">要注意</span><span class="cfloor">F65〜67</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>スーウェッジウォーター</b>は後ろが安置（前方は大ダメージ）。</li><li>スタン・睡眠で止めると安全。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・コンテンション">
   <div class="card__media"><img src="img/contention.jpg" alt="フォーギヴン・コンテンション" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・コンテンション</h3><span class="cfloor">F66〜68</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>針幾千本</b>は不可視の直線範囲。HP50%で<b>ヘイスト</b>が付いて詠唱が速くなる。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ヴォラシティ">
   <div class="card__media"><img src="img/voracity.jpg" alt="フォーギヴン・ヴォラシティ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ヴォラシティ</h3><span class="cfloor">F67〜69</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>ストーンゲイズ</b>は不可視の前方扇、<b>ボディスラム</b>は不可視の中心円。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ンゴツィ">
   <div class="card__media"><img src="img/ngotsi.jpg" alt="フォーギヴン・ンゴツィ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ンゴツィ</h3><span class="cfloor">F67〜69</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>土石流</b>は不可視の前方扇。</li><li>スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
@@ -346,67 +347,67 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="トラバース・フルドゥ">
   <div class="card__media"><img src="img/fuldu.jpg" alt="トラバース・フルドゥ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・フルドゥ</h3><span class="cfloor">F71〜72</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>徘徊する爆弾。<b>スタンが効かない</b>ので、ちょっとだけ危険。</li><li><b>炸裂</b>は敵中心の円範囲。避ける。</li><li>倒した後、死体が<b>自爆</b>を詠唱して大円範囲。必ず離れる。ダメージは距離減衰なので踏んでも離れていれば痛くないが、<b>中心はタンクでも即死</b>。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・アンビリーフ">
   <div class="card__media"><img src="img/unbelief.jpg" alt="フォーギヴン・アンビリーフ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アンビリーフ</h3><span class="cfloor">F71〜74</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>HP35%以下で<b>クラッシュファング</b>を連続で使ってくる。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・シザージョウ">
   <div class="card__media"><img src="img/scissorjaw.jpg" alt="トラバース・シザージョウ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・シザージョウ</h3><span class="cfloor">F71〜73</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>サンドブラスト</b>は不可視の前方扇範囲。避けず止めずに受けると大ダメージ（即死級との報告も）。必ずスタン／睡眠で対処。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ホイップカスタード">
   <div class="card__media"><img src="img/custard.jpg" alt="トラバース・ホイップカスタード" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ホイップカスタード</h3><span class="cfloor">F71〜72</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>「ファイラ」はランダム対象の円範囲（沈黙でも止まる）。スタン・睡眠可。</li></ul>
   </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="フォーギヴン・スパイト">
   <div class="card__media"><img src="img/spite.jpg" alt="フォーギヴン・スパイト" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・スパイト</h3><span class="flag">要注意</span><span class="cfloor">F72〜75</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>スタン／睡眠とも無効</b>。<b>双水流・輪円</b>＝ダイナモ→チャリオット、<b>双水流・円輪</b>＝チャリオット→ダイナモ。安置が入れ替わるので詠唱名を見て動く。</li></ul>
   </div></article><article class="card" data-stun="0" data-danger="0" data-name="フォーギヴン・アロガンス">
   <div class="card__media"><img src="img/arrogance.jpg" alt="フォーギヴン・アロガンス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・アロガンス</h3><span class="cfloor">F73〜76</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回・<b>スタン／睡眠とも無効</b>。<b>連蹴り</b>は前方への4連続範囲。後衛は離れれば範囲外。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ロックイーター">
   <div class="card__media"><img src="img/rockeater.jpg" alt="トラバース・ロックイーター" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ロックイーター</h3><span class="cfloor">F73〜79</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ。<b>フリクチャージ</b>は飛びつき＋ノックバック＋継続ダメージ（ドット）。<b>壁を背</b>にして落下を防ぐ。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ウォーム">
   <div class="card__media"><img src="img/worm.jpg" alt="トラバース・ウォーム" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ウォーム</h3><span class="cfloor">F74〜76</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>地震</b>は中心円範囲。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・アメミット">
   <div class="card__media"><img src="img/ammit.jpg" alt="トラバース・アメミット" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・アメミット</h3><span class="cfloor">F75〜77</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>トップル</b>は中心円範囲（チャリオット）。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ディセンション">
   <div class="card__media"><img src="img/dissension.jpg" alt="フォーギヴン・ディセンション" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ディセンション</h3><span class="cfloor">F75〜78</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>前方扇<b>トラウンス</b>と中心円<b>マイティスピン</b>。通路で処理するときは範囲に注意。スタン・睡眠可。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="フォーギヴン・コラプション">
   <div class="card__media"><img src="img/corruption.jpg" alt="フォーギヴン・コラプション" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・コラプション</h3><span class="flag">要注意</span><span class="cfloor">F76〜79</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>中心超範囲<b>ローリングバラージ</b>＋前方扇<b>フロントバラージ</b>。敵視（ヘイト）を取ると詠唱が解けるので、放置せず最優先で倒す。スタン・睡眠可。</li></ul>
   </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="フォーギヴン・ヴァニティー">
   <div class="card__media"><img src="img/vanity.jpg" alt="フォーギヴン・ヴァニティー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・ヴァニティー</h3><span class="flag">要注意</span><span class="cfloor">F77〜79</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--near">接近</span></div>
     <ul class="notes"><li>接近で感知。詠唱バーが出ず、<b>クロスレーザー</b>＝十字範囲をエフェクトで判断。<b>スタンは無効だが睡眠は効く</b>。通路では十字に注意。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・スランダー">
   <div class="card__media"><img src="img/slander.jpg" alt="フォーギヴン・スランダー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">フォーギヴン・スランダー</h3><span class="cfloor">F78〜79</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--near">接近</span></div>
     <ul class="notes"><li>接近感知。<b>メタモーフィックブラスト</b>＝前方扇、<b>オロジェニックストーム</b>＝ランダム対象のAoE。スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
@@ -415,67 +416,67 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・グレムリン">
   <div class="card__media"><img src="img/gremlin.jpg" alt="インヴォークド・グレムリン" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・グレムリン</h3><span class="cfloor">F81〜82</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>クロウ</b>は不可視の前方扇。<b>スロウ</b>で鈍足デバフを付けてくる（沈黙やエスナで対処）。</li><li>スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・カブス">
   <div class="card__media"><img src="img/kabs.jpg" alt="トラバース・カブス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・カブス</h3><span class="cfloor">F81〜83</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>ダーラ</b>は前方の超巨大な扇範囲。部屋から釣って戻るときに注意。スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ライダー">
   <div class="card__media"><img src="img/rider.jpg" alt="トラバース・ライダー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ライダー</h3><span class="cfloor">F81〜82</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--near">接近</span></div>
     <ul class="notes"><li>巡回・接近感知。<b>ストームスラッシュ</b>＝前方扇、<b>ヴァルファズル</b>＝ランダム対象へのノックバック4連。壁際は落下注意。スタン可。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="トラバース・ノール">
   <div class="card__media"><img src="img/knoll.jpg" alt="トラバース・ノール" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ノール</h3><span class="flag">要注意</span><span class="cfloor">F81〜83</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>ノックスブラスト</b>は不可視の扇範囲。</li><li>HP25%以下で<b>かみ殺す</b>を詠唱、<b>完了すると即死</b>。止めるか削りきる。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・サタナジュニア">
   <div class="card__media"><img src="img/satanajr.jpg" alt="インヴォークド・サタナジュニア" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・サタナジュニア</h3><span class="cfloor">F83〜85</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>ブリザドトラップ</b>は不可視の円範囲。スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・アークデーモン">
   <div class="card__media"><img src="img/archdemon.jpg" alt="インヴォークド・アークデーモン" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・アークデーモン</h3><span class="cfloor">F84〜86</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>アビサルスイング</b>＝前方扇、<b>アビサルトランスフィクション</b>＝麻痺（沈黙で止まる）。スタン可。</li></ul>
   </div></article><article class="card" data-stun="0" data-danger="0" data-name="トラバース・キャマ">
   <div class="card__media"><img src="img/kyama.jpg" alt="トラバース・キャマ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・キャマ</h3><span class="cfloor">F84〜87</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>スタン無効。<b>キックアンドテイル</b>は前方の細い範囲→後方範囲。<b>側面</b>が安置。</li></ul>
   </div></article><article class="card danger" data-stun="1" data-danger="1" data-name="インヴォークド・サキュバス">
   <div class="card__media"><img src="img/succubus.jpg" alt="インヴォークド・サキュバス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・サキュバス</h3><span class="flag">要注意</span><span class="cfloor">F84〜86</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ。<b>ハートヒート</b>は<b>視線を切るのが必須</b>の範囲技（食らうと危険）。視線を外して対処。スタン可。</li></ul>
   </div></article><article class="card danger" data-stun="0" data-danger="1" data-name="インヴォークド・フンババ">
   <div class="card__media"><img src="img/humbaba.jpg" alt="インヴォークド・フンババ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・フンババ</h3><span class="flag">要注意</span><span class="cfloor">F86〜89</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回・<b>スタン無効</b>。「トリプル／クアドラブロー」（ヘイト1位へ3〜4連）の後、<b>ベローズ＝不可視の扇範囲で即死</b>。正面を避ける。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・バエル">
   <div class="card__media"><img src="img/bael.jpg" alt="インヴォークド・バエル" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・バエル</h3><span class="cfloor">F86〜89</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>アビサルレイ</b>は前方の不可視直線。非戦闘時にチャリオット（中心円）。スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・トルバドゥール">
   <div class="card__media"><img src="img/troubadour.jpg" alt="インヴォークド・トルバドゥール" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・トルバドゥール</h3><span class="cfloor">F86〜88</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--near">接近</span></div>
     <ul class="notes"><li>接近感知。<b>イナーデーモン</b>はチャリオット（中心円）。スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・ケルベロス">
   <div class="card__media"><img src="img/cerberus.jpg" alt="インヴォークド・ケルベロス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ケルベロス</h3><span class="cfloor">F86〜89</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>テイルブロー</b>＝後方扇、<b>ライトニング</b>＝ヘイト1位へのAoE。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・カイム">
   <div class="card__media"><img src="img/kaim.jpg" alt="インヴォークド・カイム" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・カイム</h3><span class="cfloor">F87〜88</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>大凶眼</b>は視線範囲、<b>眼光弾</b>はランダム対象へのAoE。スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
@@ -484,67 +485,67 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
   <div class="grid"><article class="card danger" data-stun="0" data-danger="1" data-name="インヴォークド・ドリームエビル">
   <div class="card__media"><img src="img/dreamevil.jpg" alt="インヴォークド・ドリームエビル" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ドリームエビル</h3><span class="flag">要注意</span><span class="cfloor">F91〜98</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>スタン無効。<b>夢魔の視線</b>は直線AoE。</li><li><b>死重爆</b>＝HPを削り切ると爆発するので、撃破時は離れる。睡眠は効く。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・パペット">
   <div class="card__media"><img src="img/puppet.jpg" alt="インヴォークド・パペット" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・パペット</h3><span class="cfloor">F91〜94</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ。「キエエエエ」はチャリオット（中心円）。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ヴァイオレットトリフィド">
   <div class="card__media"><img src="img/violettriffid.jpg" alt="トラバース・ヴァイオレットトリフィド" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヴァイオレットトリフィド</h3><span class="cfloor">F91〜93</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>クリープアイヴィ</b>は正面の扇範囲。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・ヤテベオ">
   <div class="card__media"><img src="img/yateveo.jpg" alt="トラバース・ヤテベオ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ヤテベオ</h3><span class="cfloor">F91〜92</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li><b>音で感知</b>（聴覚）。<b>ロトンステンチ</b>は<b>壁を貫通する直線範囲</b>。物陰でも油断しない。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="0" data-danger="0" data-name="トラバース・ワーグ">
   <div class="card__media"><img src="img/warg.jpg" alt="トラバース・ワーグ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・ワーグ</h3><span class="cfloor">F93〜95</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>スタン／睡眠とも無効</b>。「トリプル／クアドラダッシャー」（3〜4連）の後にチャリオット（中心円）。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・ソウトゥース">
   <div class="card__media"><img src="img/sawtooth.jpg" alt="インヴォークド・ソウトゥース" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ソウトゥース</h3><span class="cfloor">F93〜98</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sound">聴覚</span></div>
     <ul class="notes"><li>巡回・聴覚感知。ライト／レフトの半面攻撃。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・ダハーカ">
   <div class="card__media"><img src="img/dahaka.jpg" alt="インヴォークド・ダハーカ" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・ダハーカ</h3><span class="cfloor">F93〜95</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>リシックブレス</b>＝不可視の前方扇、<b>テイルドライブ</b>＝不可視の後方扇。前後に注意。スタン・睡眠可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・バチェラー">
   <div class="card__media"><img src="img/bachelor.jpg" alt="インヴォークド・バチェラー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・バチェラー</h3><span class="cfloor">F94〜96</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>アンキレーウェブ</b>でヘビィ（鈍足）付与（視線を切れる）。スタン可。</li></ul>
 </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・アルケオデーモン">
   <div class="card__media"><img src="img/archeodemon.jpg" alt="インヴォークド・アルケオデーモン" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・アルケオデーモン</h3><span class="cfloor">F95〜98</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--patrol">巡回</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>巡回タイプ。<b>ライフブレイク</b>は前方の扇範囲。スタン可。</li></ul>
   </div></article><article class="card" data-stun="1" data-danger="0" data-name="トラバース・マレヴォレンス">
   <div class="card__media"><img src="img/malevolence.jpg" alt="トラバース・マレヴォレンス" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">トラバース・マレヴォレンス</h3><span class="cfloor">F95〜96</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>スマッシュブロー</b>は前方扇。スタン・睡眠可。</li></ul>
-  </div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・デストルドー">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+</div></article><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・デストルドー">
+  <div class="card__media"><img src="img/destrudo.jpg" alt="インヴォークド・デストルドー" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・デストルドー</h3><span class="cfloor">F96〜97</span></header>
-    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span></div>
+    <div class="chips"><span class="chip chip--stun">スタン 効く</span><span class="chip chip--sleep">睡眠 効く</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li><b>怪光線</b>は直線AoE。スタン・睡眠可。</li></ul>
-  </div></article><article class="card" data-stun="0" data-danger="0" data-name="インヴォークド・グシオン">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+</div></article><article class="card" data-stun="0" data-danger="0" data-name="インヴォークド・グシオン">
+  <div class="card__media"><img src="img/gusion.jpg" alt="インヴォークド・グシオン" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・グシオン</h3><span class="cfloor">F96〜98</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>スタン無効。<b>ライトスラム</b>＝右半面→左半面、<b>レフトスラム</b>＝左半面→右半面。当たる側が入れ替わるので逆へ動く。</li></ul>
-  </div></article><article class="card" data-stun="0" data-danger="0" data-name="インヴォークド・アケローン">
-  <div class="card__media"><div class="ph">画像<br>準備中</div></div>
+</div></article><article class="card" data-stun="0" data-danger="0" data-name="インヴォークド・アケローン">
+  <div class="card__media"><img src="img/acheron.jpg" alt="インヴォークド・アケローン" loading="lazy" width="96" height="96"></div>
   <div class="card__body"><header class="card__head"><h3 class="card__name">インヴォークド・アケローン</h3><span class="cfloor">F96〜98</span></header>
-    <div class="chips"><span class="chip chip--off">スタン 不可</span></div>
+    <div class="chips"><span class="chip chip--off">スタン 不可</span><span class="chip chip--sense chip--sight">視覚</span></div>
     <ul class="notes"><li>スタン無効。<b>オーソリティスラッシュ</b>は<b>背面が安置</b>。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
@@ -586,7 +587,7 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  // カードにホバー → その子の詳細をマスコットが話す
  function cardText(c,full){var n=c.dataset.name||'';var flEl=c.querySelector('.cfloor');var fl=flEl?flEl.textContent.trim():'';
   var tags=[];if(c.dataset.danger==='1')tags.push('⚠️要注意');tags.push(c.dataset.stun==='1'?'スタン◯':'スタン×');
-  if(c.querySelector('.chip--sleep'))tags.push('睡眠◯');if(c.querySelector('.chip--patrol'))tags.push('巡回');
+  if(c.querySelector('.chip--sleep'))tags.push('睡眠◯');if(c.querySelector('.chip--patrol'))tags.push('巡回');var se=c.querySelector('.chip--sense');if(se)tags.push(se.textContent.trim());
   var body;
   if(full){body=[].map.call(c.querySelectorAll('.notes li'),function(li){return '・'+li.textContent.trim();}).join('\n');}
   else{var li=c.querySelector('.notes li');var s=li?li.textContent.trim():'';var dot=s.indexOf('。');if(dot>0)s=s.slice(0,dot+1);if(s.length>44)s=s.slice(0,42)+'…';body=s;}
@@ -599,9 +600,9 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
  var fw=100,fwid=192,ticking=false;
  var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
- var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),jester=document.querySelector('.jester');
+ var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),jester=document.querySelector('.jester'),jesterX=null;
  function setFairy(fr){if(fr===fairyCur||!flA||!flB)return;fairyCur=fr;var back=(fairyFront===flA)?flB:flA;back.style.backgroundPositionX=(-fr*fwid)+'px';back.classList.remove('off');fairyFront.classList.add('off');fairyFront=back;}
- function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;jester.style.left=(jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180)).toFixed(1)+'px';}
+ function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;var nx=jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180);if(jesterX!==null&&Math.abs(nx-jesterX)>0.5)jester.style.setProperty('--jester-face',nx>jesterX?'1':'-1');jesterX=nx;jester.style.left=nx.toFixed(1)+'px';}
   {var docH=document.documentElement.scrollHeight-window.innerHeight;var p=docH>0?y/docH:0;p=p<0?0:p>1?1:p;var bgMax=mqm.matches?0.95:0.5;if(bgtint)bgtint.style.opacity=(p*bgMax).toFixed(3);if(bgsurf)bgsurf.style.opacity=((1-p)*bgMax).toFixed(3);}ticking=false;}
  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(setFrame);}},{passive:true});
  setFrame();})();
