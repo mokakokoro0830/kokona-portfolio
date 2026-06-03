@@ -39,12 +39,12 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 
 /* seasonal particles */
 .petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;perspective:900px}
-.petal{position:absolute;top:-14vh;will-change:transform,opacity;animation:fall var(--pd,14s) linear infinite;animation-delay:var(--pdl,0s);transform-style:preserve-3d;filter:blur(var(--blur,0px))}
+.petal{position:absolute;top:-14vh;will-change:transform,opacity;animation:fall var(--pd,14s) linear infinite;animation-delay:var(--pdl,0s);transform-style:preserve-3d}
 .petal i{display:block;position:relative;width:var(--sz,14px);height:calc(var(--sz,14px) * .82);
  background:radial-gradient(125% 125% at 32% 22%,#fff6fa 0%,var(--c,#f7b8d2) 55%,var(--c2,#e684af) 100%);
  border-radius:78% 18% 86% 22%;box-shadow:inset 0 0 3px rgba(214,90,140,.28),0 1px 3px rgba(255,170,205,.16);
  opacity:var(--op,.85);will-change:transform;animation:flutter var(--fd,3s) cubic-bezier(.45,0,.55,1) infinite;animation-delay:var(--pdl,0s);transform-origin:45% 55%}
-.petal--leaf i{width:calc(var(--sz,28px) * 1.13);height:var(--sz,28px);border-radius:0;background:url("img/season-leaf.png") center/contain no-repeat;box-shadow:none;filter:drop-shadow(0 3px 5px rgba(62,118,57,.22))}
+.petal--leaf i{width:calc(var(--sz,28px) * 1.13);height:var(--sz,28px);border-radius:0;background:url("img/season-leaf.png") center/contain no-repeat;box-shadow:none}
 .petal--maple i::after{content:"";position:absolute;inset:18% 48% 16% 48%;background:rgba(255,255,230,.42);border-radius:999px;transform:rotate(18deg)}
 .petal--maple i{width:calc(var(--sz,14px) * 1.25);height:var(--sz,14px);border-radius:24% 55% 28% 60%;clip-path:polygon(50% 0,59% 28%,83% 10%,74% 42%,100% 48%,72% 58%,82% 91%,56% 70%,50% 100%,43% 70%,17% 91%,27% 58%,0 48%,26% 42%,17% 10%,41% 28%);background:linear-gradient(135deg,#ffe0a8 0%,var(--c,#e88445) 48%,var(--c2,#b43833) 100%);box-shadow:0 2px 7px rgba(171,72,45,.2)}
 .petal--snow i{width:var(--sz,8px);height:var(--sz,8px);border-radius:50%;background:radial-gradient(circle,#fff 0%,#f8fbff 48%,rgba(224,242,255,.58) 72%,rgba(224,242,255,0) 100%);box-shadow:0 0 9px rgba(255,255,255,.7);animation:snowFloat var(--fd,4s) ease-in-out infinite}
@@ -592,22 +592,25 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
  main.classList.toggle('is-empty',cards.length>0&&shown===0);}
 [q,os,od,op].forEach(el=>el.addEventListener('input',apply));
 (function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ var isMobile=window.matchMedia('(max-width:700px)').matches;
  var month=(new Date()).getMonth()+1;
  var seasons={
   sakura:{cls:'sakura',count:26,size:[6,19],dur:[10,26],flutter:[1.8,5.4],colors:[['#f9c2d8','#ec90b6'],['#fbd0e0','#f3a9c8'],['#ffe3ee','#f7b8d2'],['#f6cbe8','#e58fcb'],['#ffd9c2','#f4a98a'],['#fff0f5','#f8bdd4']]},
-  leaf:{cls:'leaf',count:18,size:[18,42],dur:[14,33],flutter:[2.8,7.2],colors:[['#d6efa3','#65b870'],['#c6e88a','#3f9f64'],['#f0e7a3','#8fbe62'],['#aee0a2','#4aa886'],['#e7f6ba','#75aa4f']]},
+  leaf:{cls:'leaf',count:14,size:[17,36],dur:[15,34],flutter:[3.1,7.5],colors:[['#d6efa3','#65b870'],['#c6e88a','#3f9f64'],['#f0e7a3','#8fbe62'],['#aee0a2','#4aa886'],['#e7f6ba','#75aa4f']]},
   firefly:{cls:'firefly',count:18,size:[4,11],dur:[11,23],flutter:[1.7,4.8],colors:[['#fffbd0','#ffe978']]},
   maple:{cls:'maple',count:24,size:[7,20],dur:[12,27],flutter:[2.1,5.8],colors:[['#f6b05d','#c84a3a'],['#e88445','#9f3431'],['#ffd080','#d96537'],['#c96b37','#7d2d2c'],['#f1c25f','#b35b2f']]},
   snow:{cls:'snow',count:34,size:[3,10],dur:[13,30],flutter:[3.2,7.2],colors:[['#fff','#dff4ff']]}
  };
  var season=month>=3&&month<=4?seasons.sakura:month>=5&&month<=7?seasons.leaf:month===8?seasons.firefly:month>=9&&month<=11?seasons.maple:seasons.snow;
+ var count=isMobile?(season.cls==='snow'?18:season.cls==='leaf'?8:10):season.count;
+ var sizeMin=isMobile?Math.max(3,season.size[0]-3):season.size[0],sizeMax=isMobile?Math.max(sizeMin+4,season.size[1]-8):season.size[1];
  box.dataset.season=season.cls;
  var f=document.createDocumentFragment();
- for(var k=0;k<season.count;k++){var p=document.createElement('span');p.className='petal petal--'+season.cls;var i=document.createElement('i');p.appendChild(i);
-  var depth=Math.random(),sz=season.size[0]+depth*(season.size[1]-season.size[0]),op=.32+depth*.58,pd=season.dur[0]+(1-depth)*(season.dur[1]-season.dur[0])+Math.random()*5,fd=season.flutter[0]+Math.random()*(season.flutter[1]-season.flutter[0]),dl=-Math.random()*pd,wind=(22+Math.random()*92)*(Math.random()<.5?-1:1),z=-260+depth*520,blur=(1-depth)*1.55,r0=(Math.random()*360).toFixed(0);
+ for(var k=0;k<count;k++){var p=document.createElement('span');p.className='petal petal--'+season.cls;var i=document.createElement('i');p.appendChild(i);
+  var depth=Math.random(),sz=sizeMin+depth*(sizeMax-sizeMin),op=.28+depth*.5,pd=season.dur[0]+(1-depth)*(season.dur[1]-season.dur[0])+Math.random()*5,fd=season.flutter[0]+Math.random()*(season.flutter[1]-season.flutter[0]),dl=-Math.random()*pd,wind=(20+Math.random()*(isMobile?58:82))*(Math.random()<.5?-1:1),z=-160+depth*320,r0=(Math.random()*360).toFixed(0);
   var c=season.colors[k%season.colors.length];
   p.style.left=(Math.random()*104-2)+'vw';if(season.cls==='firefly')p.style.top=(54+Math.random()*28)+'vh';
-  p.style.setProperty('--pd',pd.toFixed(1)+'s');p.style.setProperty('--fd',fd.toFixed(1)+'s');p.style.setProperty('--pdl',dl.toFixed(1)+'s');p.style.setProperty('--wind',wind.toFixed(0)+'px');p.style.setProperty('--z',z.toFixed(0)+'px');p.style.setProperty('--blur',blur.toFixed(2)+'px');p.style.setProperty('--r0',r0+'deg');
+  p.style.setProperty('--pd',pd.toFixed(1)+'s');p.style.setProperty('--fd',fd.toFixed(1)+'s');p.style.setProperty('--pdl',dl.toFixed(1)+'s');p.style.setProperty('--wind',wind.toFixed(0)+'px');p.style.setProperty('--z',z.toFixed(0)+'px');p.style.setProperty('--r0',r0+'deg');
   i.style.setProperty('--sz',sz.toFixed(0)+'px');i.style.setProperty('--op',op.toFixed(2));i.style.setProperty('--c',c[0]);i.style.setProperty('--c2',c[1]);
   f.appendChild(p);}
  box.appendChild(f);})();
