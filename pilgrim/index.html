@@ -166,9 +166,9 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
  .card__media{flex:0 0 54px;height:54px}
  .card__media img{width:54px;height:54px}
  .card__media .ph{width:54px;height:54px;font-size:.5rem;line-height:1.25}
- .card .notes{display:none}
+ .card .notes{display:block;max-height:0;opacity:0;overflow:hidden;margin-top:0;transform:translateY(-4px);transition:max-height .34s cubic-bezier(.22,.7,.2,1),opacity .24s ease,transform .34s cubic-bezier(.22,.7,.2,1),margin-top .24s ease}
  .card.open{align-items:flex-start}
- .card.open .notes{display:block;margin-top:7px}
+ .card.open .notes{max-height:360px;opacity:1;margin-top:7px;transform:translateY(0)}
  .card__head{margin-bottom:5px}
  .card .chips{margin-bottom:0}
  .card__name{font-size:.98rem}
@@ -629,12 +629,13 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
   var body;
   if(full){body=[].map.call(c.querySelectorAll('.notes li'),function(li){return '・'+li.textContent.trim();}).join('\n');}
   else{var li=c.querySelector('.notes li');var s=li?li.textContent.trim():'';var dot=s.indexOf('。');if(dot>0)s=s.slice(0,dot+1);if(s.length>44)s=s.slice(0,42)+'…';body=s;}
-  return '🌻 '+n+(fl?'（'+fl+'）':'')+'\n'+tags.join(' ｜ ')+(body?'\n'+body:'');}
+ return '🌻 '+n+(fl?'（'+fl+'）':'')+'\n'+tags.join(' ｜ ')+(body?'\n'+body:'');}
  var mqm=window.matchMedia('(max-width:700px)');
+ var autoOpenCard=null;
  [].forEach.call(document.querySelectorAll('.card'),function(c){
  c.addEventListener('mouseenter',function(){if(!mqm.matches)show(cardText(c,false),0);});
  c.addEventListener('mouseleave',function(){if(!mqm.matches){clearTimeout(t);t=setTimeout(function(){b.classList.remove('show');},700);}});
-  c.addEventListener('click',function(){if(mqm.matches){c.classList.toggle('open');}else{show(cardText(c,true),8000);hop();}});});
+  c.addEventListener('click',function(){if(mqm.matches){var opened=!c.classList.contains('open');cards.forEach(function(x){x.classList.toggle('open',opened&&x===c);});autoOpenCard=opened?c:null;}else{show(cardText(c,true),8000);hop();}});});
  function openCenteredCard(){
   if(!mqm.matches)return;
   var mid=window.innerHeight*.52,best=null,bestDist=Infinity;
@@ -645,7 +646,10 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
    var dist=Math.abs((r.top+r.bottom)/2-mid);
    if(dist<bestDist){bestDist=dist;best=c;}
   });
-  cards.forEach(function(c){c.classList.toggle('open',c===best&&bestDist<window.innerHeight*.34);});
+  var next=(best&&bestDist<window.innerHeight*.34)?best:null;
+  if(next===autoOpenCard)return;
+  autoOpenCard=next;
+  cards.forEach(function(c){c.classList.toggle('open',c===next);});
  }
  [q,os,od,op].forEach(function(el){el.addEventListener('input',function(){setTimeout(openCenteredCard,0);});});
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
