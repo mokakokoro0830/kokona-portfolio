@@ -249,6 +249,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 <div class="bar"><div class="wrap bar__row"><button class="nav-toggle" id="navToggle" type="button" aria-expanded="true" aria-controls="floorNav"><span>📂 階層ジャンプ</span><span class="arr" aria-hidden="true">▾</span></button><nav class="nav" id="floorNav"><a class="pill" href="#f0">F1–10</a><a class="pill" href="#f1">F11–20</a><a class="pill" href="#f2">F21–30</a><a class="pill" href="#f3">F31–40</a><a class="pill" href="#f4">F41–50</a><a class="pill" href="#f5">F51–60</a><a class="pill" href="#f6">F61–70</a><a class="pill" href="#f7">F71–80</a><a class="pill" href="#f8">F81–90</a><a class="pill" href="#f9">F91–100</a></nav>
   <div class="controls"><input class="search" id="q" type="search" placeholder="モンスター名で検索" aria-label="検索">
   <label class="toggle"><input type="checkbox" id="onlyStun">スタン可のみ</label>
+  <label class="toggle"><input type="checkbox" id="onlyNoStun">スタン不可のみ</label>
   <label class="toggle"><input type="checkbox" id="onlyDanger">危険のみ</label><label class="toggle"><input type="checkbox" id="onlyPatrol">巡回のみ</label></div></div></div>
 <main class="wrap">
   <div class="legend"><span><span class="chip chip--stun">スタン 効く</span> 入る</span><span><span class="chip chip--off">スタン 不可</span> 入らない</span><span><span class="chip chip--sleep">睡眠 効く</span></span><span><span class="chip chip--patrol">巡回</span> 徘徊</span><span><span class="chip chip--sense chip--sight">視覚</span> 感知方式</span><span><span class="flag">要注意</span> 即死・最優先など</span></div>
@@ -593,14 +594,17 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
 <div class="mascot-bubble" id="mascotBubble" aria-live="polite"></div>
 <script>
-const q=document.getElementById('q'),os=document.getElementById('onlyStun'),od=document.getElementById('onlyDanger'),op=document.getElementById('onlyPatrol');
+const q=document.getElementById('q'),os=document.getElementById('onlyStun'),ons=document.getElementById('onlyNoStun'),od=document.getElementById('onlyDanger'),op=document.getElementById('onlyPatrol');
 const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
 {const mc=document.getElementById('mobCount');if(mc)mc.textContent=cards.length;}
 function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
- cards.forEach(c=>{const ok=(!t||c.dataset.name.toLowerCase().includes(t))&&(!os.checked||c.dataset.stun==='1')&&(!od.checked||c.dataset.danger==='1')&&(!op.checked||c.querySelector('.chip--patrol'));c.style.display=ok?'':'none';if(ok)shown++;});
+ cards.forEach(c=>{const ok=(!t||c.dataset.name.toLowerCase().includes(t))&&(!os.checked||c.dataset.stun==='1')&&(!ons.checked||c.dataset.stun==='0')&&(!od.checked||c.dataset.danger==='1')&&(!op.checked||c.querySelector('.chip--patrol'));c.style.display=ok?'':'none';if(ok)shown++;});
  document.querySelectorAll('.floor').forEach(f=>{f.style.display=[...f.querySelectorAll('.card')].some(c=>c.style.display!=='none')||!f.querySelector('.card')?'':'none';});
  main.classList.toggle('is-empty',cards.length>0&&shown===0);}
-[q,os,od,op].forEach(el=>el.addEventListener('input',apply));
+q.addEventListener('input',apply);
+os.addEventListener('input',function(){if(os.checked)ons.checked=false;apply();});
+ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();});
+[od,op].forEach(el=>el.addEventListener('input',apply));
 (function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  var isMobile=window.matchMedia('(max-width:700px)').matches;
  var month=(new Date()).getMonth()+1;
@@ -663,7 +667,7 @@ function apply(){const t=(q.value||'').trim().toLowerCase();let shown=0;
   activePeekCard=next;
   cards.forEach(function(c){c.classList.toggle('peek',c===next&&c!==manualOpenCard&&!c.classList.contains('open'));});
  }
- [q,os,od,op].forEach(function(el){el.addEventListener('input',function(){setTimeout(updateCenteredPeek,0);});});
+ [q,os,ons,od,op].forEach(function(el){el.addEventListener('input',function(){setTimeout(updateCenteredPeek,0);});});
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
  var fw=100,fwid=192,ticking=false;
  var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
