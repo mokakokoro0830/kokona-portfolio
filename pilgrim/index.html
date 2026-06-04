@@ -153,6 +153,11 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .card__media img{width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.8);background:#eef3ea;position:relative;z-index:1;cursor:zoom-in;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;box-shadow:0 10px 20px -14px rgba(18,45,32,.58)}
 .card__media img:hover{transform:scale(2.15);transform-origin:left center;z-index:40;border-color:var(--primary);box-shadow:0 16px 40px -10px rgba(20,40,30,.55)}
 @media(hover:none){.card__media img{cursor:auto}.card__media img:hover{transform:none}}
+.image-viewer{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;background:rgba(8,20,18,.78);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.image-viewer.show{opacity:1;pointer-events:auto}
+.image-viewer img{max-width:min(88vw,620px);max-height:78vh;object-fit:contain;border-radius:14px;border:2px solid rgba(255,255,255,.88);background:#eef3ea;box-shadow:0 24px 70px -24px rgba(0,0,0,.8);transform:scale(.96);transition:transform .2s var(--ease)}
+.image-viewer.show img{transform:scale(1)}
+.image-viewer__close{position:fixed;right:18px;top:18px;width:42px;height:42px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:#20342c;font-size:1.6rem;font-weight:800;line-height:1;box-shadow:0 12px 28px -18px rgba(0,0,0,.7);cursor:pointer}
 .card__media .ph{width:96px;height:96px;border-radius:var(--r-sm);border:1px dashed rgba(145,166,142,.9);background:linear-gradient(135deg,rgba(248,252,247,.9),rgba(224,235,221,.82));display:grid;place-items:center;color:#849487;font-size:.62rem;font-weight:700;text-align:center;line-height:1.3;position:relative;z-index:1;box-shadow:0 10px 20px -16px rgba(18,45,32,.5)}
 .card__body{flex:1;min-width:0;position:relative;z-index:2}.card__head{display:flex;align-items:center;gap:8px;margin-bottom:7px}.card__name{font-size:1.02rem;font-weight:800;min-width:0}
 .card.danger .card__name{color:var(--crimson)}.card.normal .card__name{color:var(--emerald-d)}
@@ -593,6 +598,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 <div class="fairy" aria-hidden="true"><span class="fl" id="flA"></span><span class="fl off" id="flB"></span></div>
 <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="お花モンスター（クリックでヒント）" title="クリックしてね🌻"></div>
 <div class="mascot-bubble" id="mascotBubble" aria-live="polite"></div>
+<div class="image-viewer" id="imageViewer" aria-hidden="true"><button class="image-viewer__close" id="imageViewerClose" type="button" aria-label="画像を閉じる">×</button><img id="imageViewerImg" alt=""></div>
 <script>
 const q=document.getElementById('q'),os=document.getElementById('onlyStun'),ons=document.getElementById('onlyNoStun'),od=document.getElementById('onlyDanger'),op=document.getElementById('onlyPatrol');
 const cards=[...document.querySelectorAll('.card')],main=document.querySelector('main');
@@ -605,6 +611,18 @@ q.addEventListener('input',apply);
 os.addEventListener('input',function(){if(os.checked)ons.checked=false;apply();});
 ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();});
 [od,op].forEach(el=>el.addEventListener('input',apply));
+(function(){var viewer=document.getElementById('imageViewer'),img=document.getElementById('imageViewerImg'),close=document.getElementById('imageViewerClose');if(!viewer||!img||!close)return;
+ function hide(){viewer.classList.remove('show');viewer.setAttribute('aria-hidden','true');img.removeAttribute('src');img.alt='';document.body.style.overflow='';}
+ function show(src,alt){img.src=src;img.alt=alt||'';viewer.classList.add('show');viewer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+ document.addEventListener('click',function(e){
+  var target=e.target.closest('.card__media img');if(!target)return;
+  if(!window.matchMedia('(hover:none),(max-width:700px)').matches)return;
+  e.preventDefault();e.stopPropagation();show(target.currentSrc||target.src,target.alt);
+ },true);
+ viewer.addEventListener('click',function(e){if(e.target===viewer)hide();});
+ close.addEventListener('click',hide);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&viewer.classList.contains('show'))hide();});
+})();
 (function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  var isMobile=window.matchMedia('(max-width:700px)').matches;
  var month=(new Date()).getMonth()+1;
