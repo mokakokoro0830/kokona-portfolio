@@ -278,7 +278,7 @@ body { background: #F5F0E8; color: #2A1F12; }
       <span class="step-num">1</span>
       <div class="step-body">
         <strong>URLにパスワードを載せない</strong>
-        <p>最初の実装では「?token=xxxx」とURLにパスワードを含めていた。ブラウザの履歴やサーバーのログに残るため、Cookieという仕組みに切り替えた。Cookie はURLには表示されず、サーバーとブラウザの間でこっそりやりとりされる。</p>
+        <p>最初の実装では「?token=xxxx」とURLにパスワードを含めていた。ブラウザの履歴やサーバーのログに残るため、URLに秘密を載せない形へ切り替えた。本番でお客様情報を扱う場合は、独自ログインではなくCloudflare Accessなどの認証基盤で管理画面を保護する前提にする。</p>
       </div>
     </div>
     <div class="step-item">

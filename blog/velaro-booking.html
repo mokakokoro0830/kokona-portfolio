@@ -435,7 +435,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   <div class="security-list">
     <div class="security-item">
       <span class="security-item__badge badge--red">Critical</span>
-      <p class="security-item__text"><strong>管理画面にパスワード保護がない</strong><br>URLを知っていれば誰でも全予約を閲覧・操作できる状態だった。</p>
+      <p class="security-item__text"><strong>管理画面に認証保護がない</strong><br>URLを知っていれば誰でも全予約を閲覧・操作できる状態だった。</p>
     </div>
     <div class="security-item">
       <span class="security-item__badge badge--red">Critical</span>
@@ -453,14 +453,14 @@ body { background: #F5F0E8; color: #2A1F12; }
 
   <p>
     全部修正して、もう一度公開し直した。
-    管理画面はパスワードで保護、予約フォームは1分間に5回までの送信制限、日付はサーバー側で検証、
+    管理画面は認証で保護、予約フォームは1分間に5回までの送信制限、日付はサーバー側で検証、
     メール本文は危険な文字を安全な文字に変換してから送信するように改修。
   </p>
 
   <div class="result-box">
     <p class="result-box__label">— 修正後の構成</p>
     <p>
-      管理画面と管理API（/admin と /api/admin/*）にパスワード保護を導入<br>
+      管理画面と管理API（/admin と /api/admin/*）に認証保護を導入。本番で個人情報を扱う場合はCloudflare Accessなどの認証基盤を使う前提<br>
       同じIPアドレスから1分間に5回以上の予約送信を制限<br>
       チェックイン日 &lt; チェックアウト日 をサーバー側で検証<br>
       カスタムメール本文を安全な文字に変換してから送信
@@ -477,7 +477,7 @@ body { background: #F5F0E8; color: #2A1F12; }
   <figure style="margin:32px 0;">
     <img src="../images/admin-screen.png" alt="VELARO 管理画面" style="width:100%;border:1px solid rgba(180,145,80,0.3);border-radius:4px;display:block;">
     <figcaption style="font-size:0.8rem;color:#8B6914;font-style:italic;text-align:center;margin-top:12px;letter-spacing:0.05em;">
-      管理画面。パスワード保護をかけているのでURLを知っていても入れない。
+      管理画面。認証保護をかけているのでURLを知っていても入れない。
     </figcaption>
   </figure>
 
