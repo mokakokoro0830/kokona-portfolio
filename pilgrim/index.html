@@ -102,8 +102,16 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .hero h1 .grad{background:linear-gradient(110deg,#ffe9a8,#e6c873 55%,#bfe7c9);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .credit{font-family:var(--font);display:inline-block;margin-left:.5em;font-size:.3em;font-weight:700;letter-spacing:.06em;color:#f1e3a8;border:1px solid rgba(241,227,168,.6);border-radius:999px;padding:.3em 1em;vertical-align:middle;text-shadow:none;white-space:nowrap}
 .hero p{color:#e7ecdf;max-width:62ch;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.mbr{display:none}
 .hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.84rem;color:#e9eede;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .hero .meta b{color:#fff;font-weight:800;font-size:1.05rem}
+@media(max-width:700px){
+ .hero h1{font-size:clamp(1.68rem,7.5vw,2.55rem);line-height:1.16;max-width:none}
+ .hero h1 .title-line{display:block;white-space:nowrap}
+ .hero h1 .credit{margin:.16em 0 0 .35em;font-size:.28em}
+ .hero p{max-width:19em;font-size:1.02rem;line-height:1.75}
+ .mbr{display:block}
+}
 
 .bar{position:sticky;top:0;z-index:20;background:rgba(244,247,239,.78);backdrop-filter:blur(16px) saturate(1.08);border-bottom:1px solid rgba(196,211,185,.72);box-shadow:0 8px 30px -26px rgba(22,60,42,.45);padding:10px 0}
 .bar__row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -234,8 +242,8 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 <header class="hero"><div class="wrap">
   <span class="eyebrow">✦ NORVRANDT ／ 深層世界</span>
   <div class="logo-anim"><img src="img/logo.png" alt="ぴるぐりむとらばーす（ピルグリム・トラバース）" width="900" height="358"></div>
-  <h1>要注意モンスター<span class="grad">早見表</span><span class="credit">ちゃお監修</span></h1>
-  <p>深層世界ピルグリム・トラバース（F1〜F100）の、踏み込む前に知っておきたいモンスターたち。ナイト目線メモ。</p>
+  <h1><span class="title-line">要注意モンスター</span><span class="grad title-line">早見表</span><span class="credit">ちゃお監修</span></h1>
+  <p>深層世界ピルグリム・トラバース<br class="mbr">（F1〜F100）の、<br class="mbr">踏み込む前に知っておきたい<br class="mbr">モンスターたち。<br class="mbr">ナイト目線メモ。</p>
   <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>10</b> 階層</span><span>随時追加中</span></div>
 </div></header>
 <div class="bar"><div class="wrap bar__row"><button class="nav-toggle" id="navToggle" type="button" aria-expanded="true" aria-controls="floorNav"><span>📂 階層ジャンプ</span><span class="arr" aria-hidden="true">▾</span></button><nav class="nav" id="floorNav"><a class="pill" href="#f0">F1–10</a><a class="pill" href="#f1">F11–20</a><a class="pill" href="#f2">F21–30</a><a class="pill" href="#f3">F31–40</a><a class="pill" href="#f4">F41–50</a><a class="pill" href="#f5">F51–60</a><a class="pill" href="#f6">F61–70</a><a class="pill" href="#f7">F71–80</a><a class="pill" href="#f8">F81–90</a><a class="pill" href="#f9">F91–100</a></nav>
