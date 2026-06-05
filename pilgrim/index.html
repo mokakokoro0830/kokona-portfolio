@@ -235,13 +235,15 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 .jester-bubble.show{opacity:1;transform:translateY(0) scale(1)}
 .jester-bubble::before{content:"";position:absolute;left:-21px;top:15px;width:25px;height:20px;background:#3c3b39;clip-path:polygon(0 48%,100% 18%,100% 82%,0 82%)}
 .jester-bubble::after{content:"";position:absolute;left:-12px;top:20px;width:16px;height:9px;background:#f4f0e9;clip-path:polygon(0 48%,100% 12%,100% 88%,0 88%)}
+.jester-bubble.tail-right::before{left:auto;right:-21px;clip-path:polygon(0 18%,100% 48%,0 82%)}
+.jester-bubble.tail-right::after{left:auto;right:-12px;clip-path:polygon(0 12%,100% 48%,0 88%)}
 .jester-mark{display:inline-block;width:15px;height:18px;margin:0 .13em;vertical-align:-.24em}
 .jester-mark img{display:block;width:100%;height:100%;object-fit:contain}
 .jester.quip{filter:drop-shadow(0 8px 16px rgba(117,44,92,.42)) brightness(1.08)}
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
 @keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
-@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-mark{width:14px;height:17px;margin:0 .12em}}
+@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-bubble.tail-right::before{left:auto;right:-18px}.jester-bubble.tail-right::after{left:auto;right:-10px}.jester-mark{width:14px;height:17px;margin:0 .12em}}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
@@ -719,9 +721,12 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
   var line=pick();
   b.innerHTML=formatLine(line);
   var r=h.getBoundingClientRect(),vw=window.innerWidth,bw=Math.min(260,vw-34);
-  var left=Math.max(24,Math.min(vw-bw-10,r.left-20));
+  var preferLeft=r.left>=bw+34||r.left>(vw-r.right);
+  var rawLeft=preferLeft?r.left-bw-10:r.right+10;
+  var left=Math.max(24,Math.min(vw-bw-10,rawLeft));
   var top=Math.max(12,r.top-8);
   b.style.left=left+'px';b.style.top=top+'px';
+  b.classList.toggle('tail-right',(r.left+r.width*.5)>(left+bw*.5));
   b.classList.add('show');j.classList.add('quip');
   clearTimeout(t);t=setTimeout(function(){b.classList.remove('show');j.classList.remove('quip');},3600);
  }
