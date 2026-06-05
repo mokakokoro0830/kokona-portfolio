@@ -235,7 +235,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 .jester-bubble.show{opacity:1;transform:translateY(0) scale(1)}
 .jester-bubble::before{content:"";position:absolute;left:-21px;top:15px;width:25px;height:20px;background:#3c3b39;clip-path:polygon(0 48%,100% 18%,100% 82%,0 82%)}
 .jester-bubble::after{content:"";position:absolute;left:-12px;top:20px;width:16px;height:9px;background:#f4f0e9;clip-path:polygon(0 48%,100% 12%,100% 88%,0 88%)}
-.jester-mark{display:inline-block;width:11px;height:16px;margin:0 .18em;vertical-align:-.2em}
+.jester-mark{display:inline-block;width:13px;height:19px;margin:0 .16em;vertical-align:-.26em}
 .jester-mark svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 1px 0 rgba(255,255,255,.7))}
 .jester-mark--in{color:#78c65f}
 .jester-mark--out{color:#dc5d75}
@@ -243,7 +243,7 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
 @keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
-@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-mark{width:10px;height:15px;margin:0 .15em}}
+@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-mark{width:11px;height:17px;margin:0 .14em}}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
@@ -718,8 +718,8 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  var last=-1,t;
  function pick(){var n=Math.floor(Math.random()*lines.length);if(lines.length>1&&n===last)n=(n+1)%lines.length;last=n;return lines[n];}
  function jesterMark(cls){
-  var flip=cls==='jester-mark--out'?' transform="translate(18 0) scale(-1 1)"':'';
-  return '<span class="jester-mark '+cls+'" aria-hidden="true"><svg viewBox="0 0 18 28" focusable="false"><g'+flip+'><path d="M14.4 2.8c-5.4-.8-8.8 1.6-8.8 5.7 0 2.1 1 3.6 2.8 4.6-3.2.4-5 2.3-5 5.1 0 3.9 3.5 5.8 8.1 5.1-.7 1.5.1 2.8 2.9 2.8V21c-2.3.5-4.2-.2-4.2-2.4 0-1.6 1.3-2.8 4.1-2.8v-5.1c-2.9 0-4.2-1.2-4.2-2.9 0-2.1 1.8-2.7 4.3-2.2Z" fill="currentColor" stroke="#3d3b38" stroke-width="1.4" stroke-linejoin="round"/></g></svg></span>';
+  var flip=cls==='jester-mark--out'?' transform="translate(16 0) scale(-1 1)"':'';
+  return '<span class="jester-mark '+cls+'" aria-hidden="true"><svg viewBox="0 0 16 22" focusable="false"><g'+flip+'><path d="M13.5 2.2H8.7C5.6 2.2 4 3.8 4 6.4v2.2H1.8v4.1H4v2.4c0 3.3 2 4.7 5 4.7h4.5v-4.1H9.4c-1 0-1.5-.5-1.5-1.5v-2.3h3.5V8.5H7.9V6.9c0-1 .5-1.5 1.5-1.5h4.1Z" fill="currentColor" stroke="#3d3b38" stroke-width="1.1" stroke-linejoin="round"/></g></svg></span>';
  }
  function formatLine(line){
   if(line==='ここに来るのは初めてです。'||line==='よろしくお願いします！'){
