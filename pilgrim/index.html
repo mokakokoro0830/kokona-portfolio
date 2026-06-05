@@ -237,13 +237,11 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 .jester-bubble::after{content:"";position:absolute;left:-12px;top:20px;width:16px;height:9px;background:#f4f0e9;clip-path:polygon(0 48%,100% 12%,100% 88%,0 88%)}
 .jester-mark{display:inline-block;width:12px;height:16px;margin:0 .16em;vertical-align:-.2em}
 .jester-mark img{display:block;width:100%;height:100%;object-fit:contain}
-.jester-bubble.has-line{width:292px;padding:5px 8px}
-.jester-line{display:block;width:100%;height:auto;border:0}
 .jester.quip{filter:drop-shadow(0 8px 16px rgba(117,44,92,.42)) brightness(1.08)}
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
 @keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
-@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble.has-line{width:260px;padding:5px 7px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-mark{width:11px;height:15px;margin:0 .14em}}
+@media(max-width:760px){.jester-bubble{width:230px;font-size:.72rem;border-width:3px;border-radius:13px;padding:7px 11px}.jester-bubble::before{left:-18px;top:13px;width:22px;height:18px}.jester-bubble::after{left:-10px;top:18px;width:14px;height:8px}.jester-mark{width:11px;height:15px;margin:0 .14em}}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
@@ -722,12 +720,6 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
   return '<span class="jester-mark '+cls+'" aria-hidden="true"><img src="'+src+'" alt=""></span>';
  }
  function formatLine(line){
-  if(line==='ここに来るのは初めてです。'){
-   return '<img class="jester-line" src="img/jester-line-first.png?v=20260605-1458" alt="ここに来るのは初めてです。">';
-  }
-  if(line==='よろしくお願いします！'){
-   return '<img class="jester-line" src="img/jester-line-hello.png?v=20260605-1458" alt="よろしくお願いします！">';
-  }
   if(line==='ここに来るのは初めてです。'||line==='よろしくお願いします！'){
    return jesterMark('jester-mark--in')+line+jesterMark('jester-mark--out');
   }
@@ -736,7 +728,6 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  function show(){
   var line=pick();
   b.innerHTML=formatLine(line);
-  b.classList.toggle('has-line',line==='ここに来るのは初めてです。'||line==='よろしくお願いします！');
   var r=h.getBoundingClientRect(),vw=window.innerWidth,bw=Math.min(260,vw-34);
   var left=Math.max(24,Math.min(vw-bw-10,r.left-20));
   var top=Math.max(12,r.top-8);
