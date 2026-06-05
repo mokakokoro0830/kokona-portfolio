@@ -231,14 +231,19 @@ footer{color:var(--text-muted);font-size:.76rem;border-top:1px solid var(--borde
 .jester{position:fixed;right:auto;left:50%;top:50%;--jester-face:1;transform:translateY(-50%) scaleX(var(--jester-face));z-index:-1;width:80px;height:120px;background:url("img/jester-strip.png?v=20260605-132349") 0 0 no-repeat;background-size:640px 120px;pointer-events:none;opacity:.95;filter:drop-shadow(0 6px 13px rgba(40,30,60,.3));animation:jesterBob 3.4s ease-in-out infinite}
 .jester-hit{position:fixed;left:50%;top:50%;z-index:29;width:80px;height:120px;transform:translateY(-50%);cursor:pointer;background:transparent;border:0;padding:0;appearance:none;-webkit-appearance:none}
 .jester-hit:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
-.jester-bubble{position:fixed;z-index:30;width:188px;max-width:min(188px,calc(100vw - 28px));background:#fffdf6;color:#2b2a25;border:1px solid rgba(218,190,105,.9);border-radius:13px;padding:9px 11px;font-size:.78rem;font-weight:800;line-height:1.45;box-shadow:0 14px 34px -20px rgba(38,28,20,.55),0 1px 0 rgba(255,255,255,.9) inset;opacity:0;transform:translateY(8px) scale(.96);pointer-events:none;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.jester-bubble{position:fixed;z-index:30;width:300px;max-width:min(300px,calc(100vw - 28px));background:#f7f3ec;color:#252421;border:4px solid #3e3d3b;border-radius:20px;padding:12px 17px;font-size:.92rem;font-weight:800;line-height:1.45;box-shadow:0 14px 34px -20px rgba(38,28,20,.55),0 1px 0 rgba(255,255,255,.9) inset;opacity:0;transform:translateY(8px) scale(.96);pointer-events:none;transition:opacity .2s var(--ease),transform .2s var(--ease)}
 .jester-bubble.show{opacity:1;transform:translateY(0) scale(1)}
-.jester-bubble::after{content:"";position:absolute;left:22px;bottom:-7px;width:13px;height:13px;background:#fffdf6;border-right:1px solid rgba(218,190,105,.9);border-bottom:1px solid rgba(218,190,105,.9);transform:rotate(45deg)}
+.jester-bubble::before{content:"";position:absolute;left:-26px;top:24px;width:30px;height:26px;background:#3e3d3b;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.jester-bubble::after{content:"";position:absolute;left:-16px;top:30px;width:20px;height:14px;background:#f7f3ec;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.jester-bubble.tail-right::before{left:auto;right:-26px;clip-path:polygon(0 0,100% 50%,0 100%)}
+.jester-bubble.tail-right::after{left:auto;right:-16px;clip-path:polygon(0 0,100% 50%,0 100%)}
+.jester-mark{display:inline-block;font-size:1.08em;line-height:1;margin:0 .18em;vertical-align:-.08em}
+.jester-mark--in{color:#77bd54}.jester-mark--out{color:#d95c77}
 .jester.quip{filter:drop-shadow(0 8px 16px rgba(117,44,92,.42)) brightness(1.08)}
 @keyframes jesterPlay{from{background-position-x:0}to{background-position-x:-960px}}
 @keyframes jesterBob{0%,100%{transform:translateY(-50%) scaleX(var(--jester-face))}50%{transform:translateY(calc(-50% - 7px)) scaleX(var(--jester-face))}}
 
-@media(max-width:760px){.jester-bubble{width:164px;font-size:.72rem}}
+@media(max-width:760px){.jester-bubble{width:244px;font-size:.78rem;border-width:3px;border-radius:16px;padding:10px 13px}}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
@@ -712,12 +717,20 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  ];
  var last=-1,t;
  function pick(){var n=Math.floor(Math.random()*lines.length);if(lines.length>1&&n===last)n=(n+1)%lines.length;last=n;return lines[n];}
+ function formatLine(line){
+  if(line==='ここに来るのは初めてです。'||line==='よろしくお願いします！'){
+   return '<span class="jester-mark jester-mark--in">↢</span>'+line+'<span class="jester-mark jester-mark--out">↣</span>';
+  }
+  return line;
+ }
  function show(){
-  b.textContent=pick();
-  var r=h.getBoundingClientRect(),vw=window.innerWidth,bw=188;
-  var left=Math.max(10,Math.min(vw-bw-10,r.left+r.width*.5-34));
-  var top=Math.max(12,r.top-68);
+  b.innerHTML=formatLine(pick());
+  var r=h.getBoundingClientRect(),vw=window.innerWidth,bw=Math.min(300,vw-28);
+  var placeLeft=(r.right+bw+24)>vw;
+  var left=placeLeft?Math.max(36,r.left-bw-14):Math.max(36,Math.min(vw-bw-10,r.right+12));
+  var top=Math.max(12,r.top+12);
   b.style.left=left+'px';b.style.top=top+'px';
+  b.classList.toggle('tail-right',placeLeft);
   b.classList.add('show');j.classList.add('quip');
   clearTimeout(t);t=setTimeout(function(){b.classList.remove('show');j.classList.remove('quip');},3600);
  }
