@@ -716,7 +716,7 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  var last=-1,t;
  function pick(){var n=Math.floor(Math.random()*lines.length);if(lines.length>1&&n===last)n=(n+1)%lines.length;last=n;return lines[n];}
  function jesterMark(cls){
-  var src=cls==='jester-mark--out'?'img/jester-mark-red.png':'img/jester-mark-green.png';
+  var src=cls==='jester-mark--out'?'img/jester-mark-red.png?v=20260605-1455':'img/jester-mark-green.png?v=20260605-1455';
   return '<span class="jester-mark '+cls+'" aria-hidden="true"><img src="'+src+'" alt=""></span>';
  }
  function formatLine(line){
