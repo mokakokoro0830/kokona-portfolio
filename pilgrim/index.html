@@ -34,7 +34,7 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 /* butterfly background art (faint, fixed) */
 /* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
 .bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
-.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") var(--clock-pos,center)/cover no-repeat;will-change:opacity,background-position}
+.bgtint{position:fixed;inset:-8vh -8vw;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") center/cover no-repeat;transform:translate3d(var(--clock-x,0px),var(--clock-y,0px),0) scale(1.06);will-change:opacity,transform}
 .cloud-layer{position:fixed;left:-12vw;right:-12vw;z-index:0;pointer-events:none;background-repeat:repeat-x;background-position:var(--cloud-x,0px) 50%;background-size:auto 100%;will-change:background-position;mix-blend-mode:screen}
 .cloud-layer--far{top:10vh;height:34vh;background-image:url("img/clouds-far.png");opacity:.52}
 .cloud-layer--near{top:43vh;height:38vh;background-image:url("img/clouds-near.png");opacity:.68}
@@ -647,7 +647,8 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
 (function(){var clock=document.querySelector('.bgtint');if(!clock||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  var start;
  function driftClock(now){if(start==null)start=now;var t=(now-start)/1000;
-  clock.style.setProperty('--clock-pos',(50+Math.sin(t*.18)*3.2).toFixed(2)+'% '+(50+Math.cos(t*.13)*2.1).toFixed(2)+'%');
+  clock.style.setProperty('--clock-x',(Math.sin(t*.46)*44).toFixed(1)+'px');
+  clock.style.setProperty('--clock-y',(Math.cos(t*.37)*30).toFixed(1)+'px');
   requestAnimationFrame(driftClock);}
  requestAnimationFrame(driftClock);
 })();
