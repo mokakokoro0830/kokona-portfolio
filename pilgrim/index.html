@@ -35,6 +35,11 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 /* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
 .bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
 .bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") center/cover no-repeat;will-change:opacity}
+.cloud-layer{position:fixed;left:-12vw;right:-12vw;z-index:0;pointer-events:none;background-repeat:repeat-x;background-position:0 50%;will-change:background-position,opacity;mix-blend-mode:screen}
+.cloud-layer--far{top:10vh;height:34vh;background-image:url("img/clouds-far.png");background-size:auto 100%;opacity:.34;animation:cloudDriftFar 96s linear infinite}
+.cloud-layer--near{top:43vh;height:38vh;background-image:url("img/clouds-near.png");background-size:auto 100%;opacity:.42;animation:cloudDriftNear 64s linear infinite}
+@keyframes cloudDriftFar{from{background-position:0 50%}to{background-position:-900px 50%}}
+@keyframes cloudDriftNear{from{background-position:0 50%}to{background-position:-1200px 50%}}
 @media(max-width:700px){.bgart{opacity:.4}}
 
 /* seasonal particles */
@@ -72,7 +77,7 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
  62%{transform:translate3d(calc(var(--wind,60px) * -1),-21vh,var(--z,0px)) scale(.92)}
  88%{transform:translate3d(calc(var(--wind,60px) * .7),-32vh,var(--z,0px)) scale(1.05)}}
 @keyframes fireflyBlink{0%,100%{opacity:.28;transform:scale(.72)}45%{opacity:1;transform:scale(1.28)}72%{opacity:.55;transform:scale(.94)}}
-@media(prefers-reduced-motion:reduce){.petals{display:none}}
+@media(prefers-reduced-motion:reduce){.petals{display:none}.cloud-layer{animation:none}}
 
 /* stained-glass rose window (corner) */
 .glass-scene{position:fixed;top:74px;right:24px;width:124px;height:124px;z-index:7}
@@ -251,6 +256,8 @@ footer{margin-top:42px;padding:0 0 26px}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
 <div class="bgtint" aria-hidden="true"></div>
+<div class="cloud-layer cloud-layer--far" aria-hidden="true"></div>
+<div class="cloud-layer cloud-layer--near" aria-hidden="true"></div>
 <div class="petals" aria-hidden="true"></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">✦ NORVRANDT ／ 深層世界</span>
