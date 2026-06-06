@@ -34,11 +34,14 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 /* butterfly background art (faint, fixed) */
 /* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
 .bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
-.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") center/cover no-repeat;will-change:opacity}
-.cloud-layer{position:fixed;left:-12vw;right:-12vw;z-index:0;pointer-events:none;background-repeat:repeat-x;background-position:var(--cloud-x,0px) 50%;background-size:auto 100%;will-change:background-position;mix-blend-mode:screen}
-.cloud-layer--far{top:10vh;height:34vh;background-image:url("img/clouds-far.png");opacity:.52}
-.cloud-layer--near{top:43vh;height:38vh;background-image:url("img/clouds-near.png");opacity:.68}
+.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;overflow:hidden;background:#07111e;will-change:opacity}
+.deep-sky{position:absolute;inset:0;background:url("img/window-sky-user-strip.webp") 0 50%/auto 100% repeat-x;animation:deepSkyDrift 150s linear infinite;will-change:background-position}
+.deep-sky--near{opacity:.28;mix-blend-mode:screen;filter:saturate(1.35) brightness(1.18) blur(.25px);background-size:auto 112%;animation-duration:82s;animation-direction:reverse}
+.deep-foreground{position:absolute;inset:0;background:url("img/window-foreground-cutout.png") center/cover no-repeat}
+.deep-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.24),rgba(0,0,0,0) 28%,rgba(0,0,0,0) 72%,rgba(0,0,0,.2)),radial-gradient(circle at 50% 46%,rgba(88,236,255,.14),rgba(2,8,20,0) 38%)}
+@keyframes deepSkyDrift{from{background-position-x:0}to{background-position-x:-3344px}}
 @media(max-width:700px){.bgart{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.deep-sky{animation:none}}
 
 /* seasonal particles */
 .petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;perspective:900px}
@@ -253,9 +256,7 @@ footer{margin-top:42px;padding:0 0 26px}
 @media(prefers-reduced-motion:reduce){.jester{animation:none}}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
-<div class="bgtint" aria-hidden="true"></div>
-<div class="cloud-layer cloud-layer--far" aria-hidden="true"></div>
-<div class="cloud-layer cloud-layer--near" aria-hidden="true"></div>
+<div class="bgtint" aria-hidden="true"><div class="deep-sky"></div><div class="deep-sky deep-sky--near"></div><div class="deep-foreground"></div><div class="deep-shade"></div></div>
 <div class="petals" aria-hidden="true"></div>
 <header class="hero"><div class="wrap">
   <span class="eyebrow">✦ NORVRANDT ／ 深層世界</span>
@@ -635,14 +636,6 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  viewer.addEventListener('click',function(e){if(e.target===viewer)hide();});
  close.addEventListener('click',hide);
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&viewer.classList.contains('show'))hide();});
-})();
-(function(){var far=document.querySelector('.cloud-layer--far'),near=document.querySelector('.cloud-layer--near');if(!far||!near||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
- var start;
- function drift(now){if(start==null)start=now;var t=(now-start)/1000;
-  far.style.setProperty('--cloud-x',((-t*42)%1800).toFixed(1)+'px');
-  near.style.setProperty('--cloud-x',((-t*70)%1800).toFixed(1)+'px');
- requestAnimationFrame(drift);}
- requestAnimationFrame(drift);
 })();
 (function(){var box=document.querySelector('.petals');if(!box||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  var isMobile=window.matchMedia('(max-width:700px)').matches;
