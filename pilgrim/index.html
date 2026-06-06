@@ -34,14 +34,13 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 /* butterfly background art (faint, fixed) */
 /* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
 .bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
-.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") center/cover no-repeat;will-change:opacity}
-.clock-rebuild{position:fixed;left:var(--clock-left,50%);top:var(--clock-top,20%);width:var(--clock-size,220px);height:var(--clock-size,220px);z-index:0;pointer-events:none;opacity:var(--clock-op,0);transform:translate(-50%,-50%);filter:drop-shadow(0 0 8px rgba(135,235,255,.82)) drop-shadow(0 0 13px rgba(229,194,103,.48));mix-blend-mode:screen}
-.clock-part{position:absolute;inset:0;background-position:center;background-repeat:no-repeat;background-size:100% 100%}
-.clock-face-fix{z-index:1;background-image:url("img/clock-face-fix.png")}
-.clock-hand{z-index:2;transform-origin:50% 50%;will-change:transform}
-.clock-hand--hour{background-image:url("img/clock-hand-hour-trace.png")}
-.clock-hand--minute{background-image:url("img/clock-hand-minute-trace.png")}
-.clock-cap{z-index:3;background-image:url("img/clock-cap.png")}
+.bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona-nohands.jpg") center/cover no-repeat;will-change:opacity}
+.clock-hands{position:fixed;left:var(--clock-left,50%);top:var(--clock-top,20%);width:var(--clock-size,220px);height:var(--clock-size,220px);z-index:0;pointer-events:none;opacity:var(--clock-op,0);transform:translate(-50%,-50%);filter:drop-shadow(0 0 8px rgba(135,235,255,.82)) drop-shadow(0 0 13px rgba(229,194,103,.48));mix-blend-mode:screen}
+.clock-hands::before{content:"";position:absolute;inset:10%;z-index:1;border-radius:50%;background:radial-gradient(circle,rgba(178,247,255,.3) 0%,rgba(55,205,225,.26) 45%,rgba(7,28,42,.2) 70%,rgba(7,28,42,0) 73%);backdrop-filter:blur(1px)}
+.clock-hands::after{content:"";position:absolute;left:50%;top:50%;z-index:3;width:9%;height:9%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#b7f6ff 38%,#d7a957 70%,rgba(215,169,87,0) 72%);box-shadow:0 0 12px rgba(123,232,255,.9)}
+.clock-hand{position:absolute;inset:0;z-index:2;transform-origin:50% 50%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;will-change:transform}
+.clock-hand--hour{background-image:url("img/clock-hand-hour.png")}
+.clock-hand--minute{background-image:url("img/clock-hand-minute.png")}
 .cloud-layer{position:fixed;left:-12vw;right:-12vw;z-index:0;pointer-events:none;background-repeat:repeat-x;background-position:var(--cloud-x,0px) 50%;background-size:auto 100%;will-change:background-position;mix-blend-mode:screen}
 .cloud-layer--far{top:10vh;height:34vh;background-image:url("img/clouds-far.png");opacity:.52}
 .cloud-layer--near{top:43vh;height:38vh;background-image:url("img/clouds-near.png");opacity:.68}
@@ -261,7 +260,7 @@ footer{margin-top:42px;padding:0 0 26px}
 </style></head><body>
 <div class="bgart" aria-hidden="true"></div>
 <div class="bgtint" aria-hidden="true"></div>
-<div class="clock-rebuild" aria-hidden="true"><span class="clock-part clock-face-fix"></span><span class="clock-part clock-hand clock-hand--hour"></span><span class="clock-part clock-hand clock-hand--minute"></span><span class="clock-part clock-cap"></span></div>
+<div class="clock-hands" aria-hidden="true"><span class="clock-hand clock-hand--hour"></span><span class="clock-hand clock-hand--minute"></span></div>
 <div class="cloud-layer cloud-layer--far" aria-hidden="true"></div>
 <div class="cloud-layer cloud-layer--near" aria-hidden="true"></div>
 <div class="petals" aria-hidden="true"></div>
@@ -652,7 +651,7 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  requestAnimationFrame(drift);}
  requestAnimationFrame(drift);
 })();
-(function(){var clock=document.querySelector('.clock-rebuild'),hour=document.querySelector('.clock-hand--hour'),minute=document.querySelector('.clock-hand--minute');if(!clock||!hour||!minute)return;
+(function(){var clock=document.querySelector('.clock-hands'),hour=document.querySelector('.clock-hand--hour'),minute=document.querySelector('.clock-hand--minute');if(!clock||!hour||!minute)return;
  var img={w:1672,h:941,x:836,y:184,size:360};
  function placeClock(){var vw=window.innerWidth,vh=window.innerHeight,scale=Math.max(vw/img.w,vh/img.h),rw=img.w*scale,rh=img.h*scale;
   clock.style.setProperty('--clock-left',(((vw-rw)/2)+img.x*scale).toFixed(1)+'px');
@@ -733,7 +732,7 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  // スクロール連動：スクロール量でコマを進める（約56pxごとに1コマ）
  var fw=100,fwid=192,ticking=false;
  var flA=document.getElementById('flA'),flB=document.getElementById('flB'),fairyFront=flA,fairyCur=-1;
- var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),clockHands=document.querySelector('.clock-rebuild'),jester=document.querySelector('.jester'),jesterHit=document.getElementById('jesterHit'),jesterX=null;
+ var bgtint=document.querySelector('.bgtint'),bgsurf=document.querySelector('.bgart'),clockHands=document.querySelector('.clock-hands'),jester=document.querySelector('.jester'),jesterHit=document.getElementById('jesterHit'),jesterX=null;
  function setFairy(fr){if(fr===fairyCur||!flA||!flB)return;fairyCur=fr;var back=(fairyFront===flA)?flB:flA;back.style.backgroundPositionX=(-fr*fwid)+'px';back.classList.remove('off');fairyFront.classList.add('off');fairyFront=back;}
  function setFrame(){var y=window.pageYOffset||document.documentElement.scrollTop||0;var fr=Math.floor(y/56)%12;if(fr<0)fr+=12;m.style.backgroundPositionX=(-fr*fw)+'px';var fr2=Math.floor(y/190)%12;if(fr2<0)fr2+=12;setFairy(fr2);if(jester){var jf=Math.floor(y/70)%8;if(jf<0)jf+=8;jester.style.backgroundPositionX=(-jf*80)+'px';var vw=window.innerWidth,jw=80,amp=(vw-jw-40)/2,jc=(vw-jw)/2;var nx=jc+amp*0.82*Math.sin(y/520)+amp*0.18*Math.sin(y/180);if(jesterX!==null&&Math.abs(nx-jesterX)>0.5)jester.style.setProperty('--jester-face',nx>jesterX?'1':'-1');jesterX=nx;jester.style.left=nx.toFixed(1)+'px';if(jesterHit)jesterHit.style.left=nx.toFixed(1)+'px';}
   updateCenteredPeek();{var docH=document.documentElement.scrollHeight-window.innerHeight;var p=docH>0?y/docH:0;p=p<0?0:p>1?1:p;var bgMax=mqm.matches?0.95:0.5,deepOp=p*bgMax;if(bgtint)bgtint.style.opacity=deepOp.toFixed(3);if(clockHands)clockHands.style.setProperty('--clock-op',Math.min(.78,deepOp*1.45).toFixed(3));if(bgsurf)bgsurf.style.opacity=((1-p)*bgMax).toFixed(3);}ticking=false;}
