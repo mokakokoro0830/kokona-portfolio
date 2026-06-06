@@ -35,11 +35,12 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 /* scroll-driven scene cross-fade: 地上(surface) → 深層(deep) */
 .bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;background:url("img/bg-surface.jpg") center/cover no-repeat;opacity:.5;will-change:opacity}
 .bgtint{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:url("img/bg-deep-kokona.jpg") center/cover no-repeat;will-change:opacity}
-.clock-hands{position:fixed;left:var(--clock-left,50%);top:var(--clock-top,20%);width:var(--clock-size,220px);height:var(--clock-size,220px);z-index:0;pointer-events:none;opacity:var(--clock-op,0);transform:translate(-50%,-50%);filter:drop-shadow(0 0 8px rgba(135,235,255,.9)) drop-shadow(0 0 13px rgba(229,194,103,.55));mix-blend-mode:screen}
-.clock-hands::before{content:"";position:absolute;left:50%;top:50%;width:9%;height:9%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#b7f6ff 38%,#d7a957 70%,rgba(215,169,87,0) 72%);box-shadow:0 0 12px rgba(123,232,255,.9)}
-.clock-hand{position:absolute;left:50%;top:50%;width:3.8%;border-radius:999px;transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(0deg);background:linear-gradient(180deg,#fff9cc 0%,#d9aa45 42%,#51e3ff 100%);box-shadow:0 0 9px rgba(72,225,255,.55)}
-.clock-hand--hour{height:30%;width:4.8%;background:linear-gradient(180deg,#fff2ba 0%,#c89536 55%,#49d3ee 100%)}
-.clock-hand--minute{height:43%}
+.clock-hands{position:fixed;left:var(--clock-left,50%);top:var(--clock-top,20%);width:var(--clock-size,220px);height:var(--clock-size,220px);z-index:0;pointer-events:none;opacity:var(--clock-op,0);transform:translate(-50%,-50%);filter:drop-shadow(0 0 8px rgba(135,235,255,.82)) drop-shadow(0 0 13px rgba(229,194,103,.48));mix-blend-mode:screen}
+.clock-hands::before{content:"";position:absolute;inset:10%;z-index:1;border-radius:50%;background:radial-gradient(circle,rgba(178,247,255,.3) 0%,rgba(55,205,225,.26) 45%,rgba(7,28,42,.2) 70%,rgba(7,28,42,0) 73%);backdrop-filter:blur(1px)}
+.clock-hands::after{content:"";position:absolute;left:50%;top:50%;z-index:3;width:9%;height:9%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#b7f6ff 38%,#d7a957 70%,rgba(215,169,87,0) 72%);box-shadow:0 0 12px rgba(123,232,255,.9)}
+.clock-hand{position:absolute;inset:0;z-index:2;transform-origin:50% 50%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;will-change:transform}
+.clock-hand--hour{background-image:url("img/clock-hand-hour.png")}
+.clock-hand--minute{background-image:url("img/clock-hand-minute.png")}
 .cloud-layer{position:fixed;left:-12vw;right:-12vw;z-index:0;pointer-events:none;background-repeat:repeat-x;background-position:var(--cloud-x,0px) 50%;background-size:auto 100%;will-change:background-position;mix-blend-mode:screen}
 .cloud-layer--far{top:10vh;height:34vh;background-image:url("img/clouds-far.png");opacity:.52}
 .cloud-layer--near{top:43vh;height:38vh;background-image:url("img/clouds-near.png");opacity:.68}
@@ -660,8 +661,8 @@ ons.addEventListener('input',function(){if(ons.checked)os.checked=false;apply();
  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  var start;
  function tick(now){if(start==null)start=now;var t=(now-start)/1000;
-  minute.style.transform='translate(-50%,-100%) rotate('+(142+t*96).toFixed(2)+'deg)';
-  hour.style.transform='translate(-50%,-100%) rotate('+(94+t*18).toFixed(2)+'deg)';
+  minute.style.transform='rotate('+(t*96).toFixed(2)+'deg)';
+  hour.style.transform='rotate('+(t*18).toFixed(2)+'deg)';
   requestAnimationFrame(tick);}
  requestAnimationFrame(tick);
 })();
