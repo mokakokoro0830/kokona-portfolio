@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invoice Flow — Kokona Portfolio</title>
+<meta name="description" content="請求書チェックを確認作業だけにする、React + TypeScript製のAI業務自動化デモ制作実績。">
+<meta property="og:title" content="Invoice Flow — Kokona Portfolio">
+<meta property="og:description" content="請求書チェックを確認作業だけにする、React + TypeScript製のAI業務自動化デモ制作実績。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://kokona-makes.dev/works/invoice-flow.html">
+<meta property="og:image" content="https://kokona-makes.dev/images/thumb-ai-invoice-checker.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Invoice Flow — Kokona Portfolio">
+<meta name="twitter:description" content="請求書チェックを確認作業だけにする、React + TypeScript製のAI業務自動化デモ制作実績。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/thumb-ai-invoice-checker.jpg">
+<link rel="canonical" href="https://kokona-makes.dev/works/invoice-flow.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="work.css">
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">Kokona Blog</a>
+    <nav class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#works">Works</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="work-hero" style="background-image:url('../images/thumb-ai-invoice-checker.jpg')">
+  <div class="work-hero__overlay"></div>
+  <div class="work-hero__content">
+    <p class="work-hero__num">14</p>
+    <p class="work-hero__cat">AI · INVOICE REVIEW</p>
+    <h1 class="work-hero__title">Invoice Flow<em>AI請求書チェックツール</em></h1>
+  </div>
+</section>
+
+<section class="work-body">
+  <div class="wrap work-wrap">
+
+    <div class="work-meta">
+      <div class="work-meta__item"><h4>カテゴリ</h4><p>業務自動化 / AIレビューUI</p></div>
+      <div class="work-meta__item"><h4>技術</h4><p>React / TypeScript / Vite</p></div>
+      <div class="work-meta__item"><h4>デプロイ</h4><p>Cloudflare Pages</p></div>
+      <div class="work-meta__item"><h4>ステータス</h4><p>LIVE</p></div>
+    </div>
+
+    <div class="work-text reveal">
+      <h2>何を作ったか</h2>
+      <p>実案件でよく見かける「請求書・領収書をAIで読み取り、スプレッドシートやDriveへ整理したい」という課題を、ポートフォリオ用の架空デモとして再構成しました。</p>
+      <p>Gmail取込 → AI読取 → 人の確認 → Drive保存までの流れを、実際の業務ツールのようなダッシュボードUIで表現。実データ・顧客情報・本物の請求書は使わず、すべて架空データで制作しています。</p>
+    </div>
+
+    <div class="work-text reveal reveal-d1">
+      <h2>画面の流れ</h2>
+      <ul>
+        <li><strong>Gmail取込</strong> — 添付PDF/JPEGを受け取る想定で、受信件数や処理状況を見える化</li>
+        <li><strong>AI読取</strong> — 取引先・請求番号・発行日・支払期限・金額・税額を抽出する想定のUI</li>
+        <li><strong>人の確認</strong> — 信頼度が低い項目だけ確認待ちにし、修正・承認できる画面設計</li>
+        <li><strong>Drive保存</strong> — 月別フォルダへ整理し、処理履歴として残す流れを表現</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d2">
+      <h2>こだわり</h2>
+      <ul>
+        <li>最初の画面から、LPではなく<strong>実際に使う業務ツール</strong>として見える構成にした</li>
+        <li>確認待ち・承認済み・要確認の状態が一目でわかるよう、色とラベルを整理</li>
+        <li>請求書プレビューと読み取り結果を左右に並べ、担当者が確認しやすい導線にした</li>
+        <li>スマホ幅でも崩れないよう、テーブルやフォームを縦並びに切り替えるレスポンシブ設計</li>
+        <li>公開前提のため、メールアドレス・取引先名・金額はすべて架空サンプルに限定</li>
+      </ul>
+    </div>
+
+    <div class="work-text reveal reveal-d3">
+      <h2>技術構成</h2>
+      <ul>
+        <li><strong>React</strong> — 画面をコンポーネントとして構成</li>
+        <li><strong>TypeScript</strong> — 請求書データの型を定義し、状態表示のミスを減らす</li>
+        <li><strong>Vite</strong> — 軽量な開発環境と高速ビルド</li>
+        <li><strong>lucide-react</strong> — 業務UIに合うアイコンを使用</li>
+        <li><strong>Cloudflare Pages</strong> — 静的デモとして公開</li>
+      </ul>
+    </div>
+
+    <div class="work-actions reveal reveal-d3">
+      <a href="https://ai-invoice-checker.pages.dev/" target="_blank" rel="noopener" class="work-btn work-btn--primary">デモを見る →</a>
+      <a href="../index.html#works" class="work-btn">← Works に戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__inner">
+    <span>© 2026 Kokona</span>
+    <span>Built with hand-written code · Visuals AI-generated</span>
+  </div>
+</footer>
+
+<script>
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
