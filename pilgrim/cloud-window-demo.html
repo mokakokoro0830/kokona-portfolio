@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Window Cloud Motion Demo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#06101b;color:#eafaff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.stage{width:min(100vw,1672px);position:relative;aspect-ratio:1672/941;overflow:hidden;background:#07111e}
+.base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.window-cloud{position:absolute;z-index:2;pointer-events:none;background-image:url("img/window-sky-strip.webp");background-size:auto 100%;background-repeat:repeat-x;background-position:0 50%;opacity:.38;mix-blend-mode:screen;filter:saturate(1.35) brightness(1.05);animation:cloudDrift 95s linear infinite}
+.window-cloud::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 44% 34%,rgba(121,245,255,.34),rgba(20,118,255,.05) 42%,rgba(3,8,20,0) 74%);mix-blend-mode:screen}
+.window-cloud--left{left:4.2%;top:13.7%;width:35.1%;height:65.2%;clip-path:polygon(11% 0,92% 0,100% 31%,88% 100%,0 96%,0 37%)}
+.window-cloud--right{left:63.2%;top:13.7%;width:35.7%;height:65.4%;clip-path:polygon(7% 0,92% 0,100% 36%,100% 95%,8% 100%,0 31%)}
+.window-cloud--near{opacity:.24;background-size:auto 125%;animation-duration:58s;animation-direction:reverse;filter:saturate(1.45) brightness(1.16) blur(.2px)}
+.shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,0) 28%,rgba(0,0,0,0) 72%,rgba(0,0,0,.16))}
+.label{position:fixed;left:16px;bottom:14px;z-index:4;margin:0;padding:8px 12px;border:1px solid rgba(140,235,255,.42);background:rgba(3,10,18,.72);backdrop-filter:blur(10px);font-size:13px;line-height:1.5;color:#dffbff}
+@keyframes cloudDrift{
+ from{background-position-x:0}
+ to{background-position-x:-1300px}
+}
+@media(prefers-reduced-motion:reduce){
+ .window-cloud{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="stage" aria-label="窓の雲だけを動かすデモ">
+ <img class="base" src="img/bg-deep-kokona.jpg" alt="">
+ <div class="window-cloud window-cloud--left" aria-hidden="true"></div>
+ <div class="window-cloud window-cloud--right" aria-hidden="true"></div>
+ <div class="window-cloud window-cloud--left window-cloud--near" aria-hidden="true"></div>
+ <div class="window-cloud window-cloud--right window-cloud--near" aria-hidden="true"></div>
+ <div class="shade" aria-hidden="true"></div>
+</main>
+<p class="label">窓の中だけ、雲レイヤーを重ねてゆっくり動かしています。</p>
+</body>
+</html>
