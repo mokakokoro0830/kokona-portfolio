@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="マラコーダ 縦横断衝の安地イメージ">
+  <rect width="720" height="520" fill="#f6f7f4"/>
+  <g transform="translate(360 260) rotate(45)">
+    <g opacity=".42">
+      <rect x="-270" y="-130" width="540" height="90" fill="#f08a3c"/>
+      <rect x="-270" y="40" width="540" height="90" fill="#f08a3c"/>
+      <rect x="-120" y="-270" width="90" height="540" fill="#f08a3c"/>
+      <rect x="80" y="-270" width="90" height="540" fill="#f08a3c"/>
+    </g>
+    <g opacity=".76">
+      <rect x="-180" y="-180" width="360" height="360" fill="#ef791e"/>
+      <rect x="-180" y="-180" width="360" height="360" fill="none" stroke="#342416" stroke-width="4"/>
+      <path d="M-60-180v360M60-180v360M-180-60h360M-180 60h360" stroke="#342416" stroke-width="3" opacity=".55"/>
+    </g>
+    <rect x="-180" y="-60" width="120" height="120" fill="#303332" opacity=".9"/>
+    <rect x="60" y="-60" width="120" height="120" fill="#303332" opacity=".9"/>
+    <g opacity=".9" fill="#ff7a19" stroke="#1b1510" stroke-width="4">
+      <ellipse cx="-260" cy="-145" rx="48" ry="17"/>
+      <ellipse cx="-230" cy="85" rx="48" ry="17"/>
+      <ellipse cx="225" cy="-95" rx="48" ry="17"/>
+      <ellipse cx="260" cy="140" rx="48" ry="17"/>
+    </g>
+    <g transform="rotate(-45)">
+      <circle cx="0" cy="0" r="48" fill="#ff8a35" opacity=".65" stroke="#e85d18" stroke-width="5"/>
+      <circle cx="0" cy="0" r="31" fill="#f5b19a" opacity=".72"/>
+      <path d="M0-74l15 28H-15z" fill="#ff7a19"/>
+      <text x="0" y="8" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="800" fill="#731d19">ボス</text>
+    </g>
+  </g>
+  <g font-family="sans-serif" font-weight="800">
+    <rect x="38" y="34" width="164" height="42" rx="10" fill="#303332"/>
+    <text x="120" y="63" text-anchor="middle" font-size="22" fill="#fff">黒マスが安地</text>
+    <rect x="38" y="86" width="164" height="42" rx="10" fill="#ef791e" opacity=".9"/>
+    <text x="120" y="115" text-anchor="middle" font-size="22" fill="#25160b">橙は危険</text>
+  </g>
+</svg>
