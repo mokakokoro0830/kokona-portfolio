@@ -196,6 +196,7 @@
     .mihashira-companion{
       --otter-size:clamp(88px,8vw,116px);
       --otter-frame:0;
+      --otter-frames:8;
       --otter-wrap-x:8px;
       --otter-step-x:0px;
       --otter-step-y:0px;
@@ -216,8 +217,9 @@
       display:block;
       width:100%;
       height:100%;
-      background:url("img/mihashira-otter-sprite.png") 0 0/calc(var(--otter-size) * 12) var(--otter-size) no-repeat;
+      background:url("img/mihashira-otter-beckon-square.png") 0 0/calc(var(--otter-size) * var(--otter-frames)) var(--otter-size) no-repeat;
       background-position:calc(var(--otter-frame) * var(--otter-size) * -1) 0;
+      animation:otterBeckon 2.2s steps(8) infinite;
       transform:scaleX(var(--otter-facing));
       transform-origin:center;
     }
@@ -309,8 +311,9 @@
     @keyframes snowFallSoft{0%{transform:translate3d(1%,-10%,0)}100%{transform:translate3d(-1.5%,10%,0)}}
     @keyframes snowFallNear{0%{transform:translate3d(-2%,-14%,0) scale(1.02)}100%{transform:translate3d(2.5%,14%,0) scale(1.02)}}
     @keyframes lanternPulse{0%,100%{opacity:.58;transform:scale(.9)}50%{opacity:1;transform:scale(1.16)}}
+    @keyframes otterBeckon{from{background-position:0 0}to{background-position:calc(var(--otter-size) * var(--otter-frames) * -1) 0}}
     @keyframes twinkle{0%,100%{transform:scale(.5);opacity:.32}50%{transform:scale(1.8);opacity:.92}}
-    @media(prefers-reduced-motion:reduce){.bg-cycle-layer,.mist,.snow-flurry,.snow-flurry::before,.snow-flurry::after,.glints span,.mihashira-companion::after{animation:none;transition:none}}
+    @media(prefers-reduced-motion:reduce){.bg-cycle-layer,.mist,.snow-flurry,.snow-flurry::before,.snow-flurry::after,.glints span,.mihashira-companion::after,.mihashira-companion__sprite{animation:none;transition:none}}
 
     .hero{
       min-height:clamp(520px,78vh,720px);
