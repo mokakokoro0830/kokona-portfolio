@@ -196,6 +196,11 @@ img{display:block;max-width:100%}h1,h2,h3{line-height:1.2;text-wrap:balance}
 .boss-card__steps b{color:#fff6d4}
 .boss-card.is-ready{background:linear-gradient(145deg,rgba(24,40,36,.94),rgba(29,61,52,.84));border-color:rgba(17,138,110,.62)}
 .boss-card.is-ready .boss-card__state{color:#e6fff3;background:rgba(17,138,110,.26)}
+.floor-boss{position:relative;z-index:1;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;width:min(100%,430px);margin:16px 0 0 auto;padding:11px;border:1px solid rgba(17,138,110,.42);border-radius:var(--r-md);background:linear-gradient(145deg,rgba(24,40,36,.94),rgba(29,61,52,.86));box-shadow:0 18px 38px -30px rgba(20,12,8,.82),inset 0 1px 0 rgba(255,255,255,.16);color:#fff;text-decoration:none;overflow:hidden}
+.floor-boss::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 0 0,rgba(255,219,124,.22),transparent 34%),linear-gradient(120deg,rgba(255,255,255,.12),transparent 42%,rgba(17,138,110,.14));pointer-events:none}
+.floor-boss__image{position:relative;z-index:1;margin:0;border-radius:10px;overflow:hidden;aspect-ratio:1.15;background:rgba(5,18,19,.28);border:1px solid rgba(255,255,255,.18)}
+.floor-boss__image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 32%}
+.floor-boss__body{position:relative;z-index:1;min-width:0}.floor-boss__eyebrow{display:inline-flex;margin-bottom:4px;border-radius:var(--r-full);padding:2px 8px;background:linear-gradient(135deg,#d9ad4f,#8e5e20);color:#221406;font-size:.68rem;font-weight:900}.floor-boss__name{margin:0;color:#fff6d4;font-size:.96rem;font-weight:900;line-height:1.25}.floor-boss__text{margin:4px 0 0;color:#eef3ea;font-size:.74rem;font-weight:800;line-height:1.45}.floor-boss__link{display:inline-flex;margin-top:7px;color:#f1d58a;font-size:.7rem;font-weight:900}
 .floor{position:relative;padding-top:76px;scroll-margin-top:70px}
 .floor::before{content:"";position:absolute;left:0;right:0;top:37px;height:1px;background:linear-gradient(90deg,transparent,rgba(195,154,58,.45),rgba(17,138,110,.32),transparent)}
 .floor::after{content:"";position:absolute;left:8%;right:8%;top:24px;height:32px;pointer-events:none;background:radial-gradient(closest-side,rgba(255,255,255,.48),transparent 72%);filter:blur(8px);opacity:.75}
@@ -337,24 +342,28 @@ footer{margin-top:42px;padding:0 0 26px}
     <div class="boss-grid">
       <article class="boss-card is-ready">
         <div class="boss-card__top"><span class="boss-card__floor">F50</span><h3 class="boss-card__name">オグブナバリ</h3><span class="boss-card__state">詳細あり</span></div>
+        <figure class="boss-card__image"><img src="img/ogbunabali.png" alt="オグブナバリ"></figure>
         <div class="boss-card__quick"><span class="boss-pill boss-pill--danger">竜巻注意</span><span class="boss-pill boss-pill--safe">砂地で解除</span><span class="boss-pill">追尾中は移動</span></div>
         <p class="boss-card__summary">砂地で弱体と吹き飛ばしを処理。追尾中は攻撃より移動優先。</p>
         <a class="boss-card__link" href="bosses.html#f50">詳細を見る</a>
       </article>
       <article class="boss-card is-ready">
         <div class="boss-card__top"><span class="boss-card__floor">F60</span><h3 class="boss-card__name">元祖マリクテンダー</h3><span class="boss-card__state">詳細あり</span></div>
+        <figure class="boss-card__image"><img src="img/maliktender.png" alt="元祖マリクテンダー"></figure>
         <div class="boss-card__quick"><span class="boss-pill boss-pill--danger">マリクの勅令</span><span class="boss-pill">一進/二進</span><span class="boss-pill boss-pill--danger">ニードルスピン</span></div>
         <p class="boss-card__summary">一進/二進はサボテンの到達先を読む。ニードルスピンは足を止めない。</p>
         <a class="boss-card__link" href="bosses.html#f60">詳細を見る</a>
       </article>
       <article class="boss-card is-ready">
         <div class="boss-card__top"><span class="boss-card__floor">F70</span><h3 class="boss-card__name">フォーギヴン・ズィール</h3><span class="boss-card__state">詳細あり</span></div>
+        <figure class="boss-card__image"><img src="img/forgiven-zeal.png" alt="フォーギヴン・ズィール"></figure>
         <div class="boss-card__quick"><span class="boss-pill boss-pill--danger">8連扇</span><span class="boss-pill">白玉順番</span><span class="boss-pill boss-pill--safe">中央寄りで見る</span></div>
         <p class="boss-card__summary">レーザー方向と白玉の順番を見る。8連扇は1発目と5発目を覚える。</p>
         <a class="boss-card__link" href="bosses.html#f70">詳細を見る</a>
       </article>
       <article class="boss-card is-ready">
         <div class="boss-card__top"><span class="boss-card__floor">F80</span><h3 class="boss-card__name">フォーギヴン・プロファニティー</h3><span class="boss-card__state">詳細あり</span></div>
+        <figure class="boss-card__image"><img src="img/forgiven-profanity.png" alt="フォーギヴン・プロファニティー"></figure>
         <div class="boss-card__quick"><span class="boss-pill boss-pill--danger">動きすぎ禁止</span><span class="boss-pill">髭の向き</span><span class="boss-pill">雷玉線</span></div>
         <p class="boss-card__summary">髭の向き、内外円、雷玉線を見る。弱体中は必要最低限だけ動く。</p>
         <a class="boss-card__link" href="bosses.html#f80">詳細を見る</a>
@@ -368,6 +377,7 @@ footer{margin-top:42px;padding:0 0 26px}
       </article>
       <article class="boss-card is-ready">
         <div class="boss-card__top"><span class="boss-card__floor">F99〜100</span><h3 class="boss-card__name">エミネント・グリーフ／デヴァウアード・イーター</h3><span class="boss-card__state">重点</span></div>
+        <figure class="boss-card__image"><img src="img/eminent-grief.png" alt="エミネント・グリーフ"></figure>
         <div class="boss-card__quick"><span class="boss-pill boss-pill--danger">2体HP差</span><span class="boss-pill">光闇床</span><span class="boss-pill">火球数</span></div>
         <p class="boss-card__summary">光闇床、2体のHP差、火球数、エーテル吸収の順番を見る。</p>
         <a class="boss-card__link" href="bosses.html#f99">詳細を見る</a>
@@ -395,7 +405,7 @@ footer{margin-top:42px;padding:0 0 26px}
   <div class="floor__head"><span class="floor__badge">F41–50</span><span class="floor__label">要注意モンスター</span><span class="floor__count">0</span></div>
   <div class="grid"></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section><section class="floor" id="f5">
+<a class="floor-boss" href="bosses.html#f50"><figure class="floor-boss__image"><img src="img/ogbunabali.png" alt="オグブナバリ"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F50 ボス</span><h3 class="floor-boss__name">オグブナバリ</h3><p class="floor-boss__text">砂地と竜巻処理を確認。</p><span class="floor-boss__link">詳細を見る</span></div></a></section><section class="floor" id="f5">
   <div class="floor__head"><span class="floor__badge">F51–60</span><span class="floor__label">要注意モンスター</span><span class="floor__count">6</span></div>
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="トラバース・フォルスラコス">
   <div class="card__media"><img src="img/falsraco.jpg" alt="トラバース・フォルスラコス" loading="lazy" width="96" height="96"></div>
@@ -429,7 +439,7 @@ footer{margin-top:42px;padding:0 0 26px}
     <ul class="notes"><li>突進「<b>バレリングスマッシュ</b>」のあと、中心範囲「<b>サイズテール</b>」かドーナツ超範囲「<b>外輪雷</b>」のどちらかが来る。</li><li>スタン可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section><section class="floor" id="f6">
+<a class="floor-boss" href="bosses.html#f60"><figure class="floor-boss__image"><img src="img/maliktender.png" alt="元祖マリクテンダー"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F60 ボス</span><h3 class="floor-boss__name">元祖マリクテンダー</h3><p class="floor-boss__text">一進/二進とニードルスピン。</p><span class="floor-boss__link">詳細を見る</span></div></a></section><section class="floor" id="f6">
   <div class="floor__head"><span class="floor__badge">F61–70</span><span class="floor__label">要注意モンスター</span><span class="floor__count">13</span></div>
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="フォーギヴン・ミスチーフ">
   <div class="card__media"><img src="img/mischief.jpg" alt="フォーギヴン・ミスチーフ" loading="lazy" width="96" height="96"></div>
@@ -498,7 +508,7 @@ footer{margin-top:42px;padding:0 0 26px}
     <ul class="notes"><li><b>土石流</b>は不可視の前方扇。</li><li>スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section><section class="floor" id="f7">
+<a class="floor-boss" href="bosses.html#f70"><figure class="floor-boss__image"><img src="img/forgiven-zeal.png" alt="フォーギヴン・ズィール"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F70 ボス</span><h3 class="floor-boss__name">フォーギヴン・ズィール</h3><p class="floor-boss__text">白玉順番と8連扇を確認。</p><span class="floor-boss__link">詳細を見る</span></div></a></section><section class="floor" id="f7">
   <div class="floor__head"><span class="floor__badge">F71–80</span><span class="floor__label">要注意モンスター</span><span class="floor__count">13</span></div>
   <div class="grid"><article class="card" data-stun="0" data-danger="0" data-name="トラバース・フルドゥ">
   <div class="card__media"><img src="img/fuldu.jpg" alt="トラバース・フルドゥ" loading="lazy" width="96" height="96"></div>
@@ -567,7 +577,7 @@ footer{margin-top:42px;padding:0 0 26px}
     <ul class="notes"><li>接近感知。<b>メタモーフィックブラスト</b>＝前方扇、<b>オロジェニックストーム</b>＝ランダム対象のAoE。スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section><section class="floor" id="f8">
+<a class="floor-boss" href="bosses.html#f80"><figure class="floor-boss__image"><img src="img/forgiven-profanity.png" alt="フォーギヴン・プロファニティー"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F80 ボス</span><h3 class="floor-boss__name">フォーギヴン・プロファニティー</h3><p class="floor-boss__text">髭、内外、雷玉線を見る。</p><span class="floor-boss__link">詳細を見る</span></div></a></section><section class="floor" id="f8">
   <div class="floor__head"><span class="floor__badge">F81–90</span><span class="floor__label">要注意モンスター</span><span class="floor__count">13</span></div>
   <div class="grid"><article class="card" data-stun="1" data-danger="0" data-name="インヴォークド・グレムリン">
   <div class="card__media"><img src="img/gremlin.jpg" alt="インヴォークド・グレムリン" loading="lazy" width="96" height="96"></div>
@@ -636,7 +646,7 @@ footer{margin-top:42px;padding:0 0 26px}
     <ul class="notes"><li><b>大凶眼</b>は視線範囲、<b>眼光弾</b>はランダム対象へのAoE。スタン・睡眠可。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section><section class="floor" id="f9">
+<a class="floor-boss" href="bosses.html#f90"><figure class="floor-boss__image"><img src="img/malacoda.png" alt="マラコーダ"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F90 ボス</span><h3 class="floor-boss__name">マラコーダ</h3><p class="floor-boss__text">光る手と外周円に注意。</p><span class="floor-boss__link">詳細を見る</span></div></a></section><section class="floor" id="f9">
   <div class="floor__head"><span class="floor__badge">F91–100</span><span class="floor__label">要注意モンスター</span><span class="floor__count">13</span></div>
   <div class="grid"><article class="card danger" data-stun="0" data-danger="1" data-name="インヴォークド・ドリームエビル">
   <div class="card__media"><img src="img/dreamevil.jpg" alt="インヴォークド・ドリームエビル" loading="lazy" width="96" height="96"></div>
@@ -705,7 +715,7 @@ footer{margin-top:42px;padding:0 0 26px}
     <ul class="notes"><li>スタン無効。<b>オーソリティスラッシュ</b>は<b>背面が安置</b>。</li></ul>
   </div></article></div>
   <p class="floor-empty">このフロアはまだ登録がありません（順次追加）</p>
-</section>
+<a class="floor-boss" href="bosses.html#f99"><figure class="floor-boss__image"><img src="img/eminent-grief.png" alt="エミネント・グリーフ"></figure><div class="floor-boss__body"><span class="floor-boss__eyebrow">F99〜100 ボス</span><h3 class="floor-boss__name">エミネント・グリーフ</h3><p class="floor-boss__text">光闇床と2体HP差を確認。</p><span class="floor-boss__link">詳細を見る</span></div></a></section>
   <p class="empty">該当するモンスターがいません。</p>
 </main>
 <footer class="wrap"><div class="footer-note"><p>ピルグリム・トラバース攻略メモ（ちゃお監修）。画像・データは順次追加。実際のゲーム内挙動を優先してください。📱 スマホは各カードをタップすると詳細が開きます。🖥 PCはホバーで左下の花人が要点を話します。</p><small>© SQUARE ENIX</small></div></footer>
