@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アメノミハシラ 要注意モンスター早見表（ちゃお監修）</title>
+  <meta name="description" content="アメノミハシラの要注意モンスター早見表。スタン可否・巡回・感知方式・危険メモを階層別に整理した攻略メモ。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --sky:#66d9ff;
+      --sky-deep:#2563eb;
+      --indigo:#241d63;
+      --violet:#6d5bd0;
+      --gold:#d9a441;
+      --gold-soft:#f5df9d;
+      --jade:#1aa889;
+      --red:#d94848;
+      --ink:#152033;
+      --muted:#68758b;
+      --paper:#fbfdff;
+      --glass:rgba(255,255,255,.82);
+      --line:rgba(185,200,228,.78);
+      --shadow:0 24px 70px -42px rgba(29,42,92,.55);
+      --hero-bg:url("img/layered/sky-day-clouds.jpg");
+      --moving-sky:url("img/layered/sky-day-clouds.jpg");
+      --tower-layer:url("img/layered/tower-foreground.png");
+      --tower-snow-layer:url("img/layered/tower-snow-accumulation.png");
+      --snow-scene-layer:url("img/layered/snow-accumulated-foreground.png?v=clean-edge-2");
+      --tower-filter:saturate(1.02) contrast(1.02);
+      --tower-opacity:.95;
+      --tower-snow-opacity:0;
+      --snow-scene-opacity:0;
+      --snow-flurry-opacity:0;
+      --tower-opacity-duration:8s;
+      --snow-scene-duration:8s;
+      --snow-flurry-duration:6s;
+      --font:"Inter","Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+      --serif:"Cormorant Garamond","Noto Serif JP",serif;
+      --r:10px;
+      --pill:999px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        linear-gradient(180deg,rgba(246,251,255,.58),rgba(238,247,255,.7) 36%,rgba(249,251,255,.82) 100%),
+        radial-gradient(900px 460px at 82% -6%,rgba(102,217,255,.32),transparent 60%),
+        radial-gradient(720px 380px at 4% 8%,rgba(217,164,65,.2),transparent 58%),
+        #f6fbff;
+      line-height:1.75;
+      -webkit-font-smoothing:antialiased;
+      font-feature-settings:"palt";
+      letter-spacing:.01em;
+      padding-bottom:52px;
+    }
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
+    a{color:inherit;text-decoration:none}
+    h1,h2,h3{line-height:1.16;text-wrap:balance}
+    .wrap{width:min(1180px,calc(100% - 40px));margin-inline:auto;position:relative;z-index:2}
+
+    .sky-bg{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;background:#eef7ff}
+    .bg-cycle-layer{position:absolute;inset:-7% -18%;background-position:center center;background-size:cover;background-repeat:no-repeat;opacity:0;filter:saturate(1.06) contrast(1.02);animation:skyCloudDrift 34s ease-in-out infinite alternate;will-change:opacity,transform;transition:opacity 15s ease-in-out}
+    .bg-cycle-layer.is-active{opacity:.9}
+    .sky-bg::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(180deg,rgba(172,223,255,.28) 0%,rgba(219,239,255,.46) 32%,rgba(248,251,255,.82) 100%),
+        radial-gradient(900px 540px at 50% 8%,rgba(255,255,255,.3),transparent 64%);
+    }
+    .mist{
+      position:fixed;inset:-12% -8% 20%;z-index:-2;pointer-events:none;
+      background:
+        radial-gradient(closest-side at 16% 54%,rgba(255,255,255,.95),rgba(255,255,255,0) 68%),
+        radial-gradient(closest-side at 32% 66%,rgba(255,255,255,.72),rgba(255,255,255,0) 72%),
+        radial-gradient(closest-side at 66% 46%,rgba(255,255,255,.78),rgba(255,255,255,0) 68%),
+        radial-gradient(closest-side at 86% 64%,rgba(255,255,255,.78),rgba(255,255,255,0) 68%);
+      filter:blur(10px);
+      opacity:.58;
+      animation:mistDrift 58s ease-in-out infinite alternate;
+    }
+    .tower-layer{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background:var(--tower-layer) center center/cover no-repeat;
+      filter:var(--tower-filter);
+      opacity:var(--tower-opacity);
+      transition:filter 15s ease-in-out,opacity var(--tower-opacity-duration) linear;
+    }
+    .tower-snow-layer{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:var(--tower-snow-layer) center center/cover no-repeat;
+      filter:drop-shadow(0 1px 2px rgba(105,125,145,.22));
+      opacity:var(--tower-snow-opacity);
+      transition:opacity 15s ease-in-out;
+    }
+    .snow-scene-layer{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:var(--snow-scene-layer) center center/cover no-repeat;
+      opacity:var(--snow-scene-opacity);
+      overflow:hidden;
+      transition:opacity var(--snow-scene-duration) linear;
+    }
+    .snow-scene-layer::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 50% 46%,transparent 0 50%,rgba(240,247,253,.14) 80%,rgba(246,250,255,.32) 100%),
+        linear-gradient(90deg,rgba(242,248,255,.32) 0%,transparent 14%,transparent 86%,rgba(242,248,255,.32) 100%),
+        linear-gradient(180deg,rgba(244,249,255,.1) 0%,transparent 16%,transparent 80%,rgba(246,250,255,.22) 100%);
+    }
+    .snow-flurry{
+      position:fixed;
+      inset:-18% -10%;
+      z-index:1;
+      pointer-events:none;
+      opacity:var(--snow-flurry-opacity);
+      overflow:hidden;
+      mix-blend-mode:screen;
+      background-image:
+        radial-gradient(circle,rgba(255,255,255,.42) 0 .9px,transparent 1.7px),
+        radial-gradient(circle,rgba(235,248,255,.34) 0 .8px,transparent 1.8px);
+      background-size:86px 86px,152px 152px;
+      background-position:0 0,42px 18px;
+      filter:drop-shadow(0 0 5px rgba(255,255,255,.24));
+      animation:snowFallFar 28s linear infinite;
+      transition:opacity var(--snow-flurry-duration) ease-in-out;
+      will-change:transform,opacity;
+    }
+    .snow-flurry::before,
+    .snow-flurry::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-repeat:repeat;
+      will-change:transform;
+    }
+    .snow-flurry::before{
+      opacity:.82;
+      background-image:
+        radial-gradient(circle,rgba(255,255,255,.86) 0 1.2px,transparent 2.1px),
+        radial-gradient(circle,rgba(247,252,255,.66) 0 1px,transparent 2px),
+        radial-gradient(circle,rgba(255,255,255,.46) 0 1.6px,transparent 2.8px);
+      background-size:74px 74px,124px 124px,196px 196px;
+      background-position:12px 0,58px 32px,104px 76px;
+      filter:blur(.18px);
+      animation:snowFallSoft 16s linear infinite;
+    }
+    .snow-flurry::after{
+      opacity:.56;
+      background-image:
+        radial-gradient(circle,rgba(255,255,255,.9) 0 2px,transparent 3.2px),
+        radial-gradient(circle,rgba(242,250,255,.68) 0 2.6px,transparent 4.4px);
+      background-size:168px 168px,262px 262px;
+      background-position:28px 20px,122px 68px;
+      filter:blur(1px);
+      animation:snowFallNear 9s linear infinite;
+    }
+    .aurora{position:fixed;inset:-12% -6% auto;height:48vh;z-index:-2;pointer-events:none;background:linear-gradient(110deg,transparent 0 12%,rgba(102,217,255,.42) 28%,rgba(109,91,208,.18) 45%,rgba(245,223,157,.32) 68%,transparent 88%);filter:blur(26px);opacity:.62;transform:skewY(-5deg)}
+    .glints{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+    .glints span{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px rgba(255,255,255,.75);opacity:.72;animation:twinkle 5s ease-in-out infinite}
+    .glints span:nth-child(1){left:12%;top:18%;animation-delay:-1s}.glints span:nth-child(2){left:78%;top:14%;animation-delay:-3s}.glints span:nth-child(3){left:58%;top:28%;animation-delay:-2s}.glints span:nth-child(4){left:86%;top:42%;animation-delay:-4s}.glints span:nth-child(5){left:22%;top:46%;animation-delay:-2.5s}
+    .mihashira-companion{
+      --otter-size:clamp(88px,8vw,116px);
+      --otter-frame:0;
+      --otter-wrap-x:8px;
+      --otter-step-x:0px;
+      --otter-step-y:0px;
+      --otter-lean:0deg;
+      --otter-facing:1;
+      position:fixed;
+      left:0;
+      bottom:clamp(8px,2vw,22px);
+      width:var(--otter-size);
+      height:var(--otter-size);
+      z-index:45;
+      pointer-events:none;
+      opacity:.96;
+      filter:drop-shadow(0 14px 18px rgba(20,28,46,.28));
+      transform:translate3d(calc(var(--otter-wrap-x) + var(--otter-step-x)),var(--otter-step-y),0) rotate(var(--otter-lean));
+    }
+    .mihashira-companion__sprite{
+      display:block;
+      width:100%;
+      height:100%;
+      background:url("img/mihashira-otter-sprite.png") 0 0/calc(var(--otter-size) * 12) var(--otter-size) no-repeat;
+      background-position:calc(var(--otter-frame) * var(--otter-size) * -1) 0;
+      transform:scaleX(var(--otter-facing));
+      transform-origin:center;
+    }
+    .mihashira-companion::after{
+      content:"";
+      position:absolute;
+      left:6%;
+      bottom:12%;
+      width:26%;
+      height:26%;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,225,112,.78),rgba(255,184,45,.22) 56%,transparent 72%);
+      filter:blur(6px);
+      mix-blend-mode:screen;
+      animation:lanternPulse 2.4s ease-in-out infinite;
+    }
+    .mihashira-companion-talk{
+      --otter-talk-x:14px;
+      --otter-tail-x:28px;
+      position:fixed;
+      left:0;
+      bottom:clamp(118px,10vw,150px);
+      z-index:46;
+      width:min(310px,calc(100vw - 28px));
+      padding:13px 15px 14px 17px;
+      border:2px solid rgba(88,135,54,.72);
+      border-radius:22px 20px 24px 18px;
+      background:
+        radial-gradient(circle at 12% 18%,rgba(255,226,112,.36),transparent 30%),
+        linear-gradient(135deg,rgba(246,255,232,.82),rgba(224,246,232,.68) 54%,rgba(255,249,222,.72));
+      color:#21311f;
+      box-shadow:0 18px 42px -28px rgba(9,18,38,.62),inset 0 0 0 1px rgba(255,255,255,.58),inset 0 -12px 30px rgba(91,142,70,.08);
+      font-size:.8rem;
+      font-weight:800;
+      line-height:1.55;
+      pointer-events:none;
+      opacity:.94;
+      transform:translate3d(var(--otter-talk-x),0,0);
+      transition:opacity .18s var(--ease),transform .18s var(--ease);
+    }
+    .mihashira-companion-talk::before{
+      content:"";
+      position:absolute;
+      left:var(--otter-tail-x);
+      bottom:-17px;
+      width:28px;
+      height:24px;
+      background:linear-gradient(135deg,rgba(224,246,232,.7),rgba(255,249,222,.76));
+      border-left:2px solid rgba(88,135,54,.72);
+      border-bottom:2px solid rgba(88,135,54,.72);
+      clip-path:polygon(0 0,100% 0,0 100%);
+      transform:skewX(-22deg);
+    }
+    .mihashira-companion-talk::after{
+      content:"";
+      position:absolute;
+      right:13px;
+      top:10px;
+      width:28px;
+      height:18px;
+      border-radius:50%;
+      border-top:2px solid rgba(92,151,61,.34);
+      transform:rotate(-12deg);
+      opacity:.72;
+    }
+    .mihashira-companion-talk b{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      margin-bottom:4px;
+      color:#2f7428;
+      font-size:.74rem;
+      letter-spacing:.04em;
+    }
+    .mihashira-companion-talk b::before{
+      content:"";
+      width:12px;
+      height:9px;
+      border-radius:80% 0 80% 0;
+      background:linear-gradient(135deg,#93c75f,#3f8e42);
+      box-shadow:0 0 10px rgba(124,194,83,.46);
+      transform:rotate(-20deg);
+    }
+    .mihashira-companion-talk span{display:block}
+    .mihashira-companion-talk.is-speaking{opacity:1;transform:translate3d(var(--otter-talk-x),-3px,0)}
+    @keyframes skyCloudDrift{0%{transform:scale(1.05) translate3d(-3.2%,-.35%,0)}50%{transform:scale(1.065) translate3d(.4%,.25%,0)}100%{transform:scale(1.05) translate3d(3.2%,.35%,0)}}
+    @keyframes mistDrift{0%{transform:translate3d(-2%,0,0) scale(1)}100%{transform:translate3d(2.5%,-1%,0) scale(1.04)}}
+    @keyframes snowFallFar{0%{transform:translate3d(-1%,-8%,0)}100%{transform:translate3d(1.5%,8%,0)}}
+    @keyframes snowFallSoft{0%{transform:translate3d(1%,-10%,0)}100%{transform:translate3d(-1.5%,10%,0)}}
+    @keyframes snowFallNear{0%{transform:translate3d(-2%,-14%,0) scale(1.02)}100%{transform:translate3d(2.5%,14%,0) scale(1.02)}}
+    @keyframes lanternPulse{0%,100%{opacity:.58;transform:scale(.9)}50%{opacity:1;transform:scale(1.16)}}
+    @keyframes twinkle{0%,100%{transform:scale(.5);opacity:.32}50%{transform:scale(1.8);opacity:.92}}
+    @media(prefers-reduced-motion:reduce){.bg-cycle-layer,.mist,.snow-flurry,.snow-flurry::before,.snow-flurry::after,.glints span,.mihashira-companion::after{animation:none;transition:none}}
+
+    .hero{
+      min-height:clamp(520px,78vh,720px);
+      padding:34px 0 74px;
+      display:grid;
+      align-items:end;
+      position:relative;
+      overflow:hidden;
+      color:#f8fbff;
+      background:
+        linear-gradient(180deg,rgba(18,25,70,.1),rgba(18,25,70,.38) 48%,rgba(246,251,255,.88) 100%),
+        linear-gradient(90deg,rgba(12,20,54,.24),rgba(12,20,54,.05) 48%,rgba(12,20,54,.16));
+      border-bottom:1px solid rgba(185,200,228,.64);
+    }
+    .hero::before{
+      content:"";position:absolute;left:50%;bottom:-22px;width:min(72vw,760px);height:min(72vw,760px);transform:translateX(-50%);
+      background:
+        repeating-conic-gradient(from 0deg,rgba(255,255,255,.16) 0 4deg,transparent 4deg 14deg),
+        radial-gradient(circle at 50% 50%,rgba(255,255,255,.42),rgba(102,217,255,.2) 38%,transparent 66%);
+      border-radius:50%;
+      opacity:.72;
+      filter:blur(.2px);
+    }
+    .tower{
+      position:absolute;left:50%;bottom:26px;width:min(36vw,360px);height:min(58vh,520px);transform:translateX(-50%);
+      background:
+        linear-gradient(90deg,transparent 0 11%,rgba(255,255,255,.38) 11% 14%,transparent 14% 86%,rgba(255,255,255,.38) 86% 89%,transparent 89%),
+        linear-gradient(180deg,rgba(255,255,255,.78),rgba(102,217,255,.18) 48%,rgba(36,29,99,.16));
+      clip-path:polygon(47% 0,53% 0,69% 100%,31% 100%);
+      opacity:.3;
+      filter:drop-shadow(0 22px 38px rgba(50,80,150,.28));
+    }
+    .tower::before,.tower::after{
+      content:"";position:absolute;left:50%;transform:translateX(-50%);border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.14);backdrop-filter:blur(10px)
+    }
+    .tower::before{top:18%;width:46%;height:16%;border-radius:50%}
+    .tower::after{bottom:8%;width:72%;height:22%;border-radius:50% 50% 4px 4px}
+    .hero-copy{max-width:720px;text-shadow:0 2px 24px rgba(17,22,68,.58)}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5em;padding:.5em 1.05em;border-radius:var(--pill);background:linear-gradient(90deg,var(--gold-soft),rgba(208,244,255,.92));color:#17203a;font-size:.74rem;font-weight:800;letter-spacing:.1em;box-shadow:0 10px 28px -18px rgba(44,56,122,.55)}
+    .hero h1{margin-top:16px;font-family:var(--serif);font-size:clamp(2.2rem,6vw,4.8rem);font-weight:700;color:#fffdf5}
+    .hero h1 .accent{background:linear-gradient(110deg,#fff3b8 0%,#66d9ff 52%,#e4d8ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero h1 .credit{display:inline-block;margin-left:.5em;vertical-align:middle;font-family:var(--font);font-size:.22em;font-weight:800;letter-spacing:.08em;color:#fff3b8;border:1px solid rgba(255,243,184,.68);border-radius:999px;padding:.34em 1em;text-shadow:none;white-space:nowrap}
+    .hero p{margin-top:14px;max-width:34em;color:#eef7ff;font-weight:600}
+    .hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;color:#edf7ff;font-size:.88rem}
+    .hero .meta b{font-size:1.35rem;color:#fff;font-weight:800}
+
+    .bar{position:sticky;top:0;z-index:30;background:rgba(250,253,255,.78);backdrop-filter:blur(18px) saturate(1.05);border-bottom:1px solid var(--line);box-shadow:0 16px 40px -34px rgba(37,54,110,.48)}
+    .bar-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0}
+    .nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+    .nav::-webkit-scrollbar{display:none}
+    .pill,.toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(178,195,224,.88);background:rgba(255,255,255,.82);color:var(--muted);border-radius:var(--pill);font-size:.78rem;font-weight:800;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+    .pill{padding:6px 12px}
+    .pill:hover{color:var(--sky-deep);border-color:rgba(37,99,235,.5)}
+    .filters{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .search{width:188px;border:1px solid rgba(178,195,224,.88);border-radius:var(--pill);background:rgba(255,255,255,.86);padding:7px 13px;color:var(--ink);font-size:.82rem}
+    .toggle{padding:6px 11px;cursor:pointer;user-select:none}
+    .toggle input{accent-color:var(--sky-deep)}
+    .toggle:has(input:checked){color:#174db8;border-color:rgba(37,99,235,.5);background:#eef7ff}
+    .nav-toggle{display:none;border:1px solid rgba(178,195,224,.88);border-radius:var(--pill);background:#fff;padding:7px 12px;color:#174db8;font-size:.8rem;font-weight:800}
+
+    main{padding-top:24px}
+    .legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:6px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:rgba(255,255,255,.74);box-shadow:var(--shadow);backdrop-filter:blur(14px);color:#40506a;font-size:.8rem}
+    .chip,.flag{display:inline-flex;align-items:center;border-radius:var(--pill);font-size:.72rem;font-weight:800;line-height:1;padding:6px 10px;border:1px solid transparent}
+    .chip--stun{background:linear-gradient(135deg,#20b88f,#148268);color:#fff}
+    .chip--no{background:#edf2f8;color:#6a7486;border-color:#cbd8ea}
+    .chip--unknown{background:rgba(255,255,255,.86);color:#7b8798;border-color:#d5dfef}
+    .chip--sleep{background:linear-gradient(135deg,#6d86e8,#5061c7);color:#fff}
+    .chip--patrol{background:linear-gradient(135deg,#ffe39a,#d9a441);color:#493007}
+    .chip--sight{background:linear-gradient(135deg,#29a8e6,#2369ce);color:#fff}
+    .chip--sensitive{background:linear-gradient(135deg,#f29d38,#cf6532);color:#fff}
+    .chip--sound{background:linear-gradient(135deg,#8a68dd,#5c42b1);color:#fff}
+    .flag{background:linear-gradient(135deg,#e45c5c,#bd323f);color:#fff}
+
+    .floor{padding-top:68px;scroll-margin-top:74px}
+    .floor-head{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+    .floor-badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--sky-deep),var(--indigo));padding:8px 14px;border-radius:8px;box-shadow:0 12px 28px -18px rgba(36,29,99,.7)}
+    .floor-title{font-weight:800;font-size:1rem;color:#26334b}
+    .floor-count{display:inline-grid;place-items:center;min-width:28px;height:28px;padding:0 8px;border-radius:var(--pill);border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.76rem;font-weight:800}
+    .boss-panel{position:relative;display:grid;grid-template-columns:380px 1fr;gap:20px;width:100%;min-height:260px;margin:16px 0 0 auto;padding:16px;border:1px solid rgba(102,217,255,.42);border-radius:var(--r);background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(238,247,255,.66));box-shadow:0 18px 54px -42px rgba(29,42,92,.64);backdrop-filter:blur(12px);overflow:hidden}
+    .boss-panel::after{content:"";position:absolute;right:-90px;bottom:-110px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(102,217,255,.24),rgba(255,255,255,0) 64%);pointer-events:none}
+    .boss-panel__head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+    .boss-panel__kicker{font-size:.72rem;font-weight:800;color:#1c73bf;letter-spacing:.08em}
+    .boss-panel__title{font-size:1.08rem;font-weight:800;color:#1e2c44}
+    .boss-panel__memo{padding-left:1.1em;color:#37455e;font-size:.84rem;line-height:1.65}
+    .boss-panel__memo li::marker{color:var(--sky-deep)}
+    .boss-panel__time{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 10px;border-radius:999px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);color:#174db8;font-size:.76rem;font-weight:800}
+    .boss-panel__body{position:relative;z-index:2;padding-right:min(24vw,300px)}
+    .boss-panel__art{position:absolute;z-index:1;right:22px;bottom:14px;width:min(24vw,260px);aspect-ratio:1;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(102,217,255,.18));border:1px solid rgba(255,255,255,.72);box-shadow:0 22px 48px -30px rgba(17,35,78,.72);overflow:hidden;transform:rotate(-2deg)}
+    .boss-panel__art img{width:100%;height:100%;object-fit:cover;filter:saturate(1.28) contrast(1.08) brightness(1.04);opacity:.9}
+    .boss-panel__art::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.32),rgba(102,217,255,.06) 45%,rgba(36,29,99,.12));mix-blend-mode:screen;pointer-events:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+    .card{position:relative;display:flex;gap:14px;min-height:142px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(244,250,255,.78));box-shadow:0 14px 48px -38px rgba(29,42,92,.55);overflow:hidden;transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease)}
+    .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--sky),var(--sky-deep))}
+    .card.danger::before{background:linear-gradient(180deg,#e45c5c,#a92233)}
+    .card:hover{transform:translateY(-2px);box-shadow:0 22px 58px -38px rgba(29,42,92,.72);border-color:rgba(77,111,184,.45)}
+    .media{flex:0 0 98px;height:98px;border-radius:8px;position:relative;background:linear-gradient(135deg,#edf7ff,#ffffff);border:1px solid rgba(178,195,224,.9);display:grid;place-items:center;color:#7b8aa4;font-size:.7rem;font-weight:800;text-align:center;line-height:1.35;overflow:hidden}
+    .media::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle,rgba(102,217,255,.55),transparent 68%);opacity:.72}
+    .media img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+    .media:has(img)::before{display:none}
+    .media span{position:relative}
+    .card-body{min-width:0;flex:1}
+    .card-head{display:flex;gap:8px;align-items:start;margin-bottom:8px}
+    .card-name{font-size:1.05rem;font-weight:800}
+    .range{margin-left:auto;color:#5e6c82;font-size:.76rem;font-weight:800;white-space:nowrap}
+    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+    .notes{padding-left:1.1em;color:#37455e;font-size:.86rem;line-height:1.65}
+    .notes li::marker{color:var(--sky-deep)}
+    .boss-video{margin:0;border:1px solid rgba(102,217,255,.38);border-radius:9px;background:linear-gradient(135deg,rgba(17,35,78,.92),rgba(29,42,92,.82));box-shadow:0 14px 38px -28px rgba(17,35,78,.72);overflow:hidden}
+    .boss-video__label{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 8px;color:#eef7ff;font-size:.66rem;font-weight:800}
+    .boss-video__label small{display:none;color:#b9dcff;font-weight:800}
+    .boss-video__frame{aspect-ratio:16/9;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#dcecff;font-size:.72rem;font-weight:800;text-align:center}
+    .boss-video__frame iframe{width:100%;height:100%;border:0;display:block}
+    .boss-video__empty{padding:12px 8px;color:#c6d8ee}
+    .boss-video__link{display:inline-flex;margin:6px 8px 8px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.14);color:#eef7ff;font-size:.66rem;font-weight:800;border:1px solid rgba(255,255,255,.24)}
+    .empty-card{display:grid;place-items:center;min-height:132px;border:1px dashed rgba(139,157,191,.78);border-radius:var(--r);background:rgba(255,255,255,.5);color:#6a7486;text-align:center;padding:20px;font-weight:700}
+    .empty-card small{display:block;margin-top:4px;font-weight:600;color:#8994a8}
+    .no-result{display:none;padding:34px;text-align:center;color:var(--muted);font-weight:800}
+    body.is-empty .floor{display:none}
+    body.is-empty .no-result{display:block}
+    footer{margin-top:42px;margin-bottom:24px;padding:16px 0;color:rgba(255,255,255,.94);font-size:.8rem;font-weight:800;text-shadow:0 2px 12px rgba(0,12,34,.68),0 0 18px rgba(0,12,34,.35)}
+    footer p{margin:0}
+    footer small{display:block;margin-top:6px;color:rgba(238,247,255,.88);font-weight:800;line-height:1.65}
+    footer code{color:#fff7c5;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+
+    @media(max-width:720px){
+      .wrap{width:min(100% - 28px,1180px)}
+      .hero{min-height:610px;padding-top:26px}
+      .hero h1{font-size:clamp(2.15rem,12vw,3.7rem)}
+      .hero h1 .line{display:block}
+      .hero h1 .credit{margin:.28em 0 0 .15em}
+      .tower{width:72vw;height:390px;opacity:.55}
+      .hero p{font-size:1rem;max-width:20em}
+      .mihashira-companion{--otter-size:76px;bottom:10px;opacity:.92}
+      .mihashira-companion-talk{left:12px;right:12px;bottom:92px;width:auto;font-size:.76rem;padding:10px 13px 11px 14px;border-radius:18px 17px 20px 16px}
+      .nav-toggle{display:inline-flex}
+      .nav{order:3;flex-basis:100%;padding-bottom:2px}
+      .nav.collapsed{display:none}
+      .filters{margin-left:0;width:100%}
+      .search{flex:1;min-width:180px}
+      .boss-panel{grid-template-columns:1fr;gap:10px;min-height:0;margin:12px 0 0 auto;padding:12px;width:100%}
+      .boss-panel__body{padding-right:0}
+      .boss-panel__art{position:relative;right:auto;bottom:auto;width:128px;margin-left:auto;transform:rotate(-1deg)}
+      .grid{grid-template-columns:1fr;gap:10px}
+      .card{min-height:112px;padding:11px;gap:11px}
+      .media{flex-basis:64px;height:64px;font-size:.58rem}
+      .card-name{font-size:1rem}
+      .notes{font-size:.82rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="sky-bg" aria-hidden="true"><span class="bg-cycle-layer is-active" id="bgLayerA"></span><span class="bg-cycle-layer" id="bgLayerB"></span></div>
+  <div class="tower-layer" aria-hidden="true"></div>
+  <div class="tower-snow-layer" aria-hidden="true"></div>
+  <div class="snow-scene-layer" aria-hidden="true"></div>
+  <div class="snow-flurry" aria-hidden="true"></div>
+  <div class="mist" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="glints" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="mihashira-companion" aria-hidden="true"><span class="mihashira-companion__sprite"></span></div>
+  <div class="mihashira-companion-talk" id="otterTalk" role="status" aria-live="polite">
+    <b>ウソウソメモ</b>
+    <span>カードに触れると、危ないところだけ先に言うでっす。</span>
+  </div>
+
+  <header class="hero">
+    <div class="tower" aria-hidden="true"></div>
+    <div class="wrap hero-copy">
+      <span class="eyebrow">HEAVEN-ON-HIGH ／ 紅玉海の塔</span>
+      <h1><span class="line">アメノミハシラ</span><span class="line">要注意モンスター<span class="accent">早見表</span><span class="credit">ちゃお監修</span></span></h1>
+      <p>踏み込む前に見たい、スタン・巡回・感知方式・危険技のメモ。ゲーム内スクショと自分の言葉で、確認しやすい形にまとめています。</p>
+      <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>10</b> 階層</span><span>画像・メモは順次追加</span></div>
+    </div>
+  </header>
+
+  <div class="bar">
+    <div class="wrap bar-row">
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false">階層 <span>▾</span></button>
+      <nav class="nav collapsed" id="floorNav" aria-label="階層ナビ"></nav>
+      <div class="filters" aria-label="絞り込み">
+        <input class="search" id="search" type="search" placeholder="モンスター名で検索">
+        <label class="toggle"><input id="stunOnly" type="checkbox">スタン可</label>
+        <label class="toggle"><input id="stunNo" type="checkbox">スタン不可</label>
+        <label class="toggle"><input id="dangerOnly" type="checkbox">要注意</label>
+        <label class="toggle"><input id="patrolOnly" type="checkbox">巡回</label>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="legend">
+      <span><span class="chip chip--stun">スタン効く</span> 止められる</span>
+      <span><span class="chip chip--no">スタン不可</span> 避ける前提</span>
+      <span><span class="chip chip--patrol">巡回</span> 通路注意</span>
+      <span><span class="chip chip--sight">視覚</span> 向き注意</span>
+      <span><span class="chip chip--sound">聴覚</span> 走り注意</span>
+      <span><span class="flag">要注意</span> 優先確認</span>
+    </div>
+    <div id="floors"></div>
+    <p class="no-result">条件に合うモンスターがまだありません。</p>
+  </main>
+
+  <footer class="wrap">
+    <p>© kokona-makes.dev / アメノミハシラ早見表。ゲーム内スクショと自分の言葉のメモで順次追加予定。</p>
+    <small>背景素材: Unsplash / Pexels の無料利用可能素材を候補として使用。詳細は <code>mihashira/img/stock/CREDITS.md</code> に記録。</small>
+  </footer>
+
+  <script>
+    const skyBackgrounds = [
+      "img/layered/sky-day-clouds.jpg",
+      "img/layered/sky-sunset.jpg",
+      "img/layered/sky-night.jpg",
+      "img/layered/sky-dawn.jpg",
+      "img/layered/sky-rain.jpg",
+      "img/layered/sky-snow.jpg",
+      "img/layered/sky-aurora.jpg",
+      "img/layered/sky-fog.jpg",
+      "img/layered/sky-fantasy.jpg"
+    ];
+    const towerFilters = [
+      "saturate(1.02) contrast(1.02)",
+      "saturate(1.12) sepia(.16) brightness(.98) contrast(1.04)",
+      "saturate(.82) brightness(.72) contrast(1.15)",
+      "saturate(1.02) brightness(1.04)",
+      "saturate(.75) brightness(.78) contrast(1.08)",
+      "saturate(.62) brightness(1.18) contrast(.96)",
+      "saturate(1.08) hue-rotate(8deg) brightness(.82) contrast(1.12)",
+      "saturate(.55) brightness(1.12) contrast(.92)",
+      "saturate(1.25) hue-rotate(-8deg) brightness(.96) contrast(1.08)"
+    ];
+    const bgLayerA = document.querySelector("#bgLayerA");
+    const bgLayerB = document.querySelector("#bgLayerB");
+    const towerLayer = document.querySelector(".tower-layer");
+    const snowSceneLayer = document.querySelector(".snow-scene-layer");
+    const snowFlurryLayer = document.querySelector(".snow-flurry");
+    const minuteMs = 60 * 1000;
+    const params = new URLSearchParams(location.search);
+    const previewWeather = params.get("weather");
+    const lockedWeather = params.get("lock");
+    const isFastCycle = params.get("cycle") === "fast";
+    const cycleMs = isFastCycle ? 30 * 1000 : minuteMs;
+    const previewBgIndex = previewWeather ? skyBackgrounds.findIndex((image) => image.includes(`sky-${previewWeather}`)) : -1;
+    const lockedBgIndex = lockedWeather ? skyBackgrounds.findIndex((image) => image.includes(`sky-${lockedWeather}`)) : -1;
+    let bgIndex = lockedBgIndex >= 0 ? lockedBgIndex : previewBgIndex >= 0 ? previewBgIndex : Math.floor(Date.now() / cycleMs) % skyBackgrounds.length;
+    const cycleBaseTime = Date.now();
+    const cycleBaseIndex = bgIndex;
+    let activeBgLayer = bgLayerA;
+    let standbyBgLayer = bgLayerB;
+
+    function applyBackground(layer, image){
+      layer.style.backgroundImage = `url("${image}")`;
+    }
+
+    function setSnowDurations(isSnow){
+      const enterSeconds = isFastCycle ? 12 : 24;
+      const exitSeconds = isFastCycle ? 8 : 12;
+      const seconds = isSnow ? enterSeconds : exitSeconds;
+      document.documentElement.style.setProperty("--tower-opacity-duration", `${seconds}s`);
+      document.documentElement.style.setProperty("--snow-scene-duration", `${seconds}s`);
+      document.documentElement.style.setProperty("--snow-flurry-duration", `${isSnow ? Math.max(3, seconds * .7) : Math.max(1.5, seconds * .55)}s`);
+      towerLayer.style.transition = `filter 15s ease-in-out, opacity ${seconds}s linear`;
+      snowSceneLayer.style.transition = `opacity ${seconds}s linear`;
+      snowFlurryLayer.style.transition = `opacity ${isSnow ? Math.max(3, seconds * .7) : Math.max(1.5, seconds * .55)}s ease-in-out`;
+    }
+
+    function setSnowSceneVars(isSnow){
+      setSnowDurations(isSnow);
+      document.documentElement.style.setProperty("--tower-opacity", isSnow ? ".04" : ".95");
+      document.documentElement.style.setProperty("--tower-snow-opacity", "0");
+      document.documentElement.style.setProperty("--snow-scene-opacity", isSnow ? ".98" : "0");
+      document.documentElement.style.setProperty("--snow-flurry-opacity", isSnow ? ".76" : "0");
+      towerLayer.style.opacity = isSnow ? ".04" : ".95";
+      snowSceneLayer.style.opacity = isSnow ? ".98" : "0";
+      snowFlurryLayer.style.opacity = isSnow ? ".76" : "0";
+    }
+
+    function applyTowerMood(index, options = {}){
+      document.documentElement.style.setProperty("--tower-filter", towerFilters[index]);
+      const isSnow = skyBackgrounds[index].includes("sky-snow");
+      if(isSnow && options.startSnowFade){
+        setSnowDurations(true);
+        document.documentElement.style.setProperty("--tower-opacity", ".95");
+        document.documentElement.style.setProperty("--tower-snow-opacity", "0");
+        document.documentElement.style.setProperty("--snow-scene-opacity", "0");
+        document.documentElement.style.setProperty("--snow-flurry-opacity", ".38");
+        towerLayer.style.opacity = ".95";
+        snowSceneLayer.style.opacity = "0";
+        snowFlurryLayer.style.opacity = ".38";
+        setTimeout(() => setSnowSceneVars(true), 80);
+        return;
+      }
+      setSnowSceneVars(isSnow);
+    }
+
+    function fadeToBackground(index){
+      applyBackground(standbyBgLayer, skyBackgrounds[index]);
+      applyTowerMood(index);
+      standbyBgLayer.classList.add("is-active");
+      activeBgLayer.classList.remove("is-active");
+      const prev = activeBgLayer;
+      activeBgLayer = standbyBgLayer;
+      standbyBgLayer = prev;
+    }
+
+    function syncTimedBackground(){
+      if(lockedBgIndex >= 0) return;
+      const elapsedSteps = Math.floor((Date.now() - cycleBaseTime) / cycleMs);
+      const nextIndex = previewBgIndex >= 0 ? (cycleBaseIndex + elapsedSteps) % skyBackgrounds.length : Math.floor(Date.now() / cycleMs) % skyBackgrounds.length;
+      if(nextIndex !== bgIndex){
+        bgIndex = nextIndex;
+        fadeToBackground(bgIndex);
+      }
+    }
+
+    applyTowerMood(bgIndex, {startSnowFade: previewWeather === "snow" || lockedWeather === "snow"});
+    applyBackground(bgLayerA, skyBackgrounds[bgIndex]);
+    applyBackground(bgLayerB, skyBackgrounds[(bgIndex + 1) % skyBackgrounds.length]);
+    setInterval(syncTimedBackground, 1000);
+
+    const otterCompanion = document.querySelector(".mihashira-companion");
+    const otterTalk = document.querySelector("#otterTalk span");
+    const otterTalkBox = document.querySelector("#otterTalk");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let otterTicking = false;
+    let otterLastY = window.scrollY || document.documentElement.scrollTop || 0;
+    let otterFacing = 1;
+    function updateOtterFromScroll(){
+      if(!otterCompanion || prefersReducedMotion) return;
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const deltaY = y - otterLastY;
+      if(deltaY > 2) otterFacing = 1;
+      if(deltaY < -2) otterFacing = -1;
+      otterLastY = y;
+      const frame = Math.floor(y / 34) % 12;
+      const stride = Math.sin(y / 34 * Math.PI);
+      const width = otterCompanion.getBoundingClientRect().width || 100;
+      const gap = 48;
+      const travel = window.innerWidth + width + gap * 2;
+      const startOffset = window.innerWidth + gap - 8;
+      const wrapX = window.innerWidth + gap - (((y * .24) + startOffset) % travel);
+      const drift = Math.sin(y / 120) * 3;
+      const otterX = wrapX + drift;
+      if(otterTalkBox){
+        const talkWidth = otterTalkBox.getBoundingClientRect().width || 310;
+        const talkX = Math.min(Math.max(12, otterX - 6), window.innerWidth - talkWidth - 12);
+        const tailX = Math.min(Math.max(24, otterX + width * .38 - talkX), talkWidth - 42);
+        otterTalkBox.style.setProperty("--otter-talk-x", `${talkX.toFixed(2)}px`);
+        otterTalkBox.style.setProperty("--otter-tail-x", `${tailX.toFixed(2)}px`);
+      }
+      otterCompanion.style.setProperty("--otter-frame", frame);
+      otterCompanion.style.setProperty("--otter-facing", otterFacing);
+      otterCompanion.style.setProperty("--otter-wrap-x", `${wrapX.toFixed(2)}px`);
+      otterCompanion.style.setProperty("--otter-step-x", `${drift.toFixed(2)}px`);
+      otterCompanion.style.setProperty("--otter-step-y", `${(-Math.abs(stride) * 5).toFixed(2)}px`);
+      otterCompanion.style.setProperty("--otter-lean", `${(Math.sin(y / 80) * 2).toFixed(2)}deg`);
+      otterTicking = false;
+    }
+    function requestOtterUpdate(){
+      if(otterTicking) return;
+      otterTicking = true;
+      requestAnimationFrame(updateOtterFromScroll);
+    }
+    updateOtterFromScroll();
+    window.addEventListener("scroll", requestOtterUpdate, {passive:true});
+    window.addEventListener("resize", requestOtterUpdate, {passive:true});
+
+    const floorGroups = [
+      ["f1","F1〜10"],["f11","F11〜20"],["f21","F21〜30"],["f31","F31〜40"],["f41","F41〜50"],
+      ["f51","F51〜60"],["f61","F61〜70"],["f71","F71〜80"],["f81","F81〜90"],["f91","F91〜100"]
+    ];
+
+    const bossGuides = {
+      f61:{floor:"F70",name:"ケンコ",time:"11:09",youtube:"https://www.youtube.com/watch?v=Xk6YaJr96ak&t=669s",image:"img/monsters/kenko.png",notes:["動画は11:09のF70ケンコから再生します。必要な注意点はあとで短く整理します。"]},
+      f71:{floor:"F80",name:"カジガカカ",time:"13:07",youtube:"https://www.youtube.com/watch?v=Xk6YaJr96ak&t=787s",image:"img/monsters/kajigakaka.png",notes:["動画は13:07のF80カジガカカから再生します。","北側の外周寄りに誘導すると、氷玉のない場所へ動きやすい。","ルナークライは氷玉の位置を見て避ける。"]},
+      f81:{floor:"F90",name:"オンラ",time:"15:13",youtube:"https://www.youtube.com/watch?v=Xk6YaJr96ak&t=913s",image:"img/monsters/onra.png",notes:["動画は15:13のF90オンラから再生します。","エンシェントクエイガ後は砂玉を見て同じ方向へ逃げる。","メテオインパクトは詠唱開始時の位置から距離減衰。"]}
+    };
+
+    const shelvedF51Monsters = [
+      {name:"アメノ・カマキリ",floor:"F51〜60",group:"f51",danger:false,stun:true,sleep:false,patrol:false,sense:"敏感-引籠り",image:"img/monsters/ameno-kamakiri-ai.webp",notes:["敵タイプは敏感-引籠り。スタン可。","注意点はとくになし。"]},
+      {name:"アメノ・カマナリ",floor:"F51〜60",group:"f51",danger:false,stun:true,sleep:false,patrol:false,sense:"敏感-引籠り",image:"img/monsters/ameno-kamanari-ai.webp",notes:["敵タイプは敏感-引籠り。スタン可。","被ダメージ増加デバフを付与してくる。デバフ中に追加で釣らないよう注意。"]},
+      {name:"アメノ・ナーガ",floor:"F51〜53",group:"f51",danger:true,stun:null,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-naga.png",notes:["巡回タイプ。通路や部屋の入口で横から絡まれやすい。","カルシファイングミストは視線攻撃。詠唱が見えたら敵の方を見ない。","複数と戦っている時に来ると危ないので、巡回位置を見てから釣る。"]},
+      {name:"アメノ・トカゲキバ",floor:"F51〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tokagekiba.png",notes:["ベルセルクで攻撃力を上げる。長引かせずに処理する。","リアーは敵中心範囲。詠唱が見えたら離れる。"]},
+      {name:"アメノ・コンゴウレイ",floor:"F52〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-kongourei.png",notes:["小型のアラグ兵器。正面の向きを見て釣る。","時間経過で直線範囲のアサルトカノンを使う。詠唱が見えたら横へ避ける。","長く放置すると自爆系の大ダメージがあるため、倒さず残さない。"]},
+      {name:"アメノ・テッソウ",floor:"F53〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tessou.png",notes:["アラグの手型モンスター。継続ダメージを付けてくるので、複数相手にしない。","ザ・ハンドは避ける前提。詠唱や向きを見て動く。"]},
+      {name:"アメノ・テッキョジン",floor:"F53〜56",group:"f51",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-tekkyojin.png",notes:["巡回タイプ。スタン不可なので止めずに避ける。","直線範囲と対象円範囲に注意。通路で他の敵と重ねない。"]},
+      {name:"アメノ・タマイシ",floor:"F55〜60",group:"f51",danger:true,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tamaishi.png",notes:["その場からあまり動かないタイプ。離れた場所から直線範囲を撃ってくる。","オートマチックカノン系の直線攻撃は大ダメージ。詠唱や向きを見て必ず横へ避ける。","通路や大部屋で別戦闘中に撃たれると危ないので、射線に立たない。"]},
+      {name:"アメノ・カラクリ",floor:"F56〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-karakuri.png",notes:["人型のアラグ兵器。基本は単体で落ち着いて処理する。","大きな事故要素は少なめだが、他の危険モンスターと同時に釣らない。"]},
+      {name:"アメノ・シュワブチ",floor:"F56〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-shuwabuchi.png",notes:["斧を持った獣人タイプ。前方扇範囲に注意。","正面に立ちっぱなしにせず、向きを固定して横や背面へ避ける。"]},
+      {name:"アメノ・ゴウワン",floor:"F57〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-gouwan.png",notes:["アラグ系の作業ロボ。エレクトロマグネティズムを使う前に倒し切りたい。","放置して長引かせず、単体で素早く処理する。"]},
+      {name:"アメノ・ラチモナイ",floor:"F57〜60",group:"f51",danger:true,stun:false,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-rachimonai.png",notes:["非戦闘中でも通路へ範囲を飛ばしてくるタイプ。別の敵と戦っている時の横槍に注意。","スタン不可。絡まれた音がしても、本体に敵視されていない場合があるので落ち着いて範囲だけ避ける。"]}
+    ];
+
+    const monsters = [
+      {name:"アメノ・オンリョウ",floor:"F61〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-onryou.png",notes:["感知範囲が広め。AAと継続ダメージが重なると削られやすいので、通路へ引いて1体ずつ処理。"]},
+      {name:"アメノ・モルボル",floor:"F63〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-morbol.png",notes:["視覚感知の巡回タイプ。63〜65層で出現。","自身中心の範囲攻撃に当たると、多数のデバフを受ける。近接は詠唱と足元に注意。","複数と同時に戦わず、スタンも使って安全に処理する。"]},
+      {name:"アメノ・ハシリドコロ",floor:"F66〜69",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hashiridokoro.png",notes:["66層から出現する視覚感知タイプ。必ず近くで戦う。","離れているとアトロポンスポアのドーナツ範囲で即死する。距離を取りすぎない。","近くで戦う都合上、複数釣ると処理が難しい。複数になったら形態変化を使う。"]},
+      {name:"ケンコ",floor:"F70ボス",group:"f61",danger:true,stun:false,sleep:false,patrol:false,sense:"ボス",image:"img/monsters/kenko.png",notes:["F70ボス。詳細メモは動画確認後に整理。"]},
+
+      {name:"アメノ・イチジャマロ",floor:"F71〜73",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-ichijamaro.png",notes:["非戦闘中でも遠くへ円範囲を投げるタイプ。通路で別の敵と戦っている時に横槍が危ないので、見かけたら優先処理。","広範囲攻撃は沈黙やスタンで止める。"]},
+      {name:"アメノ・ハヤギ",floor:"F71〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hayagi.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
+      {name:"アメノ・シクビ",floor:"F71〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-shikubi.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
+      {name:"アメノ・ヒョウガ",floor:"F71〜74",group:"f71",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-hyouga.png",notes:["巡回タイプ。長い前方範囲と視線攻撃があるので、離れすぎず近めで処理する。","スタン不可なので避ける前提。複数に絡まれない位置で戦う。"]},
+      {name:"アメノ・オオカミ",floor:"F71〜75",group:"f71",danger:false,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-ookami.png",notes:["凍傷の継続ダメージが痛い。解除できない編成ではHPを見ながら処理。スタン可。"]},
+      {name:"アメノ・ユキトカゲ",floor:"F73〜77",group:"f71",danger:true,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-yukitokage.png",notes:["非戦闘中に遠隔円範囲を投げてくる。別戦闘中に巻き込まれると危ないので、視界に入ったら早めに倒す。","前方扇もあるので正面に立たない。"]},
+      {name:"アメノ・マンモス",floor:"F74〜77",group:"f71",danger:true,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-mammoth.png",notes:["大部屋やモンスターハウスで非戦闘範囲を撒くため、バニシュ通過を崩されることがある。","前方扇のあと、見えない追加範囲が来る。扇を避けた直後に戻らず、しっかり後方へ逃げる。"]},
+      {name:"アメノ・シロジシ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-shirojishi.png",notes:["巡回タイプ。敵中心の広範囲「咆哮」はスタンで止められる。複数に絡まれたら片方は距離回避か形態変化で処理。"]},
+      {name:"アメノ・ヒョウザン",floor:"F76〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hyouzan.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
+      {name:"アメノ・ユキオトコ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-yukiotoko.png",notes:["猛吹雪を食らうと全滅級。沈黙またはスタンで止める。長い扇範囲にも注意。"]},
+      {name:"アメノ・ヤク",floor:"F77〜79",group:"f71",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-yak.png",notes:["時間経過で吸引と鈍足から危険攻撃へつながる。スタンや沈黙では止められないため、火力で押すか睡眠・魔土器で対応。"]},
+      {name:"アメノ・ジュジシ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-jujishi.png",notes:["感知直後に対象円範囲。戦闘が長引くとウィンターウィンドを詠唱するので、必ずスタンで止める。"]},
+      {name:"アメノ・トウフ",floor:"F76〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tofu.png",notes:["ゴールデンタンは沈黙で止めたい。通すと被ダメが重くなり、遠隔AAも痛い。","部屋中央で絡まれた時は、壁や柱を挟んで射線を切ると近寄らせやすい。"]},
+      {name:"カジガカカ",floor:"F80ボス",group:"f71",danger:true,stun:false,sleep:false,patrol:false,sense:"ボス",image:"img/monsters/kajigakaka.png",youtube:"",youtubeTitle:"F80 ボス解説動画",notes:["北側の外周寄りに誘導して戦うと、氷玉のない場所へ動きやすい。","ルナークライは氷玉の位置を見て避ける。逃げ場がなくならないよう、ボス位置を雑に動かしすぎない。","残り時間が少ない時は自己強化や敵弱体を使って、安全に倒し切る。"]},
+
+      {name:"アメノ・マタンガ",floor:"F81〜84",group:"f81",danger:false,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-matanga.png",notes:["戦闘開始時に飛びかかってくる。敵視1位への前方扇とランダム円範囲に注意。","この層では比較的倒しやすいが、開幕の位置だけ整えてから釣る。"]},
+      {name:"アメノ・ガルラ",floor:"F81〜84",group:"f81",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-garula.png",notes:["最優先で警戒したい巡回。突進後に前方扇、敵中心の大範囲、連続全体攻撃へつながる。","体が大きく視界が悪くなる。複数釣りになりそうなら無理に戦わず、回避や魔土器も選択肢。"]},
+      {name:"アメノ・ムカイイヌ",floor:"F81〜84",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-mukaiinu.png",notes:["氷結は離れる、雷電は近づく。最初はどちらが来るかランダムなので詠唱名を見る。","スタン不可。沈黙は効くが、止めた後にすぐ次の氷雷が来ることがある。"]},
+      {name:"アメノ・ロウエン",floor:"F81〜84",group:"f81",danger:true,stun:true,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-rouen.png",notes:["ドラミングで周囲の敵を強化し、こちらには被ダメ上昇を重ねてくる。部屋にいたら優先確認。","バナナで自己強化している時がある。バフや軽減が薄い時は無理に触らない。バニシュ解除にも注意。"]},
+      {name:"アメノ・ゴズ",floor:"F84〜87",group:"f81",danger:false,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-gozu-81.png",notes:["不可視の前方攻撃に注意。釣りながら受けると逃げ場がなくなるので、向きを安定させてから戦う。","この階層のゴズは睡眠可。同名がF91以降にも出るため、階層で挙動を分けて見る。"]},
+      {name:"アメノ・シンゼイ",floor:"F84〜86",group:"f81",danger:true,stun:false,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-shinzei.png",notes:["巡回タイプ。サンダラは中断したい。スタン不可なので、沈黙が戻らない時は軽減や睡眠も考える。","通常攻撃でも被ダメ上昇が付く。倒すならバフや火力を合わせて短く終わらせる。"]},
+      {name:"アメノ・リュウコツ",floor:"F84〜87",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-ryuukotsu.png",notes:["非戦闘中でも円範囲を投げてくる。別の敵と戦っている時に横から来ると危ないので、見つけたら優先して倒す。","単体なら比較的処理しやすい。睡眠も効く。"]},
+      {name:"アメノ・リュウジン",floor:"F85〜86",group:"f81",danger:false,stun:true,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-ryuujin.png",notes:["背面に立つと危険なWSを誘発するタイプ。基本は背後に立たず、向きと立ち位置を固定して戦う。","無詠唱のボーンブレーカーが痛いので、AAと重なる場面はHPに注意。"]},
+      {name:"アメノ・アララギ",floor:"F85〜88",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-araragi.png",notes:["短い詠唱で範囲毒を撒く。毒がスタックすると一気にきつくなるので、長引かせない。","毒を解除できない編成や状況なら、戦闘回避や魔土器を考える。"]},
+      {name:"アメノ・エンコウ",floor:"F85〜89",group:"f81",danger:false,stun:true,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-enkou.png",notes:["敵中心範囲とボーンブレーカーに注意。正面・背面を雑に踏まず、近めで素直に処理する。","この層では比較的倒しやすい枠。スタン・睡眠可。"]},
+      {name:"アメノ・ヒトツメ",floor:"F86〜87",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-hitotsume.png",notes:["グラワーは不可視の前方直線。ランダム対象で向きが変わるので、全員が敵の向きを見る。","100トンズスイングは敵中心範囲。距離を取るか、壁で視線を切って避ける。"]},
+      {name:"アメノ・コウキ",floor:"F86〜89",group:"f81",danger:false,stun:false,sleep:true,patrol:false,sense:"接近",image:"img/monsters/ameno-kouki.png",notes:["感知後に巨大ドーナツのスパイラルスピンを使う。近くで戦えば対処しやすい。","接近感知寄り。背後をすり抜ける時も近づきすぎない。時間経過の被ダメ上昇にも注意。"]},
+      {name:"アメノ・ラセツ",floor:"F86〜89",group:"f81",danger:true,stun:false,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-rasetsu.png",notes:["巡回タイプ。感知直後に突進するため、複数釣りや巻き込みが怖い。","ランダム対象の不可視前方扇と円範囲がある。戦う時は向きと立ち位置を共有する。"]},
+      {name:"オンラ",floor:"F90ボス",group:"f81",danger:true,stun:false,sleep:false,patrol:false,sense:"ボス",image:"img/monsters/onra.png",youtube:"",youtubeTitle:"F90 ボス解説動画",notes:["エンシェントクエイガ後は砂玉が出る。全員で同じ方向へ逃げ、玉の爆発とヘヴィを避ける。","メテオインパクトは詠唱開始時のボス位置から距離減衰。タンクは詠唱が見えるまで動かしすぎない。","オーラキャノンは前方直線、ナックルプレスは敵中心範囲。どちらも当たらない前提で処理。"]},
+
+      {name:"アメノ・ゴズ",floor:"F91〜93",group:"f91",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-gozu-91.png",notes:["巡回タイプ。感知直後に突進。32トンズスワイプは不可視前方、128トンズスイングは敵中心範囲。壁や距離で処理。"]},
+      {name:"アメノ・ヌツヘツホウ（戦士型）",floor:"F91〜94",group:"f91",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-nutsuhetsuhou.png",notes:["AAと無詠唱WSがかなり痛い。ノックバック対策に壁を背にする。アームズレングスやスタンで被害を抑える。"]},
+      {name:"アメノ・ジャキ",floor:"F93〜96",group:"f91",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-jaki.png",notes:["出現階層表から先行追加。危険技は確認中。"]},
+      {name:"アメノ・ミフネ",floor:"F93〜99",group:"f91",danger:true,stun:false,sleep:false,patrol:false,sense:"接近",image:"img/monsters/ameno-mifune.png",notes:["91〜92は未確認、93〜99で確認。AAが範囲なので味方を巻き込まない位置で戦う。","ランダム対象のヴァルファズルは壁や通路で射線を切ると処理しやすい。"]},
+      {name:"アメノ・クビナシ",floor:"F94〜96",group:"f91",danger:true,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-kubinashi.png",notes:["巡回タイプ。開幕に自己強化とHP吸収で硬くなる。長引くと巨大化して全体即死級の範囲につながるため速攻処理。"]},
+      {name:"アメノ・ジンバ",floor:"F94〜97",group:"f91",danger:true,stun:false,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-jinba.png",notes:["視線攻撃のあと、時間経過で超広範囲のアラガン・メテオ。倒しきるか、隣部屋・壁で射線切り。無理なら形態変化。"]},
+      {name:"アメノ・キョウゾウ",floor:"F95〜99",group:"f91",danger:false,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-kyouzou.png",notes:["特殊巡回。対象を探して寄ってきて円範囲を置く。単体なら軽めだが、別戦闘中の邪魔になるので見えたら先に処理。"]},
+      {name:"アメノ・クロキシ",floor:"F96〜99",group:"f91",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-kurokishi.png",notes:["出現階層表から先行追加。危険技は確認中。"]},
+      {name:"アメノ・テンマ",floor:"F96〜99",group:"f91",danger:true,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-tenma.png",notes:["巡回タイプ。不可視直線のバーニングブライトはスタン、天馬のいななきは沈黙で止める。AAとリアーキックも痛い。"]},
+      {name:"アメノ・ゼンキ",floor:"F96〜99",group:"f91",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-zenki.png",notes:["出現階層表から先行追加。危険技は確認中。"]},
+      {name:"アメノ・シュワブチ",floor:"F96〜99",group:"f91",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-shuwabuchi-91.png",notes:["発生の早いランダム対象直線AoEが危険。食らうとタンクでも即死級。戦うならスタンを使って素早く処理。"]},
+      {name:"アメノ・ドードー",floor:"F99",group:"f91",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-dodo.png",notes:["出現階層表から先行追加。危険技は確認中。"]}
+    ];
+
+    const nav = document.querySelector("#floorNav");
+    const floors = document.querySelector("#floors");
+    const navToggle = document.querySelector("#navToggle");
+
+    nav.innerHTML = floorGroups.map(([id,label]) => `<a class="pill" href="#${id}">${label}</a>`).join("");
+
+    function chipClass(sense){
+      if(sense === "聴覚") return "chip--sound";
+      if(sense === "接近") return "flag";
+      if(sense === "ボス") return "flag";
+      if(sense.includes("敏感")) return "chip--sensitive";
+      return "chip--sight";
+    }
+
+    function stunChip(m){
+      if(m.stun === true) return `<span class="chip chip--stun">スタン効く</span>`;
+      if(m.stun === false) return `<span class="chip chip--no">スタン不可</span>`;
+      return `<span class="chip chip--unknown">スタン未確認</span>`;
+    }
+
+    function youtubeInfo(value){
+      if(!value) return {id:"",start:""};
+      const raw = String(value).trim();
+      const plainId = raw.match(/^[a-zA-Z0-9_-]{11}$/);
+      if(plainId) return {id:raw,start:""};
+      try{
+        const url = new URL(raw);
+        const start = (url.searchParams.get("t") || url.searchParams.get("start") || "").replace(/s$/, "");
+        if(url.hostname.includes("youtu.be")) return {id:url.pathname.replace(/^\//, "").slice(0, 11),start};
+        if(url.searchParams.get("v")) return {id:url.searchParams.get("v").slice(0, 11),start};
+        const embed = url.pathname.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+        if(embed) return {id:embed[1],start};
+      }catch(error){
+        return {id:"",start:""};
+      }
+      return {id:"",start:""};
+    }
+
+    function bossVideo(m){
+      if(m.sense !== "ボス") return "";
+      const {id,start} = youtubeInfo(m.youtube);
+      const label = m.youtubeTitle || `${m.floor} 解説動画`;
+      const startParam = start ? `?start=${start}` : "";
+      const watchTime = start ? `&t=${start}s` : "";
+      const frame = id
+        ? `<iframe src="https://www.youtube.com/embed/${id}${startParam}" title="${label}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        : `<div class="boss-video__empty">YouTube動画ID待ち<br><small>URLを入れるとここに再生画面が出ます</small></div>`;
+      const link = id ? `<a class="boss-video__link" href="https://www.youtube.com/watch?v=${id}${watchTime}" target="_blank" rel="noopener">YouTubeで開く</a>` : "";
+      return `<section class="boss-video" aria-label="${label}">
+        <div class="boss-video__label"><span>${label}</span><small>YouTube埋め込み</small></div>
+        <div class="boss-video__frame">${frame}</div>
+        ${link}
+      </section>`;
+    }
+
+    function bossPanel(id){
+      const boss = bossGuides[id];
+      if(!boss) return "";
+      const video = bossVideo({sense:"ボス",youtube:boss.youtube,youtubeTitle:`${boss.floor} ${boss.name} 解説動画`,floor:boss.floor});
+      return `<aside class="boss-panel">
+        ${video}
+        <div class="boss-panel__body">
+          <div class="boss-panel__head">
+            <span class="boss-panel__kicker">BOSS</span>
+            <h3 class="boss-panel__title">${boss.floor} ${boss.name}</h3>
+          </div>
+          ${boss.time ? `<span class="boss-panel__time">動画 ${boss.time}〜</span>` : ""}
+          <ul class="boss-panel__memo">${boss.notes.map(note => `<li>${note}</li>`).join("")}</ul>
+        </div>
+        ${boss.image ? `<div class="boss-panel__art" aria-hidden="true"><img src="${boss.image}" alt=""></div>` : ""}
+      </aside>`;
+    }
+
+    function render(){
+      floors.innerHTML = floorGroups.map(([id,label]) => {
+        const items = monsters.filter(m => m.group === id);
+        const cards = items.map(m => `
+          <article class="card ${m.danger ? "danger" : ""}"
+            tabindex="0"
+            data-index="${monsters.indexOf(m)}"
+            data-name="${m.name}"
+            data-stun="${m.stun === true ? "1" : (m.stun === false ? "0" : "unknown")}"
+            data-danger="${m.danger ? "1" : "0"}"
+            data-patrol="${m.patrol ? "1" : "0"}">
+            <div class="media">${m.image ? `<img src="${m.image}" alt="${m.name}" loading="lazy">` : `<span>画像<br>準備中</span>`}</div>
+            <div class="card-body">
+              <header class="card-head">
+                <h3 class="card-name">${m.name}</h3>
+                ${m.danger ? `<span class="flag">要注意</span>` : ""}
+                <span class="range">${m.floor}</span>
+              </header>
+              <div class="chips">
+                ${stunChip(m)}
+                ${m.sleep ? `<span class="chip chip--sleep">睡眠効く</span>` : ""}
+                ${m.patrol ? `<span class="chip chip--patrol">巡回</span>` : ""}
+                ${m.sense ? `<span class="chip ${chipClass(m.sense)}">${m.sense}</span>` : ""}
+              </div>
+              <ul class="notes">${m.notes.map(note => `<li>${note}</li>`).join("")}</ul>
+            </div>
+          </article>`).join("");
+        return `
+          <section class="floor" id="${id}">
+            <div class="floor-head"><span class="floor-badge">${label}</span><span class="floor-title">要注意モンスター</span><span class="floor-count">${items.length}</span></div>
+            <div class="grid">${cards || `<div class="empty-card">この階層は追加待ち<small>スクショ・名前・階層・スタン可否から入れられます</small></div>`}</div>
+            ${bossPanel(id)}
+          </section>`;
+      }).join("");
+      document.querySelector("#mobCount").textContent = monsters.length;
+    }
+
+    function applyFilters(){
+      const q = document.querySelector("#search").value.trim().toLowerCase();
+      const stunOnly = document.querySelector("#stunOnly").checked;
+      const stunNo = document.querySelector("#stunNo").checked;
+      const dangerOnly = document.querySelector("#dangerOnly").checked;
+      const patrolOnly = document.querySelector("#patrolOnly").checked;
+      let visible = 0;
+      document.querySelectorAll(".card").forEach(card => {
+        const ok =
+          (!q || card.dataset.name.toLowerCase().includes(q)) &&
+          (!stunOnly || card.dataset.stun === "1") &&
+          (!stunNo || card.dataset.stun === "0") &&
+          (!dangerOnly || card.dataset.danger === "1") &&
+          (!patrolOnly || card.dataset.patrol === "1");
+        card.style.display = ok ? "" : "none";
+        if(ok) visible++;
+      });
+      document.body.classList.toggle("is-empty", monsters.length > 0 && visible === 0);
+    }
+
+    render();
+    applyFilters();
+    function otterMessage(m){
+      const tags = [
+        m.danger ? "要注意" : "",
+        m.patrol ? "巡回" : "",
+        m.stun === false ? "スタン不可" : "",
+        m.sleep ? "睡眠可" : "",
+        m.sense ? `${m.sense}感知` : ""
+      ].filter(Boolean).join(" / ");
+      const mainNote = m.notes.find(note => !note.includes("とくになし")) || m.notes[0] || "まだメモ追加待ちです。";
+      return `${m.name}（${m.floor}）${tags ? `：${tags}。` : "。"}${mainNote}`;
+    }
+    function speakOtter(card){
+      const m = monsters[Number(card.dataset.index)];
+      if(!m || !otterTalk || !otterTalkBox) return;
+      otterTalk.textContent = otterMessage(m);
+      otterTalkBox.classList.add("is-speaking");
+    }
+    function resetOtterTalk(){
+      if(!otterTalk || !otterTalkBox) return;
+      otterTalk.textContent = "カードに触れると、危ないところだけ先に言うでっす。";
+      otterTalkBox.classList.remove("is-speaking");
+    }
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("mouseenter", () => speakOtter(card));
+      card.addEventListener("focus", () => speakOtter(card));
+      card.addEventListener("click", () => speakOtter(card));
+      card.addEventListener("mouseleave", resetOtterTalk);
+      card.addEventListener("blur", resetOtterTalk);
+    });
+    ["search","stunOnly","stunNo","dangerOnly","patrolOnly"].forEach(id => {
+      document.querySelector(`#${id}`).addEventListener("input", applyFilters);
+      document.querySelector(`#${id}`).addEventListener("change", applyFilters);
+    });
+    navToggle.addEventListener("click", () => {
+      const open = nav.classList.toggle("collapsed") === false;
+      navToggle.setAttribute("aria-expanded", String(open));
+    });
+  </script>
+</body>
+</html>

@@ -16,3 +16,16 @@ wrangler.jsonc
 .assetsignore
 .gitignore
 .DS_Store
+mihashira/img/bg-cycle/**
+mihashira/img/layered/*preview*
+mihashira/img/layered/*backup*
+mihashira/img/layered/*.previous.*
+mihashira/img/layered/*source*
+mihashira/img/layered/snow-accumulated-scene.jpg
+mihashira/img/mihashira-otter-shrine-jump.gif
+mihashira/img/mihashira-otter-sprite-preview.png
+mihashira/img/mihashira-otter-walk.webp
+mihashira/img/monsters/*-original.svg
+mihashira/img/monsters/*-ai.png
+mihashira/img/monsters/*-ai.webp
+mihashira/img/stock/*.jpg
