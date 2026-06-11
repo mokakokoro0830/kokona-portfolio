@@ -381,6 +381,23 @@
     .pomander-orb{display:inline-grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff7bd,#d9a441 56%,#876119);color:#352102;box-shadow:0 8px 22px -14px rgba(81,54,5,.8);font-size:.86rem}
     .pomander-sub{display:block;color:#68758b;font-size:.74rem;font-weight:800;line-height:1.35}
     .pomander-body{max-height:72vh;overflow:auto;border-top:1px solid rgba(185,200,228,.62);padding:14px;background:rgba(255,255,255,.42)}
+    .pomander-map{margin-bottom:12px;border:1px solid rgba(102,217,255,.34);border-radius:12px;background:linear-gradient(135deg,rgba(23,36,82,.96),rgba(33,54,112,.88));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 44px -34px rgba(17,35,78,.9);padding:14px;color:#eef7ff}
+    .pomander-map__head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .pomander-map__title{font-size:1.05rem;font-weight:800;letter-spacing:.12em;color:#fff;text-shadow:0 0 18px rgba(102,217,255,.35)}
+    .pomander-map__note{font-size:.72rem;font-weight:800;color:#b9dcff}
+    .pomander-layout{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+    .pomander-item{position:relative;display:grid;justify-items:center;gap:6px;min-height:132px;padding:9px 6px 8px;border:1px solid rgba(185,216,255,.22);border-radius:11px;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+    .pomander-icon{position:relative;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.92),var(--icon-hi,#e5d7a7) 24%,var(--icon-mid,#b9904d) 58%,var(--icon-low,#6f4a24));border:3px solid var(--ring,#d9c34f);box-shadow:0 0 18px color-mix(in srgb,var(--ring,#d9c34f) 58%,transparent),0 8px 20px -14px #000}
+    .pomander-icon::before{content:"";position:absolute;inset:15px;border-radius:36% 64% 38% 62%;border:5px solid color-mix(in srgb,var(--line,#6b4b30) 62%,transparent);transform:rotate(var(--rot,-18deg));opacity:.72}
+    .pomander-icon::after{content:"";position:absolute;right:9px;bottom:9px;width:14px;height:14px;border-radius:50%;background:var(--gem,#66d9ff);box-shadow:0 0 12px var(--gem,#66d9ff)}
+    .pomander-icon--red{--ring:#e56745;--icon-hi:#fff1dc;--icon-mid:#c98254;--icon-low:#71402b;--gem:#ff6a4b}
+    .pomander-icon--blue{--ring:#6d8ff4;--icon-hi:#effcff;--icon-mid:#93d6e4;--icon-low:#477491;--gem:#66d9ff}
+    .pomander-icon--green{--ring:#83d36f;--icon-hi:#f7ffe8;--icon-mid:#b7c772;--icon-low:#6d7331;--gem:#8dff8a}
+    .pomander-icon--violet{--ring:#8f7cf0;--icon-hi:#fff5ff;--icon-mid:#b58ad1;--icon-low:#5b3970;--gem:#d56cff}
+    .pomander-icon--gold{--ring:#dfc84e;--icon-hi:#fff9d8;--icon-mid:#d7ae57;--icon-low:#8a6026;--gem:#fff07a}
+    .pomander-label{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;min-height:30px;border-radius:999px;background:#fff;color:#3346bd;font-size:.76rem;font-weight:800;line-height:1.1;text-align:center;box-shadow:0 8px 18px -14px #000}
+    .pomander-label b{display:inline-grid;place-items:center;flex:0 0 18px;height:18px;border-radius:50%;background:#173ad8;color:#fff;font-size:.68rem}
+    .pomander-use{color:#dcecff;font-size:.68rem;font-weight:800;text-align:center;line-height:1.3}
     .pomander-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
     .pomander-card{position:relative;min-height:122px;padding:12px 12px 12px 54px;border:1px solid rgba(178,195,224,.82);border-radius:9px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(246,251,255,.78));box-shadow:0 12px 34px -30px rgba(29,42,92,.58)}
     .pomander-num{position:absolute;left:12px;top:12px;display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#274cba,#241d63);color:#fff;font-size:.76rem;font-weight:800}
@@ -470,6 +487,13 @@
       .filters{margin-left:0;width:100%}
       .search{flex:1;min-width:180px}
       .pomander-body{max-height:68vh;padding:10px}
+      .pomander-map{padding:11px}
+      .pomander-map__head{align-items:start;flex-direction:column;gap:4px}
+      .pomander-layout{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .pomander-item{min-height:116px}
+      .pomander-icon{width:52px;height:52px}
+      .pomander-icon::before{inset:12px;border-width:4px}
+      .pomander-icon::after{right:7px;bottom:7px;width:11px;height:11px}
       .pomander-grid{grid-template-columns:1fr}
       .pomander-card{min-height:0;padding:10px 10px 10px 50px}
       .pomander-flow{grid-template-columns:1fr}
@@ -538,6 +562,30 @@
         <span>魔土器ガイド<span class="pomander-sub">81〜100F向けの用途と使い方メモ。普段は閉じておけます。</span></span>
       </summary>
       <div class="pomander-body">
+        <section class="pomander-map" aria-label="魔土器配置図">
+          <div class="pomander-map__head">
+            <div class="pomander-map__title">SPECIAL ITEMS / 魔土器配置図</div>
+            <div class="pomander-map__note">番号と名前を優先して見やすく再構成</div>
+          </div>
+          <div class="pomander-layout">
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--gold"></span><span class="pomander-label"><b>1</b>呪印解除</span><span class="pomander-use">罠を消す</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--gold"></span><span class="pomander-label"><b>2</b>サイトロ</span><span class="pomander-use">地図と罠を見る</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--red"></span><span class="pomander-label"><b>3</b>自己強化</span><span class="pomander-use">火力アップ</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--red"></span><span class="pomander-label"><b>4</b>防御強化</span><span class="pomander-use">被ダメ軽減</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--green"></span><span class="pomander-label"><b>5</b>財宝増加</span><span class="pomander-use">次階の箱増加</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--green"></span><span class="pomander-label"><b>6</b>敵排除</span><span class="pomander-use">次階の敵を減らす</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--green"></span><span class="pomander-label"><b>7</b>敵変化</span><span class="pomander-use">ミミック/マンドラ</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--red"></span><span class="pomander-label"><b>8</b>解呪</span><span class="pomander-use">呪詛を解除</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--gold"></span><span class="pomander-label"><b>9</b>運気上昇</span><span class="pomander-use">箱ドロップ狙い</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--violet"></span><span class="pomander-label"><b>10</b>形態変化</span><span class="pomander-use">敵を弱体生物化</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--gold"></span><span class="pomander-label"><b>11</b>魔法効果解除</span><span class="pomander-use">階層効果を消す</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--blue"></span><span class="pomander-label"><b>12</b>敵弱体</span><span class="pomander-use">攻防を有利に</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--red"></span><span class="pomander-label"><b>13</b>バニッシュ</span><span class="pomander-use">敵に見つからない</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--gold"></span><span class="pomander-label"><b>14</b>財宝感知</span><span class="pomander-use">埋もれた財宝探し</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--blue"></span><span class="pomander-label"><b>15</b>リレイズ</span><span class="pomander-use">自動蘇生</span></div>
+            <div class="pomander-item"><span class="pomander-icon pomander-icon--red"></span><span class="pomander-label"><b>16</b>敵石化</span><span class="pomander-use">30秒一撃化</span></div>
+          </div>
+        </section>
         <div class="pomander-grid">
           <article class="pomander-card"><span class="pomander-num">01</span><h3>呪印解除</h3><p>現在階の罠を消す。大部屋や罠が怖い場面の安全確保に使う。</p><span class="pomander-star">罠回避</span></article>
           <article class="pomander-card"><span class="pomander-num">02</span><h3>サイトロ</h3><p>現在階のマップを表示し、罠も見えるようにする。</p><span class="pomander-star">罠回避</span></article>
