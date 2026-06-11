@@ -229,6 +229,8 @@
       transform:scaleX(var(--otter-facing));
       transform-origin:center;
       z-index:2;
+      opacity:var(--otter-normal-opacity,1);
+      filter:saturate(var(--otter-normal-saturate,1)) brightness(var(--otter-normal-brightness,1)) drop-shadow(0 0 calc(var(--otter-charge,0) * 18px) rgba(102,217,255,.64));
       transition:opacity .9s var(--ease),filter .9s var(--ease);
     }
     .mihashira-companion__gaming{
@@ -288,8 +290,8 @@
     }
     .mihashira-companion.is-boosting .mihashira-companion__can{animation:energyCanSip 1.45s var(--ease) both}
     .mihashira-companion.is-boosting .mihashira-companion__burst{animation:energyBurst 2.4s var(--ease) both}
-    .mihashira-companion.is-boosting .mihashira-companion__sprite{filter:saturate(1.45) brightness(1.14)}
-    .mihashira-companion.is-gaming .mihashira-companion__sprite{opacity:0}
+    .mihashira-companion.is-boosting .mihashira-companion__sprite{filter:saturate(var(--otter-normal-saturate,1.45)) brightness(var(--otter-normal-brightness,1.14)) drop-shadow(0 0 calc(var(--otter-charge,0) * 18px) rgba(102,217,255,.64))}
+    .mihashira-companion.is-gaming .mihashira-companion__sprite{opacity:var(--otter-normal-opacity,0)}
     .mihashira-companion.is-gaming .mihashira-companion__gaming{
       filter:saturate(1.22) drop-shadow(0 0 14px rgba(102,217,255,.72)) drop-shadow(0 0 26px rgba(138,255,80,.48));
     }
@@ -300,7 +302,7 @@
       border-radius:50%;
       background:conic-gradient(from 0deg,rgba(102,217,255,.22),rgba(129,255,92,.38),rgba(255,236,75,.24),rgba(255,78,220,.32),rgba(102,217,255,.22));
       filter:blur(10px);
-      opacity:.78;
+      opacity:calc(var(--otter-charge,1) * .78);
       mix-blend-mode:screen;
       animation:gamingAuraSpin 4.8s linear infinite;
       pointer-events:none;
@@ -816,7 +818,6 @@
     let otterTicking = false;
     let otterLastY = window.scrollY || document.documentElement.scrollTop || 0;
     let otterFacing = 1;
-    let otterBoostTimer = null;
     let otterBoostResetTimer = null;
     let otterBoostFrame = null;
     let otterBoostActive = false;
@@ -869,41 +870,61 @@
     function triggerOtterBoost(){
       if(!otterCompanion) return;
       otterBoostActive = true;
-      clearTimeout(otterBoostTimer);
       clearTimeout(otterBoostResetTimer);
       if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
       otterCompanion.classList.remove("is-gaming","is-boosting");
       otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
       otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+      otterCompanion.style.setProperty("--otter-normal-opacity", "1");
+      otterCompanion.style.setProperty("--otter-normal-saturate", "1");
+      otterCompanion.style.setProperty("--otter-normal-brightness", "1");
+      otterCompanion.style.setProperty("--otter-charge", "0");
       void otterCompanion.offsetWidth;
       otterCompanion.classList.add("is-boosting");
-      setOtterBoostMessage("エナドリ投入でっす。じわじわ光るでっす。");
-      otterBoostTimer = window.setTimeout(() => {
+      setOtterBoostMessage("エナドリ投入でっす。ゆっくり変身するでっす。");
+      const startedAt = performance.now();
+      const duration = prefersReducedMotion ? 1 : 4200;
+      const smooth = (t) => t * t * (3 - 2 * t);
+      let chargedMessageShown = false;
+      const step = (now) => {
+        const progress = Math.min(1, (now - startedAt) / duration);
+        const eased = smooth(progress);
+        const earlyGlow = smooth(Math.min(1, progress / .45));
+        const crossFade = smooth(Math.max(0, (progress - .18) / .82));
+        otterCompanion.style.setProperty("--otter-charge", earlyGlow.toFixed(3));
+        otterCompanion.style.setProperty("--otter-normal-saturate", (1 + earlyGlow * 1.15).toFixed(3));
+        otterCompanion.style.setProperty("--otter-normal-brightness", (1 + earlyGlow * .22).toFixed(3));
+        otterCompanion.style.setProperty("--otter-normal-opacity", (1 - crossFade * .92).toFixed(3));
+        otterCompanion.style.setProperty("--otter-gaming-opacity", crossFade.toFixed(3));
+        otterCompanion.style.setProperty("--otter-gaming-scale", (0.72 + eased * 0.28).toFixed(3));
+        if(progress > .58 && !chargedMessageShown){
+          chargedMessageShown = true;
+          setOtterBoostMessage("虹色エネルギー充填中でっす。もうすぐ仕上がるでっす。");
+        }
+        if(progress < 1){
+          otterBoostFrame = requestAnimationFrame(step);
+          return;
+        }
         otterCompanion.classList.remove("is-boosting");
         otterCompanion.classList.add("is-gaming");
-        const startedAt = performance.now();
-        const duration = prefersReducedMotion ? 1 : 1300;
-        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-        const step = (now) => {
-          const progress = Math.min(1, (now - startedAt) / duration);
-          const eased = easeOut(progress);
-          otterCompanion.style.setProperty("--otter-gaming-opacity", eased.toFixed(3));
-          otterCompanion.style.setProperty("--otter-gaming-scale", (0.72 + eased * 0.28).toFixed(3));
-          if(progress < 1){
-            otterBoostFrame = requestAnimationFrame(step);
-          }
-        };
-        otterBoostFrame = requestAnimationFrame(step);
+        otterCompanion.style.setProperty("--otter-normal-opacity", "0");
+        otterCompanion.style.setProperty("--otter-gaming-opacity", "1");
+        otterCompanion.style.setProperty("--otter-gaming-scale", "1");
         setOtterBoostMessage("ゲーミングウソウソ、起動でっす。罠も眠気も見逃さないでっす。");
-      }, prefersReducedMotion ? 80 : 950);
+      };
+      otterBoostFrame = requestAnimationFrame(step);
       otterBoostResetTimer = window.setTimeout(() => {
         otterBoostActive = false;
         if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
         otterCompanion.classList.remove("is-gaming","is-boosting");
         otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
         otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+        otterCompanion.style.setProperty("--otter-normal-opacity", "1");
+        otterCompanion.style.setProperty("--otter-normal-saturate", "1");
+        otterCompanion.style.setProperty("--otter-normal-brightness", "1");
+        otterCompanion.style.setProperty("--otter-charge", "0");
         resetOtterTalk();
-      }, prefersReducedMotion ? 6000 : 16000);
+      }, prefersReducedMotion ? 6000 : 19000);
     }
 
     if(otterCompanion){
@@ -942,7 +963,7 @@
       {name:"アメノ・ハシリドコロ",floor:"F66〜69",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hashiridokoro.png",notes:["66層から出現する視覚感知タイプ。必ず近くで戦う。","離れているとアトロポンスポアのドーナツ範囲で即死する。距離を取りすぎない。","近くで戦う都合上、複数釣ると処理が難しい。複数になったら形態変化を使う。"]},
       {name:"ケンコ",floor:"F70ボス",group:"f61",danger:true,stun:false,sleep:false,patrol:false,sense:"ボス",image:"img/monsters/kenko.png",notes:["F70ボス。詳細メモは動画確認後に整理。"]},
 
-      {name:"アメノ・イチジャマロ",floor:"F71〜73",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-ichijamaro.png",notes:["非戦闘中でも遠くへ円範囲を投げるタイプ。通路で別の敵と戦っている時に横槍が危ないので、見かけたら優先処理。","広範囲攻撃は沈黙やスタンで止める。"]},
+      {name:"アメノ・イチジャマロ",floor:"F71〜73",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"接近",image:"img/monsters/ameno-ichijamaro.png",notes:["非戦闘中でも遠くへ円範囲を投げるタイプ。通路で別の敵と戦っている時に横槍が危ないので、見かけたら優先処理。","広範囲攻撃は沈黙やスタンで止める。"]},
       {name:"アメノ・ノヤギ",floor:"F71〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hayagi.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
       {name:"アメノ・シクビ",floor:"F71〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-shikubi.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
       {name:"アメノ・ヒョウガ",floor:"F71〜74",group:"f71",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-hyouga.png",notes:["巡回タイプ。長い前方範囲と視線攻撃があるので、離れすぎず近めで処理する。","スタン不可なので避ける前提。複数に絡まれない位置で戦う。"]},
@@ -953,13 +974,13 @@
       {name:"アメノ・ヒョウザン",floor:"F76〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hyouzan.png",notes:["画像のみ先行追加。階層・危険技は確認中。"]},
       {name:"アメノ・ユキオトコ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-yukiotoko.png",notes:["猛吹雪を食らうと全滅級。沈黙またはスタンで止める。長い扇範囲にも注意。"]},
       {name:"アメノ・ヤク",floor:"F77〜79",group:"f71",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-yak.png",notes:["時間経過で吸引と鈍足から危険攻撃へつながる。スタンや沈黙では止められないため、火力で押すか睡眠・魔土器で対応。"]},
-      {name:"アメノ・ジュジシ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-jujishi.png",notes:["感知直後に対象円範囲。戦闘が長引くとウィンターウィンドを詠唱するので、必ずスタンで止める。"]},
+      {name:"アメノ・ジュジシ",floor:"F76〜79",group:"f71",danger:true,stun:true,sleep:false,patrol:false,sense:"接近",image:"img/monsters/ameno-jujishi.png",notes:["感知直後に対象円範囲。戦闘が長引くとウィンターウィンドを詠唱するので、必ずスタンで止める。"]},
       {name:"アメノ・トウフ",floor:"F76〜79",group:"f71",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tofu.png",notes:["ゴールデンタンは沈黙で止めたい。通すと被ダメが重くなり、遠隔AAも痛い。","部屋中央で絡まれた時は、壁や柱を挟んで射線を切ると近寄らせやすい。"]},
       {name:"カジガカカ",floor:"F80ボス",group:"f71",danger:true,stun:false,sleep:false,patrol:false,sense:"ボス",image:"img/monsters/kajigakaka.png",youtube:"",youtubeTitle:"F80 ボス解説動画",notes:["北側の外周寄りに誘導して戦うと、氷玉のない場所へ動きやすい。","ルナークライは氷玉の位置を見て避ける。逃げ場がなくならないよう、ボス位置を雑に動かしすぎない。","残り時間が少ない時は自己強化や敵弱体を使って、安全に倒し切る。"]},
 
       {name:"アメノ・マタンガ",floor:"F81〜84",group:"f81",danger:false,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-matanga.png",notes:["戦闘開始時に飛びかかってくる。敵視1位への前方扇とランダム円範囲に注意。","この層では比較的倒しやすいが、開幕の位置だけ整えてから釣る。"]},
       {name:"アメノ・ガルラ",floor:"F81〜84",group:"f81",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-garula.png",notes:["最優先で警戒したい巡回。突進後に前方扇、敵中心の大範囲、連続全体攻撃へつながる。","体が大きく視界が悪くなる。複数釣りになりそうなら無理に戦わず、回避や魔土器も選択肢。"]},
-      {name:"アメノ・ムカイイヌ",floor:"F81〜84",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-mukaiinu.png",notes:["氷結は離れる、雷電は近づく。最初はどちらが来るかランダムなので詠唱名を見る。","スタン不可。沈黙は効くが、止めた後にすぐ次の氷雷が来ることがある。"]},
+      {name:"アメノ・ムカイイヌ",floor:"F81〜84",group:"f81",danger:true,stun:false,sleep:true,patrol:false,sense:"接近",image:"img/monsters/ameno-mukaiinu.png",notes:["氷結は離れる、雷電は近づく。最初はどちらが来るかランダムなので詠唱名を見る。","スタン不可。沈黙は効くが、止めた後にすぐ次の氷雷が来ることがある。"]},
       {name:"アメノ・ロウエン",floor:"F81〜84",group:"f81",danger:true,stun:true,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-rouen.png",notes:["ドラミングで周囲の敵を強化し、こちらには被ダメ上昇を重ねてくる。部屋にいたら優先確認。","バナナで自己強化している時がある。バフや軽減が薄い時は無理に触らない。バニシュ解除にも注意。"]},
       {name:"アメノ・ゴズ",floor:"F84〜87",group:"f81",danger:false,stun:false,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-gozu-81.png",notes:["不可視の前方攻撃に注意。釣りながら受けると逃げ場がなくなるので、向きを安定させてから戦う。","この階層のゴズは睡眠可。同名がF91以降にも出るため、階層で挙動を分けて見る。"]},
       {name:"アメノ・シンゼイ",floor:"F84〜86",group:"f81",danger:true,stun:false,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-shinzei.png",notes:["巡回タイプ。サンダラは中断したい。スタン不可なので、沈黙が戻らない時は軽減や睡眠も考える。","通常攻撃でも被ダメ上昇が付く。倒すならバフや火力を合わせて短く終わらせる。"]},
@@ -981,7 +1002,7 @@
       {name:"アメノ・クビナシ",floor:"F94〜96",group:"f91",danger:true,stun:false,sleep:null,patrol:true,sense:"視覚",image:"img/monsters/ameno-kubinashi.png",notes:["危険度★★★★。巡回タイプ。クラウドカバーで巨大化し、段階が進むほど火力が上がる。","最大まで大きくなると全体即死級につながる。放置せず、早めに倒すか対応を決める。"]},
       {name:"アメノ・ジンバ",floor:"F94〜97",group:"f91",danger:true,stun:false,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-jinba.png",notes:["危険度★★★★★。アラガンフィアーの視線後、少しして超広範囲のアラガン・メテオを使う。倒し切るか、全力で範囲外へ逃げる。","妖霧・ダメージ低下・呪詛・衰弱などが重い時は避けたい相手。形態変化やリレイズも選択肢に入れる。"]},
       {name:"アメノ・キョウゾウ",floor:"F95〜97?",group:"f91",danger:true,stun:true,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-kyouzou.png",notes:["危険度★★★★。非戦闘中でも旋風の範囲攻撃を使う。通路側まで出てくることもある。","部屋内で見えている時は、他の敵をいつもより遠めに釣る。スタン・睡眠可。"]},
-      {name:"アメノ・クロキシ",floor:"F96〜99",group:"f91",danger:false,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-kurokishi.png",notes:["危険度★★★。ヴォイドスラッシュは不可視・無詠唱の前方扇。","タンクはDPSやヒーラー側へ向けないように位置を固定する。スタン可。"]},
+      {name:"アメノ・クロキシ",floor:"F96〜99",group:"f91",danger:false,stun:true,sleep:false,patrol:false,sense:"接近",image:"img/monsters/ameno-kurokishi.png",notes:["危険度★★★。ヴォイドスラッシュは不可視・無詠唱の前方扇。","タンクはDPSやヒーラー側へ向けないように位置を固定する。スタン可。"]},
       {name:"アメノ・テンマ",floor:"F96〜99",group:"f91",danger:true,stun:true,sleep:true,patrol:true,sense:"視覚",image:"img/monsters/ameno-tenma.png",notes:["危険度★★★★。巡回タイプ。クェーサーはランダム対象の不可視直線範囲。","嘶きは自身中心の広範囲。沈黙またはスタンで止め、側面や背面を意識して戦う。"]},
       {name:"アメノ・ゼンキ",floor:"F96〜99",group:"f91",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-zenki.png",notes:["危険度★★★★。アビサルスイング後に、ランダム対象のアビサルトランスフィクションが来る。","スイング後にスタンを入れると事故を減らしやすい。睡眠は効かない。"]},
       {name:"アメノ・シュワブチ",floor:"F96〜99",group:"f91",danger:true,stun:true,sleep:true,patrol:false,sense:"視覚",image:"img/monsters/ameno-shuwabuchi-91.png",notes:["危険度★★★★★。ランダム対象の高速直線範囲が非常に危険で、タンクでも即死級。","戦うなら避けることを最優先。スタンと睡眠は効くが、基本は回避したい相手。"]},
