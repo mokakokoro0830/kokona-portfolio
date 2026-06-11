@@ -207,19 +207,104 @@
       width:var(--otter-size);
       height:var(--otter-size);
       z-index:45;
-      pointer-events:none;
+      pointer-events:auto;
       opacity:.96;
+      border:0;
+      padding:0;
+      background:transparent;
+      appearance:none;
+      -webkit-appearance:none;
+      cursor:pointer;
       filter:drop-shadow(0 14px 18px rgba(20,28,46,.28));
       transform:translate3d(calc(var(--otter-wrap-x) + var(--otter-step-x)),var(--otter-step-y),0) rotate(var(--otter-lean));
     }
+    .mihashira-companion:focus-visible{outline:3px solid rgba(255,230,166,.85);outline-offset:5px;border-radius:50%}
     .mihashira-companion__sprite{
       display:block;
+      position:relative;
       width:100%;
       height:100%;
       background:url("img/mihashira-otter-sprite.png") 0 0/calc(var(--otter-size) * 12) var(--otter-size) no-repeat;
       background-position:calc(var(--otter-frame) * var(--otter-size) * -1) 0;
       transform:scaleX(var(--otter-facing));
       transform-origin:center;
+      z-index:2;
+      transition:opacity .9s var(--ease),filter .9s var(--ease);
+    }
+    .mihashira-companion__gaming{
+      position:absolute;
+      left:50%;
+      bottom:-10%;
+      width:185%;
+      height:185%;
+      object-fit:contain;
+      opacity:var(--otter-gaming-opacity,0);
+      pointer-events:none;
+      transform:translateX(-50%) scale(var(--otter-gaming-scale,.72));
+      transform-origin:center bottom;
+      z-index:3;
+      filter:saturate(1.18) drop-shadow(0 0 0 rgba(102,217,255,0));
+      transition:opacity 1.35s var(--ease),transform 1.35s var(--ease),filter 1.35s var(--ease);
+    }
+    .mihashira-companion__can{
+      position:absolute;
+      left:-8%;
+      bottom:42%;
+      width:22%;
+      height:36%;
+      border-radius:7px 7px 9px 9px;
+      background:linear-gradient(145deg,#d6e9ff 0 12%,#7f4cf4 16%,#f04acb 36%,#4ee7ff 58%,#a2ff5b 76%,#2a1a67 100%);
+      border:1px solid rgba(255,255,255,.78);
+      box-shadow:0 0 16px rgba(102,217,255,.72),inset 0 2px 0 rgba(255,255,255,.72);
+      opacity:0;
+      pointer-events:none;
+      transform:rotate(-28deg) scale(.5);
+      z-index:5;
+    }
+    .mihashira-companion__can::before{
+      content:"";
+      position:absolute;
+      left:12%;
+      right:12%;
+      top:-5px;
+      height:8px;
+      border-radius:50%;
+      background:linear-gradient(180deg,#f5f5f5,#9aa4b7);
+      box-shadow:inset 0 -1px 2px rgba(0,0,0,.28);
+    }
+    .mihashira-companion__burst{
+      position:absolute;
+      inset:-44%;
+      border-radius:50%;
+      background:
+        radial-gradient(circle,rgba(255,255,255,.95) 0 4%,transparent 9%),
+        conic-gradient(from 0deg,rgba(102,217,255,.8),rgba(76,255,98,.9),rgba(255,236,75,.86),rgba(255,72,221,.82),rgba(102,217,255,.8));
+      opacity:0;
+      filter:blur(9px);
+      mix-blend-mode:screen;
+      pointer-events:none;
+      transform:scale(.32);
+      z-index:1;
+    }
+    .mihashira-companion.is-boosting .mihashira-companion__can{animation:energyCanSip 1.45s var(--ease) both}
+    .mihashira-companion.is-boosting .mihashira-companion__burst{animation:energyBurst 2.4s var(--ease) both}
+    .mihashira-companion.is-boosting .mihashira-companion__sprite{filter:saturate(1.45) brightness(1.14)}
+    .mihashira-companion.is-gaming .mihashira-companion__sprite{opacity:0}
+    .mihashira-companion.is-gaming .mihashira-companion__gaming{
+      filter:saturate(1.22) drop-shadow(0 0 14px rgba(102,217,255,.72)) drop-shadow(0 0 26px rgba(138,255,80,.48));
+    }
+    .mihashira-companion.is-gaming::before{
+      content:"";
+      position:absolute;
+      inset:-32%;
+      border-radius:50%;
+      background:conic-gradient(from 0deg,rgba(102,217,255,.22),rgba(129,255,92,.38),rgba(255,236,75,.24),rgba(255,78,220,.32),rgba(102,217,255,.22));
+      filter:blur(10px);
+      opacity:.78;
+      mix-blend-mode:screen;
+      animation:gamingAuraSpin 4.8s linear infinite;
+      pointer-events:none;
+      z-index:0;
     }
     .mihashira-companion::after{
       content:"";
@@ -310,7 +395,11 @@
     @keyframes snowFallNear{0%{transform:translate3d(-2%,-14%,0) scale(1.02)}100%{transform:translate3d(2.5%,14%,0) scale(1.02)}}
     @keyframes lanternPulse{0%,100%{opacity:.58;transform:scale(.9)}50%{opacity:1;transform:scale(1.16)}}
     @keyframes twinkle{0%,100%{transform:scale(.5);opacity:.32}50%{transform:scale(1.8);opacity:.92}}
-    @media(prefers-reduced-motion:reduce){.bg-cycle-layer,.mist,.snow-flurry,.snow-flurry::before,.snow-flurry::after,.glints span,.mihashira-companion::after{animation:none;transition:none}}
+    @keyframes energyCanSip{0%{opacity:0;transform:translate3d(-24px,18px,0) rotate(-32deg) scale(.45)}22%{opacity:1}58%{opacity:1;transform:translate3d(46px,-22px,0) rotate(10deg) scale(.72)}100%{opacity:0;transform:translate3d(66px,-30px,0) rotate(18deg) scale(.55)}}
+    @keyframes energyBurst{0%{opacity:0;transform:scale(.25) rotate(0deg)}38%{opacity:.86;transform:scale(.82) rotate(80deg)}70%{opacity:.62;transform:scale(1.05) rotate(160deg)}100%{opacity:0;transform:scale(1.22) rotate(240deg)}}
+    @keyframes otterGamingIn{0%{opacity:0;transform:translateX(-50%) scale(.72)}55%{opacity:.78;transform:translateX(-50%) scale(.94)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+    @keyframes gamingAuraSpin{0%{transform:rotate(0deg) scale(.96)}50%{transform:rotate(180deg) scale(1.04)}100%{transform:rotate(360deg) scale(.96)}}
+    @media(prefers-reduced-motion:reduce){.bg-cycle-layer,.mist,.snow-flurry,.snow-flurry::before,.snow-flurry::after,.glints span,.mihashira-companion::after,.mihashira-companion.is-gaming::before{animation:none;transition:none}}
 
     .hero{
       min-height:clamp(520px,78vh,720px);
@@ -503,7 +592,12 @@
   <div class="mist" aria-hidden="true"></div>
   <div class="aurora" aria-hidden="true"></div>
   <div class="glints" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="mihashira-companion" aria-hidden="true"><span class="mihashira-companion__sprite"></span></div>
+  <button class="mihashira-companion" id="otterBoost" type="button" aria-label="ウソウソにエナジードリンクをあげる">
+    <span class="mihashira-companion__sprite"></span>
+    <img class="mihashira-companion__gaming" src="img/gaming-otter.png" alt="" width="1254" height="1254" loading="lazy">
+    <span class="mihashira-companion__can" aria-hidden="true"></span>
+    <span class="mihashira-companion__burst" aria-hidden="true"></span>
+  </button>
   <div class="mihashira-companion-talk" id="otterTalk" role="status" aria-live="polite">
     <b>ウソウソメモ</b>
     <span>カードに触れると、危ないところだけ先に言うでっす。</span>
@@ -722,6 +816,10 @@
     let otterTicking = false;
     let otterLastY = window.scrollY || document.documentElement.scrollTop || 0;
     let otterFacing = 1;
+    let otterBoostTimer = null;
+    let otterBoostResetTimer = null;
+    let otterBoostFrame = null;
+    let otterBoostActive = false;
     function updateOtterFromScroll(){
       if(!otterCompanion || prefersReducedMotion) return;
       const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -761,6 +859,56 @@
     updateOtterFromScroll();
     window.addEventListener("scroll", requestOtterUpdate, {passive:true});
     window.addEventListener("resize", requestOtterUpdate, {passive:true});
+
+    function setOtterBoostMessage(text){
+      if(!otterTalk || !otterTalkBox) return;
+      otterTalk.textContent = text;
+      otterTalkBox.classList.add("is-speaking");
+    }
+
+    function triggerOtterBoost(){
+      if(!otterCompanion) return;
+      otterBoostActive = true;
+      clearTimeout(otterBoostTimer);
+      clearTimeout(otterBoostResetTimer);
+      if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
+      otterCompanion.classList.remove("is-gaming","is-boosting");
+      otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
+      otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+      void otterCompanion.offsetWidth;
+      otterCompanion.classList.add("is-boosting");
+      setOtterBoostMessage("エナドリ投入でっす。じわじわ光るでっす。");
+      otterBoostTimer = window.setTimeout(() => {
+        otterCompanion.classList.remove("is-boosting");
+        otterCompanion.classList.add("is-gaming");
+        const startedAt = performance.now();
+        const duration = prefersReducedMotion ? 1 : 1300;
+        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+        const step = (now) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          const eased = easeOut(progress);
+          otterCompanion.style.setProperty("--otter-gaming-opacity", eased.toFixed(3));
+          otterCompanion.style.setProperty("--otter-gaming-scale", (0.72 + eased * 0.28).toFixed(3));
+          if(progress < 1){
+            otterBoostFrame = requestAnimationFrame(step);
+          }
+        };
+        otterBoostFrame = requestAnimationFrame(step);
+        setOtterBoostMessage("ゲーミングウソウソ、起動でっす。罠も眠気も見逃さないでっす。");
+      }, prefersReducedMotion ? 80 : 950);
+      otterBoostResetTimer = window.setTimeout(() => {
+        otterBoostActive = false;
+        if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
+        otterCompanion.classList.remove("is-gaming","is-boosting");
+        otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
+        otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+        resetOtterTalk();
+      }, prefersReducedMotion ? 6000 : 16000);
+    }
+
+    if(otterCompanion){
+      otterCompanion.addEventListener("click", triggerOtterBoost);
+    }
 
     const floorGroups = [
       ["f1","F1〜10"],["f11","F11〜20"],["f21","F21〜30"],["f31","F31〜40"],["f41","F41〜50"],
@@ -984,12 +1132,14 @@
       return `${m.name}（${m.floor}）${tags ? `：${tags}。` : "。"}${mainNote}`;
     }
     function speakOtter(card){
+      if(otterBoostActive) return;
       const m = monsters[Number(card.dataset.index)];
       if(!m || !otterTalk || !otterTalkBox) return;
       otterTalk.textContent = otterMessage(m);
       otterTalkBox.classList.add("is-speaking");
     }
     function resetOtterTalk(){
+      if(otterBoostActive) return;
       if(!otterTalk || !otterTalkBox) return;
       otterTalk.textContent = "カードに触れると、危ないところだけ先に言うでっす。";
       otterTalkBox.classList.remove("is-speaking");
