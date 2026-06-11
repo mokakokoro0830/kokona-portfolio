@@ -236,13 +236,13 @@
     .mihashira-companion__gaming{
       position:absolute;
       left:50%;
-      bottom:-10%;
-      width:185%;
-      height:185%;
+      bottom:-9%;
+      width:108%;
+      height:108%;
       object-fit:contain;
       opacity:var(--otter-gaming-opacity,0);
       pointer-events:none;
-      transform:translateX(-50%) scale(var(--otter-gaming-scale,.72));
+      transform:translateX(-50%) scale(var(--otter-gaming-scale,.96));
       transform-origin:center bottom;
       z-index:3;
       filter:saturate(1.18) drop-shadow(0 0 0 rgba(102,217,255,0));
@@ -874,7 +874,7 @@
       if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
       otterCompanion.classList.remove("is-gaming","is-boosting");
       otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
-      otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+      otterCompanion.style.setProperty("--otter-gaming-scale", ".96");
       otterCompanion.style.setProperty("--otter-normal-opacity", "1");
       otterCompanion.style.setProperty("--otter-normal-saturate", "1");
       otterCompanion.style.setProperty("--otter-normal-brightness", "1");
@@ -896,7 +896,7 @@
         otterCompanion.style.setProperty("--otter-normal-brightness", (1 + earlyGlow * .22).toFixed(3));
         otterCompanion.style.setProperty("--otter-normal-opacity", (1 - crossFade * .92).toFixed(3));
         otterCompanion.style.setProperty("--otter-gaming-opacity", crossFade.toFixed(3));
-        otterCompanion.style.setProperty("--otter-gaming-scale", (0.72 + eased * 0.28).toFixed(3));
+        otterCompanion.style.setProperty("--otter-gaming-scale", (0.96 + eased * 0.04).toFixed(3));
         if(progress > .58 && !chargedMessageShown){
           chargedMessageShown = true;
           setOtterBoostMessage("虹色エネルギー充填中でっす。もうすぐ仕上がるでっす。");
@@ -918,7 +918,7 @@
         if(otterBoostFrame) cancelAnimationFrame(otterBoostFrame);
         otterCompanion.classList.remove("is-gaming","is-boosting");
         otterCompanion.style.setProperty("--otter-gaming-opacity", "0");
-        otterCompanion.style.setProperty("--otter-gaming-scale", ".72");
+        otterCompanion.style.setProperty("--otter-gaming-scale", ".96");
         otterCompanion.style.setProperty("--otter-normal-opacity", "1");
         otterCompanion.style.setProperty("--otter-normal-saturate", "1");
         otterCompanion.style.setProperty("--otter-normal-brightness", "1");
