@@ -522,10 +522,12 @@
     .card{position:relative;display:flex;gap:14px;min-height:142px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(244,250,255,.78));box-shadow:0 14px 48px -38px rgba(29,42,92,.55);overflow:hidden;transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease)}
     .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--sky),var(--sky-deep))}
     .card.danger::before{background:linear-gradient(180deg,#e45c5c,#a92233)}
-    .card:hover{transform:translateY(-2px);box-shadow:0 22px 58px -38px rgba(29,42,92,.72);border-color:rgba(77,111,184,.45)}
+    .card:hover{transform:translateY(-2px);box-shadow:0 22px 58px -38px rgba(29,42,92,.72);border-color:rgba(77,111,184,.45);z-index:20;overflow:visible}
     .media{flex:0 0 98px;height:98px;border-radius:8px;position:relative;background:linear-gradient(135deg,#edf7ff,#ffffff);border:1px solid rgba(178,195,224,.9);display:grid;place-items:center;color:#7b8aa4;font-size:.7rem;font-weight:800;text-align:center;line-height:1.35;overflow:hidden}
+    .media:hover{z-index:35;overflow:visible}
     .media::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle,rgba(102,217,255,.55),transparent 68%);opacity:.72}
-    .media img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+    .media img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease);transform-origin:left center}
+    .media img:hover{transform:scale(2.35);border-color:var(--sky-deep);box-shadow:0 18px 46px -12px rgba(17,35,78,.62);border-radius:10px}
     .media:has(img)::before{display:none}
     .media span{position:relative}
     .card-body{min-width:0;flex:1}
@@ -547,6 +549,12 @@
     .no-result{display:none;padding:34px;text-align:center;color:var(--muted);font-weight:800}
     body.is-empty .floor{display:none}
     body.is-empty .no-result{display:block}
+    .image-viewer{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;background:rgba(6,18,34,.76);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+    .image-viewer.show{opacity:1;pointer-events:auto}
+    .image-viewer img{max-width:min(90vw,760px);max-height:80vh;object-fit:contain;border-radius:16px;border:2px solid rgba(255,255,255,.86);background:#edf7ff;box-shadow:0 28px 80px -22px rgba(0,0,0,.82);transform:scale(.96);transition:transform .2s var(--ease)}
+    .image-viewer.show img{transform:scale(1)}
+    .image-viewer__close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.92);color:#1e2c44;font-size:1.7rem;line-height:1;cursor:pointer;box-shadow:0 14px 34px -20px rgba(0,0,0,.75)}
+    @media(hover:none){.media img{cursor:pointer}.media img:hover{transform:none;box-shadow:none}}
     footer{margin-top:42px;margin-bottom:24px;padding:16px 0;color:rgba(255,255,255,.94);font-size:.8rem;font-weight:800;text-shadow:0 2px 12px rgba(0,12,34,.68),0 0 18px rgba(0,12,34,.35)}
     footer p{margin:0}
     footer small{display:block;margin-top:6px;color:rgba(238,247,255,.88);font-weight:800;line-height:1.65}
@@ -754,6 +762,11 @@
     <p>© kokona-makes.dev / アメノミハシラ早見表。ゲーム内スクショと自分の言葉のメモで順次追加予定。</p>
     <small>背景素材: Unsplash / Pexels の無料利用可能素材を候補として使用。詳細は <code>mihashira/img/stock/CREDITS.md</code> に記録。</small>
   </footer>
+
+  <div class="image-viewer" id="imageViewer" aria-hidden="true">
+    <button class="image-viewer__close" id="imageViewerClose" type="button" aria-label="画像を閉じる">×</button>
+    <img id="imageViewerImg" alt="">
+  </div>
 
   <script>
     const skyBackgrounds = [
@@ -1197,6 +1210,41 @@
 
     render();
     applyFilters();
+    (function(){
+      const viewer = document.querySelector("#imageViewer");
+      const viewerImg = document.querySelector("#imageViewerImg");
+      const close = document.querySelector("#imageViewerClose");
+      if(!viewer || !viewerImg || !close) return;
+      function hide(){
+        viewer.classList.remove("show");
+        viewer.setAttribute("aria-hidden","true");
+        viewerImg.removeAttribute("src");
+        viewerImg.alt = "";
+        document.body.style.overflow = "";
+      }
+      function show(src, alt){
+        viewerImg.src = src;
+        viewerImg.alt = alt || "";
+        viewer.classList.add("show");
+        viewer.setAttribute("aria-hidden","false");
+        document.body.style.overflow = "hidden";
+      }
+      document.addEventListener("click", event => {
+        const target = event.target.closest(".media img");
+        if(!target) return;
+        if(!window.matchMedia("(hover:none),(max-width:720px)").matches) return;
+        event.preventDefault();
+        event.stopPropagation();
+        show(target.currentSrc || target.src, target.alt);
+      }, true);
+      viewer.addEventListener("click", event => {
+        if(event.target === viewer) hide();
+      });
+      close.addEventListener("click", hide);
+      document.addEventListener("keydown", event => {
+        if(event.key === "Escape" && viewer.classList.contains("show")) hide();
+      });
+    })();
     function otterMessage(m){
       const tags = [
         m.danger ? "要注意" : "",
