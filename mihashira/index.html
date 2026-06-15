@@ -527,6 +527,7 @@
     .media:hover{z-index:35;overflow:visible}
     .media::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle,rgba(102,217,255,.55),transparent 68%);opacity:.72}
     .media img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease);transform-origin:left center}
+    .media img[src*="ameno-nutsuhetsuhou"]{object-fit:contain;object-position:center;padding:4px;background:#f7fbff}
     .media img:hover{transform:scale(2.35);border-color:var(--sky-deep);box-shadow:0 18px 46px -12px rgba(17,35,78,.62);border-radius:10px}
     .media:has(img)::before{display:none}
     .media span{position:relative}
@@ -1027,6 +1028,7 @@
     ];
 
     const monsters = [
+      ...shelvedF51Monsters,
       {name:"アメノ・オンリョウ",floor:"F61〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-onryou.png",notes:["感知範囲が広め。AAと継続ダメージが重なると削られやすいので、通路へ引いて1体ずつ処理。"]},
       {name:"アメノ・モルボル",floor:"F63〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-morbol.png",notes:["視覚感知の巡回タイプ。63〜65層で出現。","自身中心の範囲攻撃に当たると、多数のデバフを受ける。近接は詠唱と足元に注意。","複数と同時に戦わず、スタンも使って安全に処理する。"]},
       {name:"アメノ・ハシリドコロ",floor:"F66〜69",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hashiridokoro.png",notes:["66層から出現する視覚感知タイプ。必ず近くで戦う。","離れているとアトロポンスポアのドーナツ範囲で即死する。距離を取りすぎない。","近くで戦う都合上、複数釣ると処理が難しい。複数になったら形態変化を使う。"]},
