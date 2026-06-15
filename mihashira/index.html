@@ -676,7 +676,7 @@
       <span class="eyebrow">HEAVEN-ON-HIGH ／ 紅玉海の塔</span>
       <h1><span class="line">アメノミハシラ</span><span class="line">要注意モンスター<span class="accent">早見表</span><span class="credit">ちゃお監修</span></span></h1>
       <p>踏み込む前に見たい、スタン・巡回・感知方式・危険技のメモ。ゲーム内スクショと自分の言葉で、確認しやすい形にまとめています。</p>
-      <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>10</b> 階層</span><span>画像・メモは順次追加</span></div>
+      <div class="meta"><span><b id="mobCount">0</b> 体収録</span><span><b>9</b> 階層</span><span>画像・メモは順次追加</span></div>
     </div>
   </header>
 
@@ -1003,7 +1003,7 @@
 
     const floorGroups = [
       ["f1","F1〜10"],["f11","F11〜20"],["f21","F21〜30"],["f31","F31〜40"],["f41","F41〜50"],
-      ["f51","F51〜60"],["f61","F61〜70"],["f71","F71〜80"],["f81","F81〜90"],["f91","F91〜100"]
+      ["f61","F61〜70"],["f71","F71〜80"],["f81","F81〜90"],["f91","F91〜100"]
     ];
 
     const bossGuides = {
@@ -1012,23 +1012,7 @@
       f81:{floor:"F90",name:"オンラ",time:"15:13",youtube:"https://www.youtube.com/watch?v=Xk6YaJr96ak&t=913s",image:"img/monsters/onra.png",notes:["動画は15:13のF90オンラから再生します。","エンシェントクエイガ後は砂玉を見て同じ方向へ逃げる。","メテオインパクトは詠唱開始時の位置から距離減衰。"]}
     };
 
-    const shelvedF51Monsters = [
-      {name:"アメノ・カマキリ",floor:"F51〜60",group:"f51",danger:false,stun:true,sleep:false,patrol:false,sense:"敏感-引籠り",image:"img/monsters/ameno-kamakiri-ai.webp",notes:["敵タイプは敏感-引籠り。スタン可。","注意点はとくになし。"]},
-      {name:"アメノ・カマナリ",floor:"F51〜60",group:"f51",danger:false,stun:true,sleep:false,patrol:false,sense:"敏感-引籠り",image:"img/monsters/ameno-kamanari-ai.webp",notes:["敵タイプは敏感-引籠り。スタン可。","被ダメージ増加デバフを付与してくる。デバフ中に追加で釣らないよう注意。"]},
-      {name:"アメノ・ナーガ",floor:"F51〜53",group:"f51",danger:true,stun:null,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-naga.png",notes:["巡回タイプ。通路や部屋の入口で横から絡まれやすい。","カルシファイングミストは視線攻撃。詠唱が見えたら敵の方を見ない。","複数と戦っている時に来ると危ないので、巡回位置を見てから釣る。"]},
-      {name:"アメノ・トカゲキバ",floor:"F51〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tokagekiba.png",notes:["ベルセルクで攻撃力を上げる。長引かせずに処理する。","リアーは敵中心範囲。詠唱が見えたら離れる。"]},
-      {name:"アメノ・コンゴウレイ",floor:"F52〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-kongourei.png",notes:["小型のアラグ兵器。正面の向きを見て釣る。","時間経過で直線範囲のアサルトカノンを使う。詠唱が見えたら横へ避ける。","長く放置すると自爆系の大ダメージがあるため、倒さず残さない。"]},
-      {name:"アメノ・テッソウ",floor:"F53〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tessou.png",notes:["アラグの手型モンスター。継続ダメージを付けてくるので、複数相手にしない。","ザ・ハンドは避ける前提。詠唱や向きを見て動く。"]},
-      {name:"アメノ・テッキョジン",floor:"F53〜56",group:"f51",danger:true,stun:false,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-tekkyojin.png",notes:["巡回タイプ。スタン不可なので止めずに避ける。","直線範囲と対象円範囲に注意。通路で他の敵と重ねない。"]},
-      {name:"アメノ・タマイシ",floor:"F55〜60",group:"f51",danger:true,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-tamaishi.png",notes:["その場からあまり動かないタイプ。離れた場所から直線範囲を撃ってくる。","オートマチックカノン系の直線攻撃は大ダメージ。詠唱や向きを見て必ず横へ避ける。","通路や大部屋で別戦闘中に撃たれると危ないので、射線に立たない。"]},
-      {name:"アメノ・カラクリ",floor:"F56〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-karakuri.png",notes:["人型のアラグ兵器。基本は単体で落ち着いて処理する。","大きな事故要素は少なめだが、他の危険モンスターと同時に釣らない。"]},
-      {name:"アメノ・シュワブチ",floor:"F56〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-shuwabuchi.png",notes:["斧を持った獣人タイプ。前方扇範囲に注意。","正面に立ちっぱなしにせず、向きを固定して横や背面へ避ける。"]},
-      {name:"アメノ・ゴウワン",floor:"F57〜60",group:"f51",danger:false,stun:null,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-gouwan.png",notes:["アラグ系の作業ロボ。エレクトロマグネティズムを使う前に倒し切りたい。","放置して長引かせず、単体で素早く処理する。"]},
-      {name:"アメノ・ラチモナイ",floor:"F57〜60",group:"f51",danger:true,stun:false,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-rachimonai.png",notes:["非戦闘中でも通路へ範囲を飛ばしてくるタイプ。別の敵と戦っている時の横槍に注意。","スタン不可。絡まれた音がしても、本体に敵視されていない場合があるので落ち着いて範囲だけ避ける。"]}
-    ];
-
     const monsters = [
-      ...shelvedF51Monsters,
       {name:"アメノ・オンリョウ",floor:"F61〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-onryou.png",notes:["感知範囲が広め。AAと継続ダメージが重なると削られやすいので、通路へ引いて1体ずつ処理。"]},
       {name:"アメノ・モルボル",floor:"F63〜65",group:"f61",danger:true,stun:true,sleep:false,patrol:true,sense:"視覚",image:"img/monsters/ameno-morbol.png",notes:["視覚感知の巡回タイプ。63〜65層で出現。","自身中心の範囲攻撃に当たると、多数のデバフを受ける。近接は詠唱と足元に注意。","複数と同時に戦わず、スタンも使って安全に処理する。"]},
       {name:"アメノ・ハシリドコロ",floor:"F66〜69",group:"f61",danger:true,stun:true,sleep:false,patrol:false,sense:"視覚",image:"img/monsters/ameno-hashiridokoro.png",notes:["66層から出現する視覚感知タイプ。必ず近くで戦う。","離れているとアトロポンスポアのドーナツ範囲で即死する。距離を取りすぎない。","近くで戦う都合上、複数釣ると処理が難しい。複数になったら形態変化を使う。"]},
