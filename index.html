@@ -3,59 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kokona — AIと組んで、手作業を減らす。</title>
+<title>Kokona | AIと組んで、手作業を減らす。</title>
 <meta name="description" content="繰り返しの地味な作業をAIに渡して、判断と実装に集中する。Claude・GAS・APIで案件管理・予約システム・通知フローを、設計から実装まで、ひとりで。">
-<meta property="og:title" content="Kokona — AIと組んで、手作業を減らす。">
+<meta property="og:title" content="Kokona | AIと組んで、手作業を減らす。">
 <meta property="og:description" content="繰り返しを消したぶん、作ることに集中する。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kokona-makes.dev">
 <meta property="og:image" content="https://kokona-makes.dev/images/hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kokona — AIと組んで、手作業を減らす。">
+<meta name="twitter:title" content="Kokona | AIと組んで、手作業を減らす。">
 <meta name="twitter:description" content="繰り返しを消したぶん、作ることに集中する。">
 <meta name="twitter:image" content="https://kokona-makes.dev/images/hero.jpg">
 <link rel="canonical" href="https://kokona-makes.dev">
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+JP:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
   /* Works filter */
   .works-filter { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:52px; }
-  .works-filter-btn { font-family:var(--serif); font-style:italic; font-size:0.8rem; letter-spacing:0.22em; color:rgba(191,161,105,0.65); background:transparent; border:1px solid rgba(191,161,105,0.22); padding:8px 22px; cursor:pointer; transition:all .22s; }
-  .works-filter-btn:hover { color:var(--gold-l); border-color:rgba(191,161,105,0.5); background:rgba(191,161,105,0.06); }
+  .works-filter-btn { font-family:var(--sans); font-size:0.74rem; font-weight:600; letter-spacing:0.12em; color:rgba(246,240,227,0.68); background:rgba(246,240,227,0.035); border:1px solid rgba(201,168,87,0.22); border-radius:999px; padding:10px 20px; cursor:pointer; transition:color .22s, border-color .22s, background .22s, transform .22s; }
+  .works-filter-btn:hover { color:var(--gold-l); border-color:rgba(201,168,87,0.54); background:rgba(201,168,87,0.08); transform:translateY(-1px); }
   .works-filter-btn.is-active { color:var(--bg); background:var(--gold); border-color:var(--gold); }
   .works-filter-count { font-style:normal; font-size:0.68rem; opacity:0.6; margin-left:5px; }
   .work-card[hidden] { display:none !important; visibility:hidden !important; }
 
   /* Services / できること */
-  .services { padding:140px 0; background:var(--bg); }
-  .services__grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:64px; }
-  .service-card { padding:44px 38px; background:var(--bg-3); border:1px solid var(--line); transition:border-color .3s, transform .3s; }
-  .service-card:hover { border-color:rgba(191,161,105,0.4); transform:translateY(-3px); }
-  .service-card__no { font-family:var(--serif); font-style:italic; font-size:1.5rem; color:var(--gold-d); letter-spacing:0.1em; line-height:1; }
+  .services { padding:132px 0; background:linear-gradient(180deg, var(--bg) 0%, #0d1315 100%); }
+  .services__grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:54px; }
+  .service-card { padding:42px 38px; background:linear-gradient(145deg, rgba(246,240,227,0.075), rgba(246,240,227,0.025)); border:1px solid rgba(201,168,87,0.16); border-radius:var(--radius); box-shadow:0 24px 80px rgba(0,0,0,0.18); transition:border-color .3s, transform .3s, background .3s; }
+  .service-card:hover { border-color:rgba(201,168,87,0.38); transform:translateY(-3px); background:linear-gradient(145deg, rgba(246,240,227,0.095), rgba(201,168,87,0.055)); }
+  .service-card__no { font-family:var(--sans); font-size:0.78rem; font-weight:700; color:var(--gold); letter-spacing:0.16em; line-height:1; }
   .service-card__title { font-family:var(--jp-mincho); font-size:1.15rem; font-weight:500; letter-spacing:0.08em; color:var(--paper); margin:10px 0 14px; }
   .service-card__desc { font-family:var(--jp-mincho); font-size:0.85rem; color:var(--paper-dim); line-height:1.95; letter-spacing:0.04em; }
-  .service-card__tag { display:inline-block; margin-top:18px; font-family:var(--sans); font-size:0.66rem; letter-spacing:0.15em; color:var(--gold); border:1px solid rgba(191,161,105,0.3); padding:3px 10px; border-radius:2px; }
+  .service-card__tag { display:inline-block; margin-top:18px; font-family:var(--sans); font-size:0.66rem; font-weight:600; letter-spacing:0.13em; color:var(--gold); border:1px solid rgba(201,168,87,0.28); padding:5px 11px; border-radius:999px; }
   .services__note { text-align:center; margin-top:48px; font-family:var(--jp-mincho); font-size:0.9rem; color:var(--paper-dim); letter-spacing:0.06em; line-height:1.9; }
-  .services__cta { display:inline-block; margin-top:26px; font-family:var(--serif); font-style:italic; font-size:0.95rem; letter-spacing:0.18em; color:var(--bg); background:var(--gold); padding:14px 40px; text-decoration:none; transition:background .3s; }
+  .services__cta { display:inline-block; margin-top:26px; font-family:var(--sans); font-size:0.82rem; font-weight:700; letter-spacing:0.13em; color:var(--bg); background:var(--gold); border-radius:999px; padding:15px 38px; text-decoration:none; transition:background .3s, transform .3s; }
   .services__cta:hover { background:var(--gold-l); }
   @media (max-width:760px){ .services__grid { grid-template-columns:1fr; } }
 
   /* Showcase / 代表作ダイジェスト */
-  .showcase { padding:96px 0 64px; background:var(--bg); }
+  .showcase { padding:110px 0 72px; background:var(--bg); }
   .showcase__head { text-align:center; margin-bottom:46px; }
-  .showcase__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-  .showcase-card { position:relative; display:block; aspect-ratio:4/3; border-radius:3px; overflow:hidden; border:1px solid var(--line); text-decoration:none; }
+  .showcase__grid { display:grid; grid-template-columns:repeat(6,1fr); gap:16px; }
+  .showcase-card { position:relative; display:block; min-height:260px; aspect-ratio:4/3; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(201,168,87,0.16); text-decoration:none; background:var(--bg-2); box-shadow:0 24px 90px rgba(0,0,0,0.22); }
+  .showcase-card:nth-child(1), .showcase-card:nth-child(2) { grid-column:span 3; aspect-ratio:16/10; }
+  .showcase-card:nth-child(n+3) { grid-column:span 2; }
   .showcase-card__img { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s var(--ease); }
   .showcase-card:hover .showcase-card__img { transform:scale(1.06); }
-  .showcase-card__overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,6,0.92) 0%, rgba(10,9,6,0.2) 55%, rgba(10,9,6,0) 100%); }
+  .showcase-card__overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(8,11,13,0.94) 0%, rgba(8,11,13,0.42) 56%, rgba(8,11,13,0.06) 100%); }
   .showcase-card__cat { position:absolute; top:12px; left:14px; font-family:var(--sans); font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-l); text-transform:uppercase; }
   .showcase-card__name { position:absolute; bottom:30px; left:14px; right:14px; font-family:var(--jp-mincho); font-size:1.05rem; font-weight:500; letter-spacing:0.06em; color:var(--paper); margin:0; }
   .showcase-card__jp { position:absolute; bottom:12px; left:14px; right:14px; font-family:var(--jp-mincho); font-size:0.66rem; color:var(--paper-dim); letter-spacing:0.04em; margin:0; }
-  .showcase__more { font-family:var(--serif); font-style:italic; font-size:0.9rem; letter-spacing:0.18em; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(191,161,105,0.3); padding-bottom:3px; transition:color .3s; }
+  .showcase__more { font-family:var(--sans); font-size:0.78rem; font-weight:700; letter-spacing:0.14em; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,87,0.3); padding-bottom:4px; transition:color .3s, letter-spacing .3s; }
   .showcase__more:hover { color:var(--gold-l); }
-  @media (max-width:760px){ .showcase__grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:900px){ .showcase__grid { grid-template-columns:repeat(2,1fr); } .showcase-card, .showcase-card:nth-child(1), .showcase-card:nth-child(2), .showcase-card:nth-child(n+3) { grid-column:auto; min-height:220px; } }
+  @media (max-width:560px){ .showcase__grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -82,10 +86,13 @@
   <div class="hero__overlay"></div>
   <canvas class="hero__particles" id="hero-canvas"></canvas>
   <div class="hero__content">
-    <p class="hero__kicker">— AI × Automation × Building</p>
+    <p class="hero__kicker">AI × Automation × Building</p>
     <h1 class="hero__title">AIと組んで、<br>手作業を減らす。</h1>
     <p class="hero__sub">繰り返しを消したぶん、作ることに集中する。</p>
-    <a href="#works" class="hero__cta">Works を見る</a>
+    <div class="hero__actions">
+      <a href="#works" class="hero__cta">Worksを見る</a>
+      <a href="#contact" class="hero__cta hero__cta--ghost">相談する</a>
+    </div>
   </div>
   <div class="hero__scroll">
     <span></span>
@@ -96,7 +103,7 @@
 <section class="showcase" id="showcase">
   <div class="wrap">
     <div class="showcase__head reveal">
-      <p class="kicker">— Selected Works</p>
+      <p class="kicker">Selected Works</p>
       <h2 class="sec-title">こんなものを作っています</h2>
     </div>
     <div class="showcase__grid">
@@ -150,7 +157,7 @@
         <img src="images/avatar.jpg" alt="Kokona">
       </div>
       <div class="about__body">
-        <p class="kicker reveal">— About</p>
+        <p class="kicker reveal">About</p>
         <h2 class="sec-title reveal reveal-d1">Kokona</h2>
         <p class="about__handle reveal reveal-d1">@kokona_codes</p>
         <p class="about__text reveal reveal-d2">
@@ -180,9 +187,9 @@
 <section class="services" id="services">
   <div class="wrap">
     <div class="sec-head reveal" style="text-align:center">
-      <p class="kicker">— Services</p>
+      <p class="kicker">Services</p>
       <h2 class="sec-title">できること</h2>
-      <p class="sec-sub">— What I can build for you —</p>
+      <p class="sec-sub">What I can build for you</p>
     </div>
     <div class="services__grid">
       <div class="service-card reveal">
@@ -224,9 +231,9 @@
 <section class="works" id="works">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="kicker">— Works</p>
+      <p class="kicker">Works</p>
       <h2 class="sec-title">作品一覧</h2>
-      <p class="sec-sub">— All projects built from scratch —</p>
+      <p class="sec-sub">All projects built from scratch</p>
     </div>
     <!-- Works filter -->
     <div class="works-filter reveal" role="tablist">
@@ -264,7 +271,7 @@
           <p class="work-card__num">02</p>
           <p class="work-card__cat">SYSTEM · BOOKING MANAGEMENT</p>
           <h3 class="work-card__name">VELARO</h3>
-          <p class="work-card__name-jp">ヴェラーロ — 予約管理システム</p>
+          <p class="work-card__name-jp">ヴェラーロ / 予約管理システム</p>
           <p class="work-card__desc">リゾートヴィラ向け予約管理システム。ゲスト予約フォーム → Supabase DB → 自動メール送信 → 管理画面でステータス管理まで一気通貫。Next.js + Resend。</p>
           <span class="work-card__link">View Project →</span>
         </div>
@@ -384,7 +391,7 @@
           <p class="work-card__num">12</p>
           <p class="work-card__cat">CORPORATE · WORDPRESS THEME</p>
           <h3 class="work-card__name">Aileron Inc.</h3>
-          <p class="work-card__name-jp">エイルロン — コーポレートサイト</p>
+          <p class="work-card__name-jp">エイルロン / コーポレートサイト</p>
           <p class="work-card__desc">AI業務自動化スタートアップ向けコーポレートサイト。WordPressオリジナルテーマ想定で全13ページを実装。カスタム投稿・ACF設計を念頭にした構造。</p>
           <span class="work-card__link">View Project →</span>
         </div>
@@ -396,7 +403,7 @@
           <p class="work-card__num">13</p>
           <p class="work-card__cat">SaaS · SUBSCRIPTION LP</p>
           <h3 class="work-card__name">OFISYS</h3>
-          <p class="work-card__name-jp">オフィシス — ひとり情シス代行</p>
+          <p class="work-card__name-jp">オフィシス / ひとり情シス代行</p>
           <p class="work-card__desc">中小企業向け「ひとり情シス代行」月額サブスクのLP。サービスをホバーで詳細表示・料金の月額/年額トグル・FAQアコーディオンを純粋なHTML/CSS/JSで実装。</p>
           <span class="work-card__link">View Project →</span>
         </div>
@@ -437,9 +444,9 @@
 <section class="process" id="process">
   <div class="wrap">
     <div class="sec-head reveal" style="text-align:center">
-      <p class="kicker">— Process</p>
+      <p class="kicker">Process</p>
       <h2 class="sec-title">どうやって作るか</h2>
-      <p class="sec-sub">— From concept to launch, solo —</p>
+      <p class="sec-sub">From concept to launch, solo</p>
     </div>
     <div class="process__steps">
       <div class="process__step reveal">
@@ -478,7 +485,7 @@
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="sec-head reveal" style="text-align:center">
-      <p class="kicker">— Connect</p>
+      <p class="kicker">Connect</p>
       <h2 class="sec-title">つながる</h2>
       <p class="contact__lead reveal reveal-d1">お仕事のご依頼・ご質問はフォームからどうぞ。<br><span style="font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--gold)">For project inquiries and collaborations.</span></p>
     </div>
@@ -512,7 +519,7 @@
 
         <div class="cf__footer">
           <button class="cf__btn" type="submit">
-            <span class="cf__btn-text">送信する — Send</span>
+            <span class="cf__btn-text">送信する / Send</span>
             <span class="cf__btn-arrow">→</span>
           </button>
           <div class="cf__status" id="cf-status" aria-live="polite"></div>
