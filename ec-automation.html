@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EC商品データ・CSV・スプレッドシート自動化 | Kokona</title>
+<meta name="description" content="Amazon、楽天、Yahooショッピング、eBayなどのEC商品データ整理、CSV作成、スプレッドシート自動化、GAS/VBA/Pythonの小さな業務改善を対応します。">
+<meta property="og:title" content="EC商品データ・CSV・スプレッドシート自動化 | Kokona">
+<meta property="og:description" content="ASIN、商品情報取得、CSV整形、Excel/VBA、GAS、スプレッドシート自動化。小さく動く形から整えます。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kokona-makes.dev/ec-automation.html">
+<meta property="og:image" content="https://kokona-makes.dev/images/case-ec.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://kokona-makes.dev/ec-automation.html">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Noto Sans JP','Inter',system-ui,sans-serif;color:#172026;background:#f7f5ef;line-height:1.78;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
+  .nav{position:sticky;top:0;z-index:20;background:rgba(247,245,239,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(23,32,38,.08)}
+  .nav__inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .logo{font-family:Inter,sans-serif;font-weight:800;letter-spacing:.04em}
+  .nav__links{display:flex;align-items:center;gap:20px;font-size:.86rem;font-weight:700;color:#4e5a61}
+  .nav__links a:hover{color:#0d6b5f}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:800;border:1px solid transparent;transition:transform .2s,background .2s,border-color .2s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--main{background:#0d6b5f;color:#fff;box-shadow:0 14px 34px rgba(13,107,95,.22)}
+  .btn--ghost{background:#fff;color:#172026;border-color:rgba(23,32,38,.12)}
+  .hero{position:relative;overflow:hidden;background:#113931;color:#fff}
+  .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,26,23,.95),rgba(8,26,23,.72) 46%,rgba(8,26,23,.18)),url('images/case-ec.jpg') center/cover;opacity:.96}
+  .hero__inner{position:relative;z-index:1;min-height:650px;display:grid;grid-template-columns:minmax(0,1.05fr) 420px;gap:54px;align-items:center;padding:84px 0}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:7px 12px;border:1px solid rgba(246,222,156,.38);border-radius:999px;color:#f6de9c;background:rgba(246,222,156,.08);font:800 .73rem/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  h1{font-size:clamp(2rem,5vw,4.35rem);line-height:1.12;margin:0 0 22px;font-weight:900;letter-spacing:.01em}
+  .hero__lead{max-width:720px;font-size:1.05rem;color:rgba(255,255,255,.84);margin:0 0 30px}
+  .hero__actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+  .hero__chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);padding:7px 11px;color:rgba(255,255,255,.86);font-size:.78rem;font-weight:700}
+  .proof{background:rgba(255,255,255,.94);color:#172026;border-radius:8px;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.28)}
+  .proof h2{font-size:1rem;margin:0 0 14px}
+  .proof ul{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+  .proof li{padding-left:22px;position:relative;font-size:.92rem;color:#425058}
+  .proof li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:8px;border-radius:50%;background:#0d6b5f}
+  section{padding:88px 0}
+  .section--white{background:#fff}
+  .section--dark{background:#172026;color:#fff}
+  .head{max-width:760px;margin:0 auto 42px;text-align:center}
+  .label{font:800 .74rem/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#0d6b5f;margin:0 0 12px}
+  .section--dark .label{color:#f6de9c}
+  h2{font-size:clamp(1.55rem,3vw,2.55rem);line-height:1.34;margin:0 0 12px;font-weight:900}
+  .sub{margin:0;color:#637078}
+  .section--dark .sub{color:rgba(255,255,255,.72)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:#fff;border:1px solid rgba(23,32,38,.08);border-radius:8px;padding:26px;box-shadow:0 18px 54px rgba(23,32,38,.07)}
+  .card h3{margin:0 0 10px;font-size:1.05rem}
+  .card p{margin:0;color:#5e6b73;font-size:.93rem}
+  .card__tag{display:inline-block;margin-bottom:14px;font:800 .68rem/1 Inter,sans-serif;letter-spacing:.12em;color:#0d6b5f;text-transform:uppercase}
+  .menu{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .menu-card{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:24px;background:#fff;border:1px solid rgba(23,32,38,.08);border-radius:8px;box-shadow:0 18px 54px rgba(23,32,38,.06)}
+  .menu-card__no{display:grid;place-items:center;width:42px;height:42px;border-radius:999px;background:#0d6b5f;color:#fff;font:900 .78rem/1 Inter,sans-serif;letter-spacing:.08em}
+  .menu-card h3{margin:0 0 8px;font-size:1.02rem}
+  .menu-card p{margin:0;color:#5e6b73;font-size:.92rem}
+  .menu-card ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:5px;color:#4e5a61;font-size:.86rem}
+  .menu-card li::before{content:"- ";color:#0d6b5f;font-weight:900}
+  .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .price-card{display:flex;flex-direction:column;min-height:270px;padding:24px;background:#fff;border:1px solid rgba(23,32,38,.08);border-radius:8px;box-shadow:0 18px 54px rgba(23,32,38,.06)}
+  .price-card__label{font:900 .68rem/1 Inter,sans-serif;letter-spacing:.13em;color:#0d6b5f;text-transform:uppercase;margin-bottom:12px}
+  .price-card h3{font-size:1rem;line-height:1.45;margin:0 0 12px}
+  .price-card__amount{margin:0 0 14px;font:900 1.38rem/1.2 Inter,'Noto Sans JP',sans-serif;color:#172026}
+  .price-card__amount small{font-size:.72rem;color:#637078;font-weight:700}
+  .price-card p{margin:0;color:#5e6b73;font-size:.9rem}
+  .price-card__note{margin-top:auto;padding-top:16px;font-size:.78rem;color:#7a6950}
+  .cases{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:stretch}
+  .case-main{position:relative;min-height:440px;border-radius:8px;overflow:hidden;background:#0d6b5f}
+  .case-main::before{content:"";position:absolute;inset:0;background:url('images/service-flow-v1.png') center/cover;opacity:.72}
+  .case-main__body{position:absolute;inset:auto 0 0;padding:32px;background:linear-gradient(to top,rgba(11,19,23,.94),rgba(11,19,23,0));color:#fff}
+  .case-main h3{font-size:1.65rem;margin:0 0 10px}
+  .case-main p{margin:0;color:rgba(255,255,255,.82)}
+  .case-list{display:grid;gap:14px}
+  .mini{padding:22px;border-radius:8px;background:#fff;border:1px solid rgba(23,32,38,.08)}
+  .mini strong{display:block;margin-bottom:6px}
+  .mini span{display:block;color:#637078;font-size:.9rem}
+  .table{overflow:hidden;border-radius:8px;border:1px solid rgba(23,32,38,.1);background:#fff}
+  .row{display:grid;grid-template-columns:1fr 1.35fr;border-bottom:1px solid rgba(23,32,38,.08)}
+  .row:last-child{border-bottom:none}
+  .row b,.row span{padding:16px 18px}
+  .row b{background:#f0ede4}
+  .row span{color:#526067}
+  .notice{border-radius:8px;background:#fff7df;border:1px solid rgba(171,126,0,.2);padding:20px;color:#584417}
+  .notice strong{display:block;margin-bottom:6px;color:#3d2f0d}
+  .ask-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:0;padding:0;list-style:none}
+  .ask-list li{padding:18px 20px;border-radius:8px;background:#f5f1e8;border:1px solid rgba(23,32,38,.08);color:#46545b}
+  .ask-list b{display:block;margin-bottom:4px;color:#172026}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step}
+  .flow__item{position:relative;padding:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px}
+  .flow__item::before{counter-increment:step;content:"0" counter(step);display:block;margin-bottom:18px;color:#f6de9c;font:900 .78rem/1 Inter,sans-serif;letter-spacing:.14em}
+  .flow__item h3{margin:0 0 8px;font-size:1rem}
+  .flow__item p{margin:0;color:rgba(255,255,255,.72);font-size:.9rem}
+  .cta{background:#0d6b5f;color:#fff;padding:58px 0}
+  .cta__inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .cta h2{margin:0}
+  .cta p{margin:8px 0 0;color:rgba(255,255,255,.78)}
+  .footer{padding:28px 0;background:#10171a;color:rgba(255,255,255,.62);font-size:.82rem}
+  .footer__inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+  @media (max-width:900px){
+    .hero__inner,.cases{grid-template-columns:1fr}
+    .hero__inner{min-height:auto}
+    .grid,.flow,.menu,.price-grid,.ask-list{grid-template-columns:1fr 1fr}
+    .proof{max-width:620px}
+  }
+  @media (max-width:640px){
+    .wrap{width:min(100% - 28px,1120px)}
+    .nav__links a:not(:last-child){display:none}
+    .hero__inner{padding:56px 0}
+    .grid,.flow,.menu,.price-grid,.ask-list{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr}
+    .cta__inner,.footer__inner{display:block}
+    .cta .btn{margin-top:22px}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a href="/" class="logo">Kokona</a>
+    <nav class="nav__links">
+      <a href="#services">できること</a>
+      <a href="#cases">見せ方</a>
+      <a href="#flow">進め方</a>
+      <a href="/#contact">相談する</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <p class="eyebrow">EC Data Automation</p>
+        <h1>商品データ、CSV、表計算の<br>地味でミスりやすい作業を整えます。</h1>
+        <p class="hero__lead">
+          Amazon / 楽天 / Yahooショッピング / eBay まわりの商品情報整理、CSV作成、
+          Excel・VBA・Googleスプレッドシート・GASの小さな自動化に対応します。
+          まずは手作業を残したまま、小さく動く形から作ります。
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--main" href="/#contact">相談する</a>
+          <a class="btn btn--ghost" href="https://ec-csv-formatter.pages.dev/" target="_blank" rel="noopener noreferrer">無料デモを試す</a>
+          <a class="btn btn--ghost" href="#services">対応範囲を見る</a>
+        </div>
+        <div class="hero__chips" aria-label="対応キーワード">
+          <span class="chip">ASIN</span>
+          <span class="chip">商品情報取得</span>
+          <span class="chip">CSV整形</span>
+          <span class="chip">Excel / VBA</span>
+          <span class="chip">GAS</span>
+          <span class="chip">スプレッドシート</span>
+        </div>
+      </div>
+      <aside class="proof" aria-label="強み">
+        <h2>発注前に見えるようにしていること</h2>
+        <ul>
+          <li>対応範囲と対応しない範囲を先に分けます。</li>
+          <li>APIキーやログイン情報は契約前に受け取りません。</li>
+          <li>本番反映前に、少量データで動作確認します。</li>
+          <li>CSV列名・出力例・確認手順を残します。</li>
+          <li>個人情報・決済・認証が絡む場合は事前に止めます。</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section--white" id="services">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Services</p>
+        <h2>小さく頼みやすい作業に絞っています</h2>
+        <p class="sub">初回受注向けに、広すぎるシステム開発ではなく「今ある作業を少し楽にする」範囲を中心にしています。</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="card__tag">01 / EC Data</span>
+          <h3>商品情報・価格・在庫の整理</h3>
+          <p>ASINや商品URL、既存の商品リストをもとに、必要な列を整理。取得できる項目と手入力が必要な項目を分けます。</p>
+        </article>
+        <article class="card">
+          <span class="card__tag">02 / CSV</span>
+          <h3>CSV作成・変換・一括登録補助</h3>
+          <p>モールや管理画面に合わせたCSV列の並び替え、不要文字の削除、カテゴリ・価格・説明文の整形に対応します。</p>
+        </article>
+        <article class="card">
+          <span class="card__tag">03 / Sheets</span>
+          <h3>スプレッドシート自動化</h3>
+          <p>GASで転記、チェック、メール通知、集計、ステータス管理を自動化。まずは手動確認を残した形で作ります。</p>
+        </article>
+        <article class="card">
+          <span class="card__tag">04 / Excel VBA</span>
+          <h3>Excel・VBA・マクロ修正</h3>
+          <p>既存マクロの軽微修正、出力形式の変更、帳票作成、列の変換など。添付ファイル確認後に範囲を確定します。</p>
+        </article>
+        <article class="card">
+          <span class="card__tag">05 / API</span>
+          <h3>API連携の最小構成</h3>
+          <p>PA-API、Keepa、各種APIなどは利用規約とキー管理を確認したうえで、小さな検証用データから進めます。</p>
+        </article>
+        <article class="card">
+          <span class="card__tag">06 / Docs</span>
+          <h3>手順書・運用メモ</h3>
+          <p>納品後に使えるように、実行手順、注意点、失敗時の見方、列定義を短いメモとして残します。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Small Jobs</p>
+        <h2>最初に頼みやすい小案件メニュー</h2>
+        <p class="sub">大きな開発より、まず「今ある表を整える」「CSVを作りやすくする」「確認作業を減らす」ところから始めます。</p>
+      </div>
+      <div class="menu">
+        <article class="menu-card">
+          <span class="menu-card__no">01</span>
+          <div>
+            <h3>ASIN・商品URLから必要項目を整理</h3>
+            <p>取得できる情報、手入力が必要な情報、空欄チェックを分けて、商品リストとして使いやすくします。</p>
+            <ul>
+              <li>商品名・価格・JAN・URLなどの列整理</li>
+              <li>重複、空欄、表記ゆれの確認</li>
+              <li>API利用可否の事前確認</li>
+            </ul>
+          </div>
+        </article>
+        <article class="menu-card">
+          <span class="menu-card__no">02</span>
+          <div>
+            <h3>CSV一括登録用の整形</h3>
+            <p>モールや管理画面に合わせて、列順、文字数、カテゴリ、価格、説明文を整えます。</p>
+            <ul>
+              <li>CSV列名・出力例の作成</li>
+              <li>不要文字、改行、全角半角の整理</li>
+              <li>少量データでアップロード前確認</li>
+            </ul>
+          </div>
+        </article>
+        <article class="menu-card">
+          <span class="menu-card__no">03</span>
+          <div>
+            <h3>Googleスプレッドシート/GAS自動化</h3>
+            <p>転記、ステータス管理、チェック、通知などを、普段使っている表の延長で自動化します。</p>
+            <ul>
+              <li>ボタン実行・定期実行の設計</li>
+              <li>Gmail通知、集計、差分チェック</li>
+              <li>運用メモと確認手順を残す</li>
+            </ul>
+          </div>
+        </article>
+        <article class="menu-card">
+          <span class="menu-card__no">04</span>
+          <div>
+            <h3>Excel/VBAマクロの軽微修正</h3>
+            <p>既存ファイルの出力形式変更、帳票の向き、列変換、ボタン処理など、範囲を絞って対応します。</p>
+            <ul>
+              <li>既存マクロの動作確認</li>
+              <li>印刷・帳票・CSV出力の調整</li>
+              <li>修正箇所と使い方のメモ化</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--white">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Price Guide</p>
+        <h2>目安料金</h2>
+        <p class="sub">正式なお見積もりは、元データ・件数・欲しい出力を確認してから出します。まずは小さく試せる範囲に分けます。</p>
+      </div>
+      <div class="price-grid">
+        <article class="price-card">
+          <span class="price-card__label">Light</span>
+          <h3>CSV・Excel表の整理</h3>
+          <p class="price-card__amount">5,000〜15,000円</p>
+          <p>列の並び替え、不要文字削除、重複・空欄チェック、簡単な出力形式変更。</p>
+          <span class="price-card__note">少量データ・単発作業向け</span>
+        </article>
+        <article class="price-card">
+          <span class="price-card__label">Standard</span>
+          <h3>GAS・VBAの小さな自動化</h3>
+          <p class="price-card__amount">15,000〜50,000円</p>
+          <p>スプレッドシート転記、メール通知、チェック処理、既存マクロの軽微修正。</p>
+          <span class="price-card__note">日々の手作業を減らしたい方向け</span>
+        </article>
+        <article class="price-card">
+          <span class="price-card__label">Custom</span>
+          <h3>商品情報取得・API連携</h3>
+          <p class="price-card__amount">30,000円〜</p>
+          <p>ASIN・商品URLをもとにした情報整理、API連携、価格・在庫チェックの試作。</p>
+          <span class="price-card__note">API利用可否・規約確認後に見積もり</span>
+        </article>
+        <article class="price-card">
+          <span class="price-card__label">Support</span>
+          <h3>修正・運用サポート</h3>
+          <p class="price-card__amount">3,000円〜 <small>/ 回</small></p>
+          <p>納品後の軽微修正、列追加、条件変更、手順メモの更新など。</p>
+          <span class="price-card__note">継続前提の場合は別途相談</span>
+        </article>
+      </div>
+      <p class="notice" style="margin-top:18px">
+        <strong>料金の考え方</strong>
+        ログインが必要な作業、大量件数、本番データの一括更新、決済・顧客情報・認証が絡む作業は、通常より慎重に確認します。内容によっては事前に範囲を分けます。
+      </p>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Portfolio Direction</p>
+        <h2>「作品」より「頼んだ後の動き」が伝わる見せ方へ</h2>
+        <p class="sub">案件を取れている人は、スキル名だけでなく、制作物例と対応範囲を並べています。ここでは実案件に近い形で、見せる材料を整理しています。</p>
+      </div>
+      <div class="cases">
+        <a class="case-main" href="blog/crowdworks-automation.html">
+          <div class="case-main__body">
+            <h3>案件巡回自動化</h3>
+            <p>検索、候補抽出、スキップ判定、提案文作成、Gmail通知までを自動化した実運用ツール。データ整理・判定ルール・通知設計の見本として掲載。</p>
+          </div>
+        </a>
+        <div class="case-list">
+          <a class="mini" href="works/invoice-flow.html">
+            <strong>Invoice Flow</strong>
+            <span>Gmail添付 → AIチェック → 人が確認する業務フローのデモ。</span>
+          </a>
+          <a class="mini" href="works/recruit-form.html">
+            <strong>採用フォーム自動化</strong>
+            <span>フォーム送信、採番、スプレッドシート記録、自動返信。</span>
+          </a>
+          <a class="mini" href="works/sns-automation.html">
+            <strong>SNS投稿カレンダー生成</strong>
+            <span>入力データから投稿文と予定表をまとめて作るデモ。</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--white">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Scope</p>
+        <h2>最初に範囲を分けます</h2>
+        <p class="sub">受注後に話が大きくなりすぎないよう、対応できることと慎重に扱うことを明記しています。</p>
+      </div>
+      <div class="table">
+        <div class="row">
+          <b>向いている案件</b>
+          <span>ASIN・商品URL・既存CSV・Excel表・スプレッドシートをもとに、取得、整形、転記、チェックを小さく自動化する案件。</span>
+        </div>
+        <div class="row">
+          <b>最初の進め方</b>
+          <span>サンプル5〜20件程度で仕様を確認し、列定義・出力形式・確認手順を固めてから広げます。</span>
+        </div>
+        <div class="row">
+          <b>慎重に扱うもの</b>
+          <span>モール管理画面への直接ログイン、決済、顧客情報、会員情報、認証、医療・患者情報が絡む作業。</span>
+        </div>
+        <div class="row">
+          <b>対応しない前提</b>
+          <span>規約違反のスクレイピング、契約前のログイン情報共有、本番データを使った無確認の一括更新。</span>
+        </div>
+      </div>
+      <p class="notice" style="margin-top:18px">
+        <strong>安全面の考え方</strong>
+        APIキーやパスワードはコードに直接書きません。必要な場合は環境変数やGASプロパティなど、公開されない場所で管理します。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Before Estimate</p>
+        <h2>見積もり前に確認したいこと</h2>
+        <p class="sub">ここが分かると、短いやり取りで現実的な金額と納期を出しやすくなります。</p>
+      </div>
+      <ul class="ask-list">
+        <li><b>元データ</b>Excel、CSV、スプレッドシート、商品URL、ASINリストなど、現在使っている形式。</li>
+        <li><b>欲しい出力</b>完成後にほしいCSV列、帳票、スプレッドシート、通知内容、サンプル画像。</li>
+        <li><b>件数と頻度</b>1回だけなのか、毎日/毎週使うのか。対象件数は10件、100件、1000件のどれに近いか。</li>
+        <li><b>ログイン・API</b>ログインが必要か、API利用が可能か。契約前にパスワードやAPIキーは受け取りません。</li>
+        <li><b>確認方法</b>何を見て「正しい」と判断するか。サンプル5〜20件で先に確認します。</li>
+        <li><b>扱う情報</b>顧客情報、決済、認証、医療情報が含まれる場合は、事前に範囲を確認し慎重に進めます。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--dark" id="flow">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Flow</p>
+        <h2>進め方</h2>
+        <p class="sub">大きく作り始めず、まず動作確認できる小さな単位に分けます。</p>
+      </div>
+      <div class="flow">
+        <div class="flow__item">
+          <h3>現状確認</h3>
+          <p>今の表、CSV、手作業、欲しい出力を確認します。</p>
+        </div>
+        <div class="flow__item">
+          <h3>最小仕様</h3>
+          <p>列名、取得項目、確認方法、除外条件を決めます。</p>
+        </div>
+        <div class="flow__item">
+          <h3>試作</h3>
+          <p>少量データで動く形を作り、結果を見ながら直します。</p>
+        </div>
+        <div class="flow__item">
+          <h3>納品</h3>
+          <p>本番用データ、手順書、注意点をまとめて渡します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <div>
+        <h2>EC商品データ・CSV・表計算の小さな自動化から。</h2>
+        <p>案件文に「ASIN」「CSV」「Excel」「GAS」「スプレッドシート」があれば、まず確認します。</p>
+      </div>
+      <div class="hero__actions" style="margin:0">
+        <a class="btn btn--ghost" href="https://ec-csv-formatter.pages.dev/" target="_blank" rel="noopener noreferrer">無料デモを試す</a>
+        <a class="btn btn--ghost" href="/#contact">相談する</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© 2026 Kokona</span>
+    <span><a href="/">Portfolio Home</a></span>
+  </div>
+</footer>
+</body>
+</html>
