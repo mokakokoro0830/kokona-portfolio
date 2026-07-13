@@ -41,6 +41,13 @@
   "blogPost": [
     {
       "@type": "BlogPosting",
+      "headline": "商品登録前のCSVチェックを、ブラウザだけで完結させる — Catalog Check 制作記録",
+      "url": "https://kokona-makes.dev/blog/ec-csv-formatter.html",
+      "datePublished": "2026-07-13",
+      "author": { "@type": "Person", "name": "Kokona" }
+    },
+    {
+      "@type": "BlogPosting",
       "headline": "自然派の整骨院LPを、予約まで動く形にする — みどり整骨院 制作記録",
       "url": "https://kokona-makes.dev/blog/midori-seikotsuin.html",
       "datePublished": "2026-06-08",
@@ -485,7 +492,7 @@ body {
 <!-- Category filter tabs -->
 <div class="cat-filter" role="tablist" aria-label="記事カテゴリ">
   <button class="cat-btn is-active" data-filter="all" role="tab" aria-selected="true">
-    すべて<span class="cat-count">12</span>
+    すべて<span class="cat-count">13</span>
   </button>
   <button class="cat-btn" data-filter="dev" role="tab" aria-selected="false">
     開発ログ<span class="cat-count">7</span>
@@ -494,11 +501,26 @@ body {
     HP・サイト制作<span class="cat-count">4</span>
   </button>
   <button class="cat-btn" data-filter="auto" role="tab" aria-selected="false">
-    自動化<span class="cat-count">1</span>
+    自動化<span class="cat-count">2</span>
   </button>
 </div>
 
 <div class="blog-list">
+
+  <a href="ec-csv-formatter.html" class="blog-card reveal" data-cat="auto">
+    <div class="blog-card__thumb">
+      <img src="../images/thumb-ec-csv-formatter.jpg" alt="Catalog Checkの商品CSV確認・整形ツール" loading="lazy">
+    </div>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span class="blog-card__date">2026.07.13</span>
+        <span class="blog-card__tag">自動化</span>
+      </div>
+      <h2 class="blog-card__title">商品登録前のCSVチェックを、ブラウザだけで完結させる<br>— Catalog Check 制作記録</h2>
+      <p class="blog-card__desc">商品CSVを入れる、列名・価格・在庫・画像名の崩れを確認する、整形済みCSVとチェック表を保存する。EC運用の手戻りを減らす小さなデモを、ブラウザ内完結で作った記録。</p>
+      <span class="blog-card__link">Read more →</span>
+    </div>
+  </a>
 
   <a href="midori-seikotsuin.html" class="blog-card reveal" data-cat="site">
     <div class="blog-card__thumb">

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商品登録前のCSVチェックを、ブラウザだけで完結させる — Catalog Check 制作記録 — Kokona Blog</title>
+<meta name="description" content="商品CSVの列名、価格、在庫、画像ファイル名を登録前に確認・整形し、整形済みCSVとチェック表を保存できるCatalog Checkの制作記録。ブラウザ内完結の安全なデモとして公開した理由も紹介します。">
+<link rel="canonical" href="https://kokona-makes.dev/blog/ec-csv-formatter.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kokona">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://kokona-makes.dev/blog/ec-csv-formatter.html">
+<meta property="og:title" content="商品登録前のCSVチェックを、ブラウザだけで完結させる — Catalog Check 制作記録">
+<meta property="og:description" content="商品CSVを入れる、崩れを見つける、登録用に出力する。EC運用の手戻りを減らす小さなデモを作った記録。">
+<meta property="og:image" content="https://kokona-makes.dev/images/thumb-ec-csv-formatter.jpg">
+<meta property="og:image:alt" content="Catalog Checkの入力・確認・出力フローを表示したツール画面">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="Kokona">
+<meta property="article:section" content="自動化">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kokona_codes">
+<meta name="twitter:creator" content="@kokona_codes">
+<meta name="twitter:title" content="商品登録前のCSVチェックを、ブラウザだけで完結させる">
+<meta name="twitter:description" content="EC商品CSVの崩れを確認し、整形済みCSVとチェック表を保存できる小さなデモを作った。">
+<meta name="twitter:image" content="https://kokona-makes.dev/images/thumb-ec-csv-formatter.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "商品登録前のCSVチェックを、ブラウザだけで完結させる — Catalog Check 制作記録",
+  "description": "商品CSVの列名、価格、在庫、画像ファイル名を登録前に確認・整形し、整形済みCSVとチェック表を保存できるCatalog Checkの制作記録。",
+  "url": "https://kokona-makes.dev/blog/ec-csv-formatter.html",
+  "image": "https://kokona-makes.dev/images/thumb-ec-csv-formatter.jpg",
+  "datePublished": "2026-07-13",
+  "dateModified": "2026-07-13",
+  "inLanguage": "ja",
+  "articleSection": "自動化",
+  "author": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/",
+    "sameAs": ["https://x.com/kokona_codes"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Kokona",
+    "url": "https://kokona-makes.dev/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kokona-makes.dev/blog/ec-csv-formatter.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://kokona-makes.dev/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://kokona-makes.dev/blog/"},
+    {"@type":"ListItem","position":3,"name":"Catalog Check 制作記録"}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { background: #f5f0e8; color: #2a1f12; }
+#scroll-progress { background: #8b6914; }
+.breadcrumb { max-width: 760px; margin: 0 auto; padding: 110px 32px 0; color: #8b6914; font-family: var(--serif); font-size: 0.78rem; letter-spacing: 0.18em; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.breadcrumb li + li::before { margin-right: 8px; color: rgba(139, 105, 20, 0.5); content: "›"; }
+.breadcrumb a { color: #8b6914; text-decoration: none; }
+.breadcrumb a:hover { opacity: 0.65; }
+.breadcrumb [aria-current] { color: #5c4510; font-style: italic; }
+.art-cover { max-width: 1200px; margin: 54px auto 0; padding: 0 32px; }
+.art-cover img { display: block; width: 100%; border: 1px solid rgba(180, 145, 80, 0.3); border-radius: 4px; box-shadow: 0 20px 60px rgba(28, 16, 8, 0.15); }
+.art-hero { max-width: 760px; margin: 0 auto; padding: 50px 32px 44px; }
+.art-hero__meta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 24px; }
+.art-hero__date { padding: 4px 12px; border-radius: 2px; color: #5c4510; background: #ede5d4; font-family: var(--serif); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.18em; }
+.art-hero__tag { padding: 3px 12px; border: 1px solid #c4a45a; border-radius: 2px; color: #8b6914; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; }
+.art-hero__title { margin: 0 0 26px; color: #1c1008; font-family: var(--jp-mincho); font-size: 2.35rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; }
+.art-hero__lead { margin: 0; padding-left: 22px; border-left: 3px solid #c4a45a; color: #3d2b1a; font-size: 0.96rem; line-height: 2; }
+.art-body { max-width: 760px; margin: 0 auto; padding: 0 32px 112px; color: #2a1f12; font-size: 0.95rem; line-height: 2.1; }
+.art-body p { margin: 0 0 22px; }
+.art-body h2 { margin: 60px 0 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(180, 145, 80, 0.4); color: #1c1008; font-family: var(--jp-mincho); font-size: 1.4rem; font-weight: 500; letter-spacing: 0.1em; }
+.art-body h3 { margin: 32px 0 12px; color: #1c1008; font-family: var(--jp-mincho); font-size: 1.06rem; font-weight: 500; letter-spacing: 0.06em; }
+.art-body strong { color: #1c1008; font-weight: 600; }
+.art-body ul { margin: 0 0 22px 22px; padding: 0; }
+.art-body li { margin-bottom: 7px; }
+.flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 30px 0; border: 1px solid rgba(180, 145, 80, 0.35); background: #fffdf8; }
+.flow__step { position: relative; min-height: 210px; padding: 22px 18px; border-right: 1px solid rgba(180, 145, 80, 0.28); }
+.flow__step:last-child { border-right: 0; }
+.flow__step:not(:last-child)::after { position: absolute; z-index: 2; top: 50%; right: -8px; width: 15px; height: 15px; border-top: 1px solid #8b6914; border-right: 1px solid #8b6914; background: #fffdf8; content: ""; transform: translateY(-50%) rotate(45deg); }
+.flow__number { display: inline-block; margin-bottom: 28px; color: #8b6914; font-family: "DM Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em; }
+.flow h3 { margin: 0 0 8px; font-family: var(--jp-mincho); font-size: 1rem; }
+.flow p { margin: 0; color: #5c4830; font-size: 0.84rem; line-height: 1.8; }
+.flow__items { display: grid; gap: 6px; margin-top: 14px; }
+.flow__items span { display: block; padding: 5px 7px; border-left: 2px solid #c4a45a; color: #5c4510; background: #f5f0e8; font-size: 0.72rem; font-weight: 600; line-height: 1.4; }
+.check-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 28px 0; }
+.check-item { padding: 18px; border-top: 2px solid #8b6914; background: #ede5d4; }
+.check-item__no { color: #8b6914; font-family: "DM Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em; }
+.check-item h3 { margin: 18px 0 8px; font-size: 0.98rem; }
+.check-item p { margin: 0; color: #5c4830; font-size: 0.82rem; line-height: 1.8; }
+.result-box { margin: 34px 0; padding: 28px; border: 1px solid rgba(180, 145, 80, 0.3); border-left: 3px solid #c4a45a; border-radius: 4px; background: #ede5d4; }
+.result-box__label { margin-bottom: 14px; color: #8b6914; font-family: var(--serif); font-size: 0.75rem; font-style: italic; letter-spacing: 0.2em; }
+.result-box p { margin: 0; font-size: 0.88rem; line-height: 1.9; }
+.callout { margin: 30px 0; padding: 20px 22px; border: 1px solid rgba(139, 105, 20, 0.28); color: #584417; background: #fff7df; }
+.callout strong { display: block; margin-bottom: 6px; color: #3d2f0d; }
+.cta-links { display: flex; flex-wrap: wrap; gap: 14px; margin: 38px 0 0; }
+.cta-link { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; color: #f5f0e8; background: #2a1f12; font-family: var(--serif); font-size: 0.84rem; letter-spacing: 0.14em; text-decoration: none; }
+.cta-link:hover { background: #5c4510; }
+.cta-link--outline { border: 1px solid #c4a45a; color: #5c4510; background: transparent; }
+.cta-link--outline:hover { background: #ede5d4; }
+@media (max-width: 720px) {
+  .breadcrumb { padding: 94px 20px 0; }
+  .art-cover { margin-top: 34px; padding: 0 14px; }
+  .art-hero { padding: 34px 20px 30px; }
+  .art-hero__title { font-size: 1.72rem; }
+  .art-body { padding: 0 20px 76px; font-size: 0.92rem; }
+  .flow, .check-grid { grid-template-columns: 1fr; }
+  .flow__step { min-height: auto; border-right: 0; border-bottom: 1px solid rgba(180, 145, 80, 0.28); }
+  .flow__step:last-child { border-bottom: 0; }
+  .flow__step:not(:last-child)::after { top: auto; right: auto; bottom: -8px; left: 50%; transform: translateX(-50%) rotate(135deg); }
+  .flow__number { margin-bottom: 14px; }
+}
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">Kokona</a>
+    <nav class="nav__links">
+      <a href="../#about">About</a>
+      <a href="../#works">Works</a>
+      <a href="../#process">Process</a>
+      <a href="../blog/" style="color:var(--gold)">Blog</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li><a href="./">Blog</a></li>
+    <li aria-current="page">Catalog Check 制作記録</li>
+  </ol>
+</nav>
+
+<main>
+  <figure class="art-cover">
+    <img src="../images/thumb-ec-csv-formatter.jpg" alt="Catalog Checkの入力・確認・出力フローを表示したツール画面">
+  </figure>
+
+  <section class="art-hero">
+    <div class="art-hero__meta">
+      <span class="art-hero__date">2026.07.13</span>
+      <span class="art-hero__tag">Automation</span>
+    </div>
+    <h1 class="art-hero__title">商品登録前のCSVチェックを、<br>ブラウザだけで完結させる。<br>— Catalog Check 制作記録</h1>
+    <p class="art-hero__lead">商品登録に使うCSVは、列名や価格表記が少し崩れているだけでも手戻りになりやすい。そこで、元CSVを入れる、崩れを確認する、登録用に出力する、という流れを1画面で試せる小さなデモを作った。</p>
+  </section>
+
+  <article class="art-body">
+    <h2>CSVの「あと少し」が、登録作業を止める</h2>
+    <p>商品名、SKU、価格、在庫、画像ファイル名。必要な情報はそろっているのに、表記ゆれや空欄が残ったままCSVを作ると、登録前の確認が長くなる。</p>
+    <p>今回作った <strong>Catalog Check</strong> は、EC運用で出やすいその「あと少し」を、登録する前にまとめて見つけるためのデモ。特定のモールへ接続するサービスではなく、手元のデータを確認しやすくするためのブラウザ内ツールとして設計している。</p>
+
+    <h2>何ができるプロダクトなのか</h2>
+    <div class="flow" aria-label="Catalog Checkの処理フロー">
+      <section class="flow__step">
+        <span class="flow__number">01 / INPUT</span>
+        <h3>商品CSVを入れる</h3>
+        <p>CSVを貼り付けるか、ファイルとして読み込む。</p>
+        <div class="flow__items" aria-label="入力する項目の例">
+          <span>商品名 / SKU</span>
+          <span>価格 / 在庫数</span>
+          <span>商品画像 / 説明文</span>
+        </div>
+      </section>
+      <section class="flow__step">
+        <span class="flow__number">02 / CHECK</span>
+        <h3>崩れを見つけて整える</h3>
+        <p>読み替えや補正を行い、修正が必要な行を表示する。</p>
+        <div class="flow__items" aria-label="確認する項目の例">
+          <span>列名のばらつき</span>
+          <span>価格・在庫の不整合</span>
+          <span>画像名の不足</span>
+        </div>
+      </section>
+      <section class="flow__step">
+        <span class="flow__number">03 / OUTPUT</span>
+        <h3>登録しやすい形で出力</h3>
+        <p>結果を確認して、次の作業に渡せるファイルを保存する。</p>
+        <div class="flow__items" aria-label="出力するもの">
+          <span>整形済みCSV</span>
+          <span>チェック表CSV</span>
+          <span>変換結果のプレビュー</span>
+        </div>
+      </section>
+    </div>
+
+    <h2>先に見つけたい3つの崩れ</h2>
+    <div class="check-grid">
+      <section class="check-item">
+        <span class="check-item__no">01</span>
+        <h3>列名のばらつき</h3>
+        <p>商品名、SKU、価格などの呼び方を読み取り、出力側に必要な列へ揃える。</p>
+      </section>
+      <section class="check-item">
+        <span class="check-item__no">02</span>
+        <h3>価格と在庫の不整合</h3>
+        <p>円記号、カンマ、空欄、マイナス価格、在庫ゼロを確認し、見直す行を分ける。</p>
+      </section>
+      <section class="check-item">
+        <span class="check-item__no">03</span>
+        <h3>画像ファイル名の不足</h3>
+        <p>拡張子の抜けや空欄を見つけ、画像が出ないまま登録されるリスクを減らす。</p>
+      </section>
+    </div>
+
+    <h2>変換だけで終わらせず、確認する場所を残す</h2>
+    <p>単に列を並べ替えるだけだと、「どこを直すべきか」が別の作業になる。そこで、変換プレビューの横に要修正・確認・登録OKの件数と理由を表示し、チェック表CSVにも出力できるようにした。</p>
+    <p>楽天風、Yahoo風、Amazon風の列構成を選べるようにしつつ、価格の扱い、商品名の空白整理、URL用キーの作成、画像拡張子の補完などを切り替えられる。実際のモール仕様は案件ごとに確認が必要なので、ここでは安全なサンプルデータだけを扱っている。</p>
+
+    <div class="result-box">
+      <p class="result-box__label">— What It Leaves Behind</p>
+      <p>このデモで残るのは、整形済みCSVだけではない。どの列を読み替えたか、自動で何を整えたか、どの行を確認すべきかも見える。納品前の確認や、次にデータを触る人への引き継ぎまで見据えた形にしている。</p>
+    </div>
+
+    <h2>CSVを外部へ送らない理由</h2>
+    <p>商品データには、公開前の商品名、価格、画像ファイル名などが含まれることがある。デモとして気軽に試せるよう、CSVの読み込みと変換はブラウザ内だけで完結させた。入力内容を外部サーバーへ送信しないため、サンプル以外のデータでも扱いを確認しやすい。</p>
+    <div class="callout">
+      <strong>実案件で扱うときの注意</strong>
+      顧客情報、ログイン情報、APIキー、未公開の本番データが入る作業は、公開デモとは別に権限・保存先・削除方法を確認して進める。認証や大量データの一括更新が絡む場合は、作業範囲を先に切り分ける。
+    </div>
+
+    <h2>「案件用の画面」から、使えるプロダクトへ</h2>
+    <p>最初は、ポートフォリオとして何を作ったかを説明する要素が強かった。ただ、それでは初見の人が「結局、このツールは何をしてくれるのか」をつかみにくい。</p>
+    <p>そこで画面を見直し、冒頭から <strong>入力 → 確認 → 出力</strong> の流れを見せるようにした。制作意図はこのブログやポートフォリオ側で伝え、ツール本体は操作と結果を主役にする。この分け方のほうが、実際に試す人にも、制作物として見る人にも分かりやすい。</p>
+
+    <h2>今回作ったもの</h2>
+    <ul>
+      <li>CSV貼り付け・CSVファイル読み込み</li>
+      <li>楽天風 / Yahoo風 / Amazon風の列名への読み替え</li>
+      <li>価格・在庫・画像名などの確認と一部補正</li>
+      <li>変換プレビュー、要確認リスト、整形済みCSV・チェック表CSVの保存</li>
+      <li>PCとスマホで崩れない表示、ブラウザ内完結のデータ処理</li>
+    </ul>
+
+    <div class="cta-links">
+      <a href="https://ec-csv-formatter.pages.dev/" target="_blank" rel="noopener noreferrer" class="cta-link">Catalog Checkを試す →</a>
+      <a href="../ec-automation.html" class="cta-link cta-link--outline">ECデータ自動化の対応範囲を見る →</a>
+    </div>
+  </article>
+</main>
+
+<footer style="padding:40px 0 60px;color:#8b6914;text-align:center;font-family:var(--serif);font-size:0.78rem;font-style:italic;letter-spacing:0.2em;">
+  © 2026 Kokona
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 60);
+});
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.height = total > 0 ? (window.scrollY / total * 100).toFixed(1) + '%' : '0%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "74161943a033480db7de4fc321dad496"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
